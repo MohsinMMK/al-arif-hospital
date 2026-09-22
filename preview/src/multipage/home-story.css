@@ -23,3 +23,8 @@
  .story-unani .story-care-feature:after{left:auto;right:calc(-36px - var(--care-gap)/2)}
 }
 @media(min-width:801px) and (max-width:1100px){.story-care-inner{--care-gap:55px}}
+
+/* Keep the next care chapter below the opening screen without clipping copy. */
+.story-opening{display:flex;flex-direction:column;min-height:calc(100svh - var(--site-header-height,90px))}
+.story-opening>.story-hero{width:100%;flex-shrink:0}
+.story-opening>.story-about{width:100%;margin:0 auto;flex:1;align-content:center}
