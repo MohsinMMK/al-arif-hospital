@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import Lenis from 'lenis'
+import Lenis, { type VirtualScrollData } from 'lenis'
 import Snap from 'lenis/snap'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -10,21 +10,30 @@ export function useSiteScroll(enabled: boolean, path: string) {
  useEffect(() => {
   if (!enabled) return
   const media = gsap.matchMedia()
-  media.add({smooth:'(min-width:801px) and (pointer:fine)',chapters:'(min-width:1101px) and (min-height:800px)'}, context => {
-   if (!context.conditions?.smooth) return
+  media.add({all:'all',compact:'(max-width:800px)',chapters:'(min-width:1101px) and (min-height:800px)'}, context => {
    const headerHeight = () => document.querySelector('.mp-header')?.getBoundingClientRect().height ?? 90
+   const nativeScrollSelector = '.mp-search-dialog, .mp-search-overlay, .mp-header nav, .mp-menu-backdrop, select, textarea'
    const lenis = new Lenis({
     autoRaf: false, duration: .75, smoothWheel: true,
+    syncTouch: true, syncTouchLerp: .1, touchInertiaExponent: 1.5,
     easing: progress => 1 - Math.pow(1 - progress, 4),
     anchors: { duration: .8 },
-    prevent: element => Boolean(element.closest('.mp-search-dialog, .mp-search-overlay, .mp-header nav, .mp-menu-backdrop, select, textarea')),
+    prevent: element => Boolean(element.closest(nativeScrollSelector)),
+    virtualScroll: ({event}) => !('touches' in event && event.touches.length > 1),
    })
    // Let wheel momentum subside before gently correcting the final position.
    // Zero velocity at both ends avoids a sudden tug when reversing a small overshoot.
-   const snap = path === '/site' && context.conditions?.chapters ? new Snap(lenis, {
+   const snap = path === '/site' && (context.conditions?.chapters || context.conditions?.compact) ? new Snap(lenis, {
     type: 'proximity', distanceThreshold: '35%', debounce: 420, duration: .9,
     easing: progress => (1 - Math.cos(Math.PI * progress)) / 2,
    }) : undefined
+   // A held finger, tap, pinch or nested control must never start a section snap.
+   const guardSnap = ({event, deltaY}: VirtualScrollData) => {
+    const nestedControl = event.target instanceof Element && event.target.closest(nativeScrollSelector)
+    if (event.type === 'touchstart' || event.type === 'touchmove' || !deltaY || event.ctrlKey || nestedControl) snap?.stop()
+    else snap?.start()
+   }
+   lenis.on('virtual-scroll', guardSnap)
    let removePoints: (()=>void)[] = []
    const updatePoints = () => {
     removePoints.forEach(remove => remove())
@@ -51,6 +60,7 @@ export function useSiteScroll(enabled: boolean, path: string) {
     removePoints.forEach(remove=>remove())
     snap?.stop()
     snap?.destroy()
+    lenis.off('virtual-scroll',guardSnap)
     gsap.ticker.remove(tick)
     lenis.off('scroll',ScrollTrigger.update)
     lenis.stop()

@@ -32,15 +32,23 @@ function CareChapter({unani=false}:{unani?:boolean}) {
   const line=root.current.querySelector('.story-care-line span')
   const section=root.current
   const accents=rows.map(row=>row.querySelector('.story-feature-wash'))
-  const timeline=gsap.timeline({scrollTrigger:{
-   trigger:section,start:'top 85%',
-   end:()=>`top ${(document.querySelector('.mp-header')?.getBoundingClientRect().height??90)+2}px`,
-   scrub:.18,invalidateOnRefresh:true,
-   onUpdate:trigger=>section.classList.toggle('is-complete',trigger.progress>=.999),
-  }})
-  timeline.fromTo(line,{scaleY:0},{scaleY:1,duration:1,ease:'none'},0)
-  timeline.fromTo(accents,{clipPath:unani?'inset(0 0 0 100%)':'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.68,stagger:.08,ease:'power2.out'},0)
-  return ()=>section.classList.remove('is-complete')
+  const media=gsap.matchMedia()
+  media.add({compact:'(max-width:800px)',wide:'(min-width:801px)'},context=>{
+   const timeline=gsap.timeline({scrollTrigger:{
+    trigger:section,start:'top 85%',
+    end:()=>`top ${(document.querySelector('.mp-header')?.getBoundingClientRect().height??90)+2}px`,
+    scrub:.18,invalidateOnRefresh:true,
+    onUpdate:trigger=>section.classList.toggle('is-complete',trigger.progress>=.999),
+   }})
+   timeline.fromTo(line,{scaleY:0},{scaleY:1,duration:1,ease:'none'},0)
+   timeline.fromTo(accents,{clipPath:unani?'inset(0 0 0 100%)':'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.68,stagger:.08,ease:'power2.out'},0)
+   if(context.conditions?.compact){
+    gsap.set(rows,{y:18})
+    timeline.to(rows,{y:0,duration:.72,stagger:.06,ease:'power2.out'},0)
+   }
+   return ()=>section.classList.remove('is-complete')
+  })
+  return ()=>media.revert()
  },{scope:root,dependencies:[enabled,unani],revertOnUpdate:true})
  return <section ref={root} id={unani?'unani-care':'general-care'} className={`story-care ${unani?'story-unani':'story-general'}`} aria-labelledby={unani?'unani-title':'general-title'}><div className="story-care-inner"><div className="story-care-intro"><div className="story-care-mark" aria-hidden="true">{unani?<Leaf size={50}/>:<Stethoscope size={50}/>}</div><h2 id={unani?'unani-title':'general-title'}>{unani?<>Unani care.<br/><em>Time to listen.</em></>:<>General hospital.<br/><em>Care for everyday life.</em></>}</h2><p>{unani?'A consultation starts with your health history, daily life and questions. Explore Unani medicine and the therapies described in the hospital brief.':'From everyday health concerns to women’s health and surgical consultations, find the service that fits the conversation you need.'}</p><StoryLink to={`/site/services?wing=${unani?'unani':'general'}`}>{unani?'Explore Unani care':'Explore general care'}</StoryLink><div className="story-care-footnote">{unani?'Your clinician discusses suitability before treatment.':'Reception helps confirm your clinician and visit.'}</div></div><div className="story-care-features"><div className="story-care-line" aria-hidden="true"><span/></div>{services.map(service=><article className="story-care-feature" key={service.slug}><div className="story-feature-wash" aria-hidden="true"/><Link to={`/site/services/${service.slug}`}><h3>{service.name}</h3><ArrowUpRight size={22}/></Link><p className="story-care-full-copy">{service.intro}</p><p className="story-care-mobile-copy">{mobileCareSummaries[service.slug]??service.intro}</p></article>)}</div></div></section>
 }

@@ -119,3 +119,12 @@ The user rejected the previous care-explorer composition as too application-like
 - Playwright checked all 22 public routes. A 420px wheel input on a service detail page measured 157px after 70ms and settled at 420px, with no subsequent section snap. Search, route scroll reset, 1024px pointer smoothing, 390px native scrolling, the inquiry planner and both motion preferences passed with no uncaught page errors.
 - Both homepage care sections settled within 1px of the header with their progress lines at 100%. Reviewed desktop care and about-page screenshots in `.impeccable/review/sitewide-motion-*.png`.
 - Verification commands: `npm --prefix preview test`, `npm --prefix preview run lint`, `npm --prefix preview run build`. No new dependencies or environment variables.
+
+## Mobile touch motion — 22 September 2026
+
+- Removed the desktop-only gate from the shared Lenis driver. Touch synchronization now follows the finger with restrained release inertia; compact homepage chapters use the approved 420ms pause and 900ms sine settling. Native CSS snap remains disabled while Lenis is active.
+- Mobile care rows start 18px lower and move into place with a short stagger. All four rows and their background reveals finish at the section stop. Desktop care animation is unchanged.
+- Chromium mobile emulation with CDP touch gestures passed at 390×844 and 375×667. General and Unani sections settled within 0.5px of the header; every card fit above the floating contact actions with its animation complete. Screenshots: `output/playwright/mobile-motion-*.png`.
+- Reverse swipes, touch interruption, held touches without unintended snapping, nested search scrolling, menu-to-inquiry navigation and the inquiry planner passed. Reduced motion removed the driver and transforms while retaining native touch scrolling. Desktop wheel settling passed; no uncaught page errors.
+- Six local tests, lint and TypeScript/Vite build passed using `npm --prefix preview test`, `npm --prefix preview run lint`, and `npm --prefix preview run build`. No dependencies or environment variables added. Tests used browser emulation, not physical phones.
+- Implementation references: [Lenis touch synchronization](https://github.com/darkroomengineering/lenis#settings), [official snap plugin](https://github.com/darkroomengineering/lenis/blob/main/packages/snap/README.md).
