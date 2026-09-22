@@ -74,3 +74,19 @@
  .story-doctors{scroll-snap-align:start;scroll-margin-top:0}
 }
 @media(prefers-reduced-motion:reduce){html.care-chapter-scroll{scroll-snap-type:none}}
+/* Four clear service rows within each mobile care screen. */
+@media(max-width:800px){
+ .story-care-features{grid-template-columns:minmax(0,1fr);gap:8px}
+ .story-care-feature{padding:10px 14px}
+ .story-care-feature a{align-items:center;gap:12px;min-height:32px}
+ .story-care-feature a>svg{display:block;flex-shrink:0;width:18px;height:18px;margin:0}
+ .story-care-feature h3{font-size:19px;line-height:1.25}
+ .story-care-feature p{margin-top:4px;font-size:13px;line-height:1.5}
+}
+@media(max-width:800px) and (max-height:700px){
+ .story-care{padding-top:16px}
+ .story-care-inner{gap:8px}
+ .story-care-feature{padding:8px 12px}
+ .story-care-feature h3{font-size:18px}
+ .story-care-feature p{font-size:12px;line-height:1.4}
+}
