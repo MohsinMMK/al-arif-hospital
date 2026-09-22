@@ -12,6 +12,16 @@ import { VisitJourney } from './motion'
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 function StoryLink({to,children}:{to:string;children:React.ReactNode}) {return <Link className="story-link" to={to}>{children}<ArrowUpRight size={19}/></Link>}
 
+const mobileCareSummaries:Record<string,string>={
+ 'general-medicine':'Everyday concerns, preventive care and ongoing health needs.',
+ 'general-surgery':'Surgical consultations, procedures and follow-up care.',
+ 'womens-health':'Gynecology, pregnancy consultations and reproductive health.',
+ 'diagnostics-pharmacy':'Tests, prescriptions and collection arrangements.',
+ 'unani-medicine':'Individual Unani consultations and treatment discussions.',
+ 'infertility-care':'Private reproductive health and fertility consultations.',
+ 'hijama':'Discuss therapy suitability, privacy and preparation.',
+ 'joint-rehabilitation':'Support for joint concerns, mobility and rehabilitation.'
+}
 function CareChapter({unani=false}:{unani?:boolean}) {
  const root=useRef<HTMLElement>(null)
  const enabled=useContext(InteractionMotion)
@@ -27,7 +37,7 @@ function CareChapter({unani=false}:{unani?:boolean}) {
    ScrollTrigger.create({trigger:row,start:'top 60%',end:'bottom 60%',toggleClass:'is-current'})
   })
  },{scope:root,dependencies:[enabled,unani],revertOnUpdate:true})
- return <section ref={root} id={unani?'unani-care':'general-care'} className={`story-care ${unani?'story-unani':'story-general'}`} aria-labelledby={unani?'unani-title':'general-title'}><div className="story-care-inner"><div className="story-care-intro"><div className="story-care-mark" aria-hidden="true">{unani?<Leaf size={50}/>:<Stethoscope size={50}/>}</div><h2 id={unani?'unani-title':'general-title'}>{unani?<>Unani care.<br/><em>Time to listen.</em></>:<>General hospital.<br/><em>Care for everyday life.</em></>}</h2><p>{unani?'A consultation starts with your health history, daily life and questions. Explore Unani medicine and the therapies described in the hospital brief.':'From everyday health concerns to women’s health and surgical consultations, find the service that fits the conversation you need.'}</p><StoryLink to={`/site/services?wing=${unani?'unani':'general'}`}>{unani?'Explore Unani care':'Explore general care'}</StoryLink><div className="story-care-footnote">{unani?'Your clinician discusses suitability before treatment.':'Reception helps confirm your clinician and visit.'}</div></div><div className="story-care-features"><div className="story-care-line" aria-hidden="true"><span/></div>{services.map((service,index)=><article className="story-care-feature" key={service.slug}><div className="story-feature-wash" aria-hidden="true"/><div className="story-mobile-care-heading">{unani?'Unani care':'General hospital'}</div><Link to={`/site/services/${service.slug}`}><h3>{service.name}</h3><ArrowUpRight size={22}/></Link><p>{service.intro}</p><div className="story-mobile-care-position" aria-label={`Service ${index+1} of ${services.length}`}><span>{index+1} / {services.length}</span><span aria-hidden="true">{index===services.length-1?(unani?'Next: meet our doctors':'Next: Unani care'):'Scroll to explore'}<ArrowDown size={16}/></span></div></article>)}</div></div></section>
+ return <section ref={root} id={unani?'unani-care':'general-care'} className={`story-care ${unani?'story-unani':'story-general'}`} aria-labelledby={unani?'unani-title':'general-title'}><div className="story-care-inner"><div className="story-care-intro"><div className="story-care-mark" aria-hidden="true">{unani?<Leaf size={50}/>:<Stethoscope size={50}/>}</div><h2 id={unani?'unani-title':'general-title'}>{unani?<>Unani care.<br/><em>Time to listen.</em></>:<>General hospital.<br/><em>Care for everyday life.</em></>}</h2><p>{unani?'A consultation starts with your health history, daily life and questions. Explore Unani medicine and the therapies described in the hospital brief.':'From everyday health concerns to women’s health and surgical consultations, find the service that fits the conversation you need.'}</p><StoryLink to={`/site/services?wing=${unani?'unani':'general'}`}>{unani?'Explore Unani care':'Explore general care'}</StoryLink><div className="story-care-footnote">{unani?'Your clinician discusses suitability before treatment.':'Reception helps confirm your clinician and visit.'}</div></div><div className="story-care-features"><div className="story-care-line" aria-hidden="true"><span/></div>{services.map(service=><article className="story-care-feature" key={service.slug}><div className="story-feature-wash" aria-hidden="true"/><Link to={`/site/services/${service.slug}`}><h3>{service.name}</h3><ArrowUpRight size={22}/></Link><p className="story-care-full-copy">{service.intro}</p><p className="story-care-mobile-copy">{mobileCareSummaries[service.slug]??service.intro}</p></article>)}</div></div></section>
 }
 
 export default function HomeStory(){
