@@ -104,3 +104,10 @@ The user rejected the previous care-explorer composition as too application-like
 - Archived former designs, removed unused care explorer and associated CSS, and removed react-markdown (81 packages).
 - Browser checked all 22 public catalog routes at 1440px and 390px: headings present, no horizontal overflow or review banners, no uncaught page errors. Mobile navigation and local inquiry preparation passed.
 - Six tests, lint and production build passed. No environment variables added. No deployment or booking backend was introduced.
+
+## Lenis / GSAP refinement
+- Desktop homepage uses Lenis and its official snap plugin, driven by the GSAP ticker. Native CSS snapping is disabled only while Lenis is active; mobile keeps native section settling.
+- Care timeline completes at the header offset rather than when the last row crosses 65% of the viewport. Browser verified scaleY=1 at both settled chapters, completed card reveals, forward/reverse transitions, anchor offset, search, route cleanup and reduced-motion handling.
+- Removed decorative link underlines and horizontal list/section separators. Form outlines, focus indicators and the care diagram remain.
+- Sources: https://github.com/darkroomengineering/lenis and https://github.com/darkroomengineering/lenis/blob/main/packages/snap/README.md and https://gsap.com/docs/v3/Plugins/ScrollTrigger/.
+- New dependency: lenis. No environment variables. Tests, lint and build pass.

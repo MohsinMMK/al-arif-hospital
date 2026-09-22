@@ -8,6 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { InteractionMotion } from './interaction-context'
 import { doctorPages, servicePages } from './data'
 import { VisitJourney } from './motion'
+import { useCareScroll } from './useCareScroll'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 function StoryLink({to,children}:{to:string;children:React.ReactNode}) {return <Link className="story-link" to={to}>{children}<ArrowUpRight size={19}/></Link>}
@@ -30,18 +31,24 @@ function CareChapter({unani=false}:{unani?:boolean}) {
   if(!enabled||!root.current)return
   const rows=gsap.utils.toArray<HTMLElement>('.story-care-feature',root.current)
   const line=root.current.querySelector('.story-care-line span')
-  gsap.fromTo(line,{scaleY:0},{scaleY:1,ease:'none',scrollTrigger:{trigger:root.current.querySelector('.story-care-features'),start:'top 65%',end:'bottom 65%',scrub:.3}})
-  rows.forEach(row=>{
-   const accent=row.querySelector('.story-feature-wash')
-   gsap.fromTo(accent,{clipPath:unani?'inset(0 0 0 100%)':'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.55,ease:'power3.out',scrollTrigger:{trigger:row,start:'top 72%',toggleActions:'play none none reverse'}})
-   ScrollTrigger.create({trigger:row,start:'top 60%',end:'bottom 60%',toggleClass:'is-current'})
-  })
+  const section=root.current
+  const accents=rows.map(row=>row.querySelector('.story-feature-wash'))
+  const timeline=gsap.timeline({scrollTrigger:{
+   trigger:section,start:'top 85%',
+   end:()=>`top ${(document.querySelector('.mp-header')?.getBoundingClientRect().height??90)+2}px`,
+   scrub:.18,invalidateOnRefresh:true,
+   onUpdate:trigger=>section.classList.toggle('is-complete',trigger.progress>=.999),
+  }})
+  timeline.fromTo(line,{scaleY:0},{scaleY:1,duration:1,ease:'none'},0)
+  timeline.fromTo(accents,{clipPath:unani?'inset(0 0 0 100%)':'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.68,stagger:.08,ease:'power2.out'},0)
+  return ()=>section.classList.remove('is-complete')
  },{scope:root,dependencies:[enabled,unani],revertOnUpdate:true})
  return <section ref={root} id={unani?'unani-care':'general-care'} className={`story-care ${unani?'story-unani':'story-general'}`} aria-labelledby={unani?'unani-title':'general-title'}><div className="story-care-inner"><div className="story-care-intro"><div className="story-care-mark" aria-hidden="true">{unani?<Leaf size={50}/>:<Stethoscope size={50}/>}</div><h2 id={unani?'unani-title':'general-title'}>{unani?<>Unani care.<br/><em>Time to listen.</em></>:<>General hospital.<br/><em>Care for everyday life.</em></>}</h2><p>{unani?'A consultation starts with your health history, daily life and questions. Explore Unani medicine and the therapies described in the hospital brief.':'From everyday health concerns to women’s health and surgical consultations, find the service that fits the conversation you need.'}</p><StoryLink to={`/site/services?wing=${unani?'unani':'general'}`}>{unani?'Explore Unani care':'Explore general care'}</StoryLink><div className="story-care-footnote">{unani?'Your clinician discusses suitability before treatment.':'Reception helps confirm your clinician and visit.'}</div></div><div className="story-care-features"><div className="story-care-line" aria-hidden="true"><span/></div>{services.map(service=><article className="story-care-feature" key={service.slug}><div className="story-feature-wash" aria-hidden="true"/><Link to={`/site/services/${service.slug}`}><h3>{service.name}</h3><ArrowUpRight size={22}/></Link><p className="story-care-full-copy">{service.intro}</p><p className="story-care-mobile-copy">{mobileCareSummaries[service.slug]??service.intro}</p></article>)}</div></div></section>
 }
 
 export default function HomeStory(){
  const enabled=useContext(InteractionMotion)
+ useCareScroll(enabled)
  useEffect(()=>{
   if(!enabled)return
   document.documentElement.classList.add('care-chapter-scroll')

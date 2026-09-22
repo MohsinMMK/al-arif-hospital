@@ -218,3 +218,6 @@ DoctorSpotlight adapts the actual React Bits SpotlightCard source into semantic 
 
 ## Accepted website cleanup — 22 September 2026
 This supersedes earlier preview-shell guidance: remove review strips and draft notices, review footer links, design selector and management routes. Keep the established identity, public page hierarchy and motion; the motion toggle lives in the footer. The mobile menu softens the background and preserves floating contact actions. Contact rows pair matching icons, numbers and arrows. Source and planning documents stay outside the public bundle.
+
+## Desktop scroll refinement
+The desktop homepage uses Lenis with lenis/snap on the GSAP ticker, replacing competing native snap motion. Settling takes 650ms with quartic easing; normal scroll smoothing takes 750ms. Both care chapters complete their line and card reveals at the header offset. Cleanup stops the snap and scrolling instances before destruction. Mobile keeps four compact single-column rows and native whole-section settling. Reduced-motion and the manual motion preference bypass smoothing. Decorative horizontal separators and link underlines are removed; form boundaries, focus indicators and the care connector diagram remain.
