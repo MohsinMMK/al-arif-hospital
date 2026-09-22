@@ -4,5 +4,16 @@
   "installCommand": "npm --prefix preview ci",
   "buildCommand": "npm --prefix preview test && npm --prefix preview run lint && npm --prefix preview run build",
   "outputDirectory": "preview/dist",
+  "headers": [
+    {
+      "source": "/assets/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

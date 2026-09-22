@@ -32,6 +32,8 @@ Push an approved change to `main` in `MohsinMMK/al-arif-hospital`. The connected
 
 Only `preview/dist` is published. SPA rewrites support direct visits and refreshes on all page routes. Source workbooks, research, planning documents and local test artifacts are excluded from the public build.
 
+Hashed files under `/assets/` use a one-year immutable browser cache. HTML keeps Vercel's revalidation policy so later deployments can reference fresh asset hashes. Keep unhashed public files outside `/assets/`.
+
 ## Structure
 
 - `preview/src/multipage/Website.tsx`: shared shell, navigation and page routes.

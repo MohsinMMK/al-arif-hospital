@@ -42,6 +42,8 @@ Initial JavaScript transfer is 33.4% smaller; median main-content paint is about
 
 The redundant Motion runtime was replaced with the existing GSAP engine. Lottie downloads only within 400px of its section. React and scroll libraries have separate hashed chunks for independent caching, and three critical local font faces are preloaded. Original workbook data and planning documents are absent from runtime imports and the public output.
 
+Production initially returned `max-age=0` for hashed assets. `vercel.json` now sets `public, max-age=31536000, immutable` for `/assets/`, following [Vercel's header configuration](https://vercel.com/docs/project-configuration/vercel-json#headers). HTML continues to revalidate. This repeat-visit improvement is separate from the cold-cache measurements above.
+
 Raw local evidence is in `output/playwright/performance-{baseline,after}.json` and `performance-{baseline,after}-assets.json`; generated test artifacts remain Git-ignored.
 
 ## Browser coverage
