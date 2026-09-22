@@ -18,7 +18,12 @@ export function useCareScroll(enabled: boolean) {
     anchors: { duration: .8 },
     prevent: element => Boolean(element.closest('.mp-search-dialog, .mp-header nav, .mp-menu-backdrop')),
    })
-   const snap = new Snap(lenis, {type:'proximity',distanceThreshold:'35%',debounce:160,duration:.65,easing:progress=>1-Math.pow(1-progress,4)})
+   // Let wheel momentum subside before gently correcting the final position.
+   // Zero velocity at both ends avoids a sudden tug when reversing a small overshoot.
+   const snap = new Snap(lenis, {
+    type: 'proximity', distanceThreshold: '35%', debounce: 420, duration: .9,
+    easing: progress => (1 - Math.cos(Math.PI * progress)) / 2,
+   })
    let removePoints: (()=>void)[] = []
    const updatePoints = () => {
     removePoints.forEach(remove => remove())
