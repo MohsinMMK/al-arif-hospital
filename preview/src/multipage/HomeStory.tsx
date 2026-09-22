@@ -147,7 +147,9 @@ function CareChapter({ unani = false }: { unani?: boolean }) {
               ? "A consultation starts with your health history, daily life and questions. Explore Unani medicine and the therapies described in the hospital brief."
               : "From everyday health concerns to women’s health and surgical consultations, find the service that fits the conversation you need."}
           </p>
-          <StoryLink to={`/site/services?wing=${unani ? "unani" : "general"}`}>
+          <StoryLink
+            to={`/site/services#${unani ? "unani-care" : "general-hospital"}`}
+          >
             {unani ? "Explore Unani care" : "Explore general care"}
           </StoryLink>
           <div className="story-care-footnote">

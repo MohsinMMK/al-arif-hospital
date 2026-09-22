@@ -1,4 +1,5 @@
 import HomeStory from "./HomeStory";
+import { CareDirectory, CareTeam } from "./CareDirectory";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { InteractionMotion } from "./interaction-context";
 import { QuickFind, ReadingProgress, VisitChecklist } from "./interactive";
@@ -46,6 +47,7 @@ import { useReducedMotion } from "./useReducedMotion";
 import { useSiteScroll } from "./useSiteScroll";
 import "./website.css";
 import "./home-story.css";
+import "./care-services.css";
 
 const address =
   "18-13-132/41/A & B, Tulsi Nagar, Noori Nagar, Bandlaguda, Chandrayangutta, Hyderabad, Telangana 500005";
@@ -147,76 +149,19 @@ function ServiceLink({ service }: { service: Service }) {
 }
 
 function Services() {
-  const [params, setParams] = useSearchParams();
-  const wing = params.get("wing") || "all";
-  const [search, setSearch] = useState("");
-  const filtered = servicePages.filter(
-    (service) =>
-      (wing === "all" ||
-        service.wing ===
-          (wing === "general" ? "General hospital" : "Unani care")) &&
-      `${service.name} ${service.intro}`
-        .toLowerCase()
-        .includes(search.toLowerCase()),
-  );
   return (
-    <div className="mp-page">
-      <Breadcrumb current="Care & services" />
-      <PageTitle
-        title={"A place to start.\nA path to your care."}
-        description="Choose your care. See the team. Plan your visit."
-      />
-      <div className="mp-directory-tools">
-        <div className="mp-filters" aria-label="Filter care wing">
-          {[
-            ["all", "All care"],
-            ["general", "General hospital"],
-            ["unani", "Unani care"],
-          ].map(([value, label]) => (
-            <button
-              aria-pressed={wing === value}
-              key={value}
-              onClick={() => setParams(value === "all" ? {} : { wing: value })}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-        <div className="mp-search">
-          <Search size={18} />
-          <Input
-            aria-label="Search services"
-            placeholder="Find a service"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-          />
-        </div>
+    <div className="care-directory">
+      <div className="mp-page care-directory-breadcrumb">
+        <Breadcrumb current="Care & services" />
       </div>
-      <div className="mp-service-directory">
-        {filtered.map((service) => (
-          <ServiceLink key={service.slug} service={service} />
-        ))}
-        {!filtered.length && (
-          <div className="mp-empty" role="status">
-            <h2>No service matches that search.</h2>
-            <p>Try a different word or show all care.</p>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSearch("");
-                setParams({});
-              }}
-            >
-              Clear filters
-            </Button>
-          </div>
-        )}
+      <CareDirectory />
+      <div className="mp-page care-directory-close">
+        <p className="mp-source-note">
+          Please confirm service availability, fees and consultation
+          arrangements with reception.
+        </p>
+        <ContactBand />
       </div>
-      <p className="mp-source-note">
-        Please confirm service availability, fees and consultation arrangements
-        with reception.
-      </p>
-      <ContactBand />
     </div>
   );
 }
@@ -231,7 +176,7 @@ function ServiceDetail() {
     <div className="mp-page">
       <Breadcrumb
         parent="Care & services"
-        to="/site/services"
+        to={`/site/services#${service.wing === "General hospital" ? "general-hospital" : "unani-care"}`}
         current={service.name}
       />
       <div className="mp-detail-hero">
@@ -316,33 +261,22 @@ function ServiceDetail() {
             <Phone size={16} />
             +91 85550 86667
           </a>
-          <hr />
-          <h3>Associated care team</h3>
-          {relatedDoctors.length ? (
-            relatedDoctors.map((doctor) => (
-              <Link
-                className="mp-related-doctor"
-                key={doctor.slug}
-                to={`/site/doctors/${doctor.slug}`}
-              >
-                <span>
-                  {doctor.name}
-                  <small>{doctor.role}</small>
-                </span>
-                <ArrowUpRight size={17} />
-              </Link>
-            ))
-          ) : (
-            <p>
-              The laboratory or pharmacy team can help with current
-              arrangements.
-            </p>
-          )}
           <small>
             Contact reception before travelling to confirm your arrangements.
           </small>
         </aside>
       </div>
+      {relatedDoctors.length > 0 ? (
+        <CareTeam
+          doctors={relatedDoctors}
+          title="Meet your care team."
+          id="service-care-team"
+        />
+      ) : (
+        <p className="care-service-team-note">
+          The laboratory or pharmacy team can help with current arrangements.
+        </p>
+      )}
       <section className="mp-related-services">
         <h2>Continue exploring.</h2>
         {servicePages

@@ -9,7 +9,14 @@ import { ArrowUpRight } from "lucide-react";
 import { InteractionMotion } from "@/multipage/interaction-context";
 import type { DoctorProfile } from "@/multipage/data";
 
-export function DoctorSpotlight({ doctor }: { doctor: DoctorProfile }) {
+export function DoctorSpotlight({
+  doctor,
+  headingLevel = 3,
+}: {
+  doctor: DoctorProfile;
+  headingLevel?: 3 | 4;
+}) {
+  const Heading = headingLevel === 4 ? "h4" : "h3";
   const link = useRef<HTMLAnchorElement>(null);
   const enabled = useContext(InteractionMotion);
   const initials = doctor.name
@@ -41,7 +48,7 @@ export function DoctorSpotlight({ doctor }: { doctor: DoctorProfile }) {
       <span className="doctor-monogram" aria-hidden="true">
         {initials}
       </span>
-      <h3>{doctor.name}</h3>
+      <Heading>{doctor.name}</Heading>
       <p>{doctor.role}</p>
       <span className="doctor-profile-link">
         View profile <ArrowUpRight size={17} />

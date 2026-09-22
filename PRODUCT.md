@@ -21,7 +21,11 @@ Display name: Al-Arif. Preserve warm cream, pastel sage, olive text, Bitter head
 The 18-sheet workbook extraction in `research/workbook.json` is the source record. Source labels such as Verified or Approved are assertions, not independent verification. Keep source conflicts and planning evidence private. Do not fabricate clinician qualifications, portraits, outcomes, testimonials, emergency capabilities or live availability.
 
 ## Implemented behavior
-Search and filters run locally. The visit checklist and inquiry preferences reset when their pages unmount. Call, WhatsApp and map links require visitor action. The inquiry planner stores no patient information and sends no request; reception confirms visits.
+Search runs locally. Care & services keeps General hospital and Unani care visible as two sections, each with four services followed by its associated team. General hospital shows four clinicians and Unani shows two; one clinician belongs to both through the existing service associations. Service and doctor search results appear above the sections without hiding either wing, with direct detail/profile links, a clear-search control and guidance when nothing matches.
+
+Service-detail teams follow the overview, preparation and FAQs on desktop and mobile. Diagnostics & pharmacy retains department guidance. Homepage wing links, service breadcrumbs and existing wing query links lead to the corresponding care section. Mobile service descriptions stay visible and team profiles use compact horizontal rows.
+
+The visit checklist and inquiry preferences reset when their pages unmount. Call, WhatsApp and map links require visitor action. The inquiry planner stores no patient information and sends no request; reception confirms visits.
 
 ## Not implemented
 Booking, patient accounts, payments, clinical records, staff administration, programme admissions, publication management, Urdu RTL and Telugu translations. Historical architecture proposals in `docs/planning/` do not imply these systems exist.

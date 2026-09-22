@@ -37,6 +37,7 @@ Hashed files under `/assets/` use a one-year immutable browser cache. HTML keeps
 ## Structure
 
 - `preview/src/multipage/Website.tsx`: shared shell, navigation and page routes.
+- `CareDirectory.tsx`, `care-services.css`: the two care sections, service/doctor search and shared care-team layout.
 - `HomeStory.tsx`, `Chapter.tsx`, `VisitJourney.tsx`, `useSiteScroll.ts`: homepage and GSAP/Lenis/Lottie motion.
 - `data.ts`: services, clinicians, source references and the page catalog.
 - `interactive.tsx`: reading progress, accessible search and the visit checklist.
@@ -46,6 +47,8 @@ Hashed files under `/assets/` use a one-year immutable browser cache. HTML keeps
 - [VALIDATION.md](VALIDATION.md): checks and measured performance.
 - [research/README.md](research/README.md): private source evidence.
 - `docs/planning/`: historical workbook report and expansion proposal.
+
+The care directory at `/site/services` has General hospital (`#general-hospital`) and Unani (`#unani-care`) sections. Homepage wing links and service breadcrumbs target these sections; existing `?wing=general` and `?wing=unani` links also work. Services open `/site/services/:slug`, and clinicians open `/site/doctors/:slug`.
 
 ## Operational scope
 

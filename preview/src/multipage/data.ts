@@ -271,7 +271,7 @@ export const pageCatalog = [
   {
     path: "/site/services",
     title: "Care & services",
-    description: "Filter both care wings and open individual service pages.",
+    description: "Explore general hospital and Unani services with their associated doctors.",
     kind: "Directory",
   },
   ...servicePages.map((service) => ({
