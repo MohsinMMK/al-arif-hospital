@@ -25,6 +25,20 @@ Build output: `preview/dist`. A future host must serve `index.html` for applicat
 
 The public bundle contains only the selected website. Preview banners, design-option selection, workbook report access and management demos have been removed. Historical designs are retained in `archive/design-study`; source records remain in `research` and planning documents. These directories are private project records, not deployable website assets.
 
-The request page helps visitors prepare preferences and contact reception. It does not transmit or store requests, collect patient information, or confirm appointments. Programmes have no open applications; unavailable publication records are labelled. Content approval, credentials, contact details and hours still require hospital review before deployment. The HTML retains `noindex` until a real domain and publication are approved. This cleanup does not deploy the site.
+The request page helps visitors prepare preferences and contact reception. It does not transmit or store requests, collect patient information, or confirm appointments. Programmes have no open applications; unavailable publication records are labelled. Content approval, credentials, contact details and hours still require hospital review before deployment. The HTML retains `noindex` until a real domain and publication are approved. 
 
 Third-party icon/component licenses are included under `preview/public/third-party` and ship with the build.
+
+## Vercel deployment
+
+Vercel project: `al-arif-general-hospital`, connected to `MohsinMMK/al-arif-hospital`. The production branch is `main`.
+
+```sh
+git add .
+git commit -m "feat: describe the change"
+git push origin main
+```
+
+A push triggers Vercel automatically. `vercel.json` installs with the lockfile, runs tests and lint, then builds the site. Only `preview/dist` is published; private project records stay outside it. SPA rewrites support direct links and refreshes on every public route. A failed build does not replace the last successful production deployment. No Vercel token or application secrets are stored in this repository.
+
+Production URL: https://al-arif-general-hospital.vercel.app

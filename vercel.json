@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "npm --prefix preview ci",
+  "buildCommand": "npm --prefix preview test && npm --prefix preview run lint && npm --prefix preview run build",
+  "outputDirectory": "preview/dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}

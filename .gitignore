@@ -12,3 +12,5 @@ dist/
 output/
 coverage/
 *.tsbuildinfo
+
+.vercel/
