@@ -65,3 +65,12 @@
 .story-care-mobile-copy{display:none}
 @media(max-width:800px){.story-care-full-copy{display:none}.story-care-mobile-copy{display:block}}
 @media(max-width:800px) and (max-height:700px){.story-care-intro h2 em,.story-care-intro h2 br{display:none}.story-care-feature{padding-block:12px}.story-care-inner{gap:12px}.story-care-feature p{margin-top:8px}}
+/* Mobile snaps the whole four-card chapter, never individual cards. */
+@media(max-width:800px){
+ html.care-chapter-scroll{scroll-snap-type:y proximity;scroll-padding-top:var(--site-header-height,90px)}
+ .story-care{min-height:calc(100svh - var(--site-header-height,90px));display:flex;align-items:center;scroll-snap-align:start;scroll-snap-stop:always}
+ .story-care-inner{width:100%}
+ .home-story .story-care[id]{scroll-margin-top:0}
+ .story-doctors{scroll-snap-align:start;scroll-margin-top:0}
+}
+@media(prefers-reduced-motion:reduce){html.care-chapter-scroll{scroll-snap-type:none}}
