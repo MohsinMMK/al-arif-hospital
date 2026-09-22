@@ -13,13 +13,20 @@ export function useSiteScroll(enabled: boolean, path: string) {
   media.add({all:'all',compact:'(max-width:800px)',chapters:'(min-width:1101px) and (min-height:800px)'}, context => {
    const headerHeight = () => document.querySelector('.mp-header')?.getBoundingClientRect().height ?? 90
    const nativeScrollSelector = '.mp-search-dialog, .mp-search-overlay, .mp-header nav, .mp-menu-backdrop, select, textarea'
+   let pinchGesture = false
    const lenis = new Lenis({
     autoRaf: false, duration: .75, smoothWheel: true,
     syncTouch: true, syncTouchLerp: .1, touchInertiaExponent: 1.5,
     easing: progress => 1 - Math.pow(1 - progress, 4),
     anchors: { duration: .8 },
     prevent: element => Boolean(element.closest(nativeScrollSelector)),
-    virtualScroll: ({event}) => !('touches' in event && event.touches.length > 1),
+    virtualScroll: ({event}) => {
+     if (!('touches' in event)) return true
+     if (event.type === 'touchstart' && event.touches.length === 1) pinchGesture = false
+     if (event.touches.length > 1) pinchGesture = true
+     // Keep the release of a pinch native too; resume on the next single-finger gesture.
+     return !pinchGesture
+    },
    })
    // Let wheel momentum subside before gently correcting the final position.
    // Zero velocity at both ends avoids a sudden tug when reversing a small overshoot.
