@@ -1,91 +1,1141 @@
-import HomeStory from './HomeStory'
-import { WhatsAppIcon } from '@/components/WhatsAppIcon'
-import { InteractionMotion } from './interaction-context'
-import { MotionConfig } from 'motion/react'
-import { QuickFind, ReadingProgress, VisitChecklist } from './interactive'
-import { useEffect, useRef, useState } from 'react'
-import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, Navigate, useParams, useSearchParams } from 'react-router-dom'
-import { ArrowUpRight, ArrowRight, ChevronLeft, Leaf, Stethoscope, Menu, X, Phone, MapPin, BookOpen, CalendarDays, Search, Check, CircleHelp,  } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { servicePages, doctorPages } from './data'
-import type { Service } from './data'
-import { Chapter } from './motion'
-import { useReducedMotion } from './useReducedMotion'
-import { useSiteScroll } from './useSiteScroll'
-import './website.css'
-import './home-story.css'
+import HomeStory from "./HomeStory";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
+import { InteractionMotion } from "./interaction-context";
+import { QuickFind, ReadingProgress, VisitChecklist } from "./interactive";
+import { useEffect, useRef, useState } from "react";
+import {
+  BrowserRouter,
+  Link,
+  NavLink,
+  Route,
+  Routes,
+  useLocation,
+  Navigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
+import {
+  ArrowUpRight,
+  ArrowRight,
+  ChevronLeft,
+  Leaf,
+  Stethoscope,
+  Menu,
+  X,
+  Phone,
+  MapPin,
+  BookOpen,
+  CalendarDays,
+  Search,
+  Check,
+  CircleHelp,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { servicePages, doctorPages } from "./data";
+import type { Service } from "./data";
+import { Chapter } from "./Chapter";
+import { useReducedMotion } from "./useReducedMotion";
+import { useSiteScroll } from "./useSiteScroll";
+import "./website.css";
+import "./home-story.css";
 
-const address='18-13-132/41/A & B, Tulsi Nagar, Noori Nagar, Bandlaguda, Chandrayangutta, Hyderabad, Telangana 500005'
-const maps='https://maps.google.com/?q=Al+Arif+General+Hospital+Bandlaguda+Hyderabad'
-function Action({to,children,outline=false}:{to:string;children:React.ReactNode;outline?:boolean}) {return <Button asChild variant={outline?'outline':'default'}><Link className="mp-action" to={to}><span>{children}</span><ArrowUpRight size={17}/></Link></Button>}
-function TextLink({to,children}:{to:string;children:React.ReactNode}) {return <Link className="mp-text-link" to={to}>{children}<ArrowUpRight size={17}/></Link>}
-function Breadcrumb({parent='Home',to='/site',current}:{parent?:string;to?:string;current:string}) {return <nav className="mp-breadcrumb" aria-label="Breadcrumb"><Link to={to}><ChevronLeft size={14}/>{parent}</Link><span>/</span><span>{current}</span></nav>}
-function PageTitle({title,description,children}:{title:string;description:string;children?:React.ReactNode}) {return <div className="mp-page-title"><h1>{title}</h1><p>{description}</p>{children}</div>}
-function ContactBand({service}:{service?:string}) {return <section className="mp-contact-band"><div><h2>Let’s find your<br /><em>next step.</em></h2><p>Ask reception about the right consultation and a day that works for you.</p></div><Action to={`/site/request${service?`?service=${service}`:''}`}>Plan an inquiry</Action></section>}
-function ServiceLink({service}:{service:Service}) {return <Link to={`/site/services/${service.slug}`} className="mp-service-row"><div><h3>{service.name}</h3></div><p>{service.intro}</p><ArrowUpRight size={23}/></Link>}
+const address =
+  "18-13-132/41/A & B, Tulsi Nagar, Noori Nagar, Bandlaguda, Chandrayangutta, Hyderabad, Telangana 500005";
+const maps =
+  "https://maps.google.com/?q=Al+Arif+General+Hospital+Bandlaguda+Hyderabad";
+function Action({
+  to,
+  children,
+  outline = false,
+}: {
+  to: string;
+  children: React.ReactNode;
+  outline?: boolean;
+}) {
+  return (
+    <Button asChild variant={outline ? "outline" : "default"}>
+      <Link className="mp-action" to={to}>
+        <span>{children}</span>
+        <ArrowUpRight size={17} />
+      </Link>
+    </Button>
+  );
+}
+function TextLink({ to, children }: { to: string; children: React.ReactNode }) {
+  return (
+    <Link className="mp-text-link" to={to}>
+      {children}
+      <ArrowUpRight size={17} />
+    </Link>
+  );
+}
+function Breadcrumb({
+  parent = "Home",
+  to = "/site",
+  current,
+}: {
+  parent?: string;
+  to?: string;
+  current: string;
+}) {
+  return (
+    <nav className="mp-breadcrumb" aria-label="Breadcrumb">
+      <Link to={to}>
+        <ChevronLeft size={14} />
+        {parent}
+      </Link>
+      <span>/</span>
+      <span>{current}</span>
+    </nav>
+  );
+}
+function PageTitle({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description: string;
+  children?: React.ReactNode;
+}) {
+  return (
+    <div className="mp-page-title">
+      <h1>{title}</h1>
+      <p>{description}</p>
+      {children}
+    </div>
+  );
+}
+function ContactBand({ service }: { service?: string }) {
+  return (
+    <section className="mp-contact-band">
+      <div>
+        <h2>
+          Let’s find your
+          <br />
+          <em>next step.</em>
+        </h2>
+        <p>
+          Ask reception about the right consultation and a day that works for
+          you.
+        </p>
+      </div>
+      <Action to={`/site/request${service ? `?service=${service}` : ""}`}>
+        Plan an inquiry
+      </Action>
+    </section>
+  );
+}
+function ServiceLink({ service }: { service: Service }) {
+  return (
+    <Link to={`/site/services/${service.slug}`} className="mp-service-row">
+      <div>
+        <h3>{service.name}</h3>
+      </div>
+      <p>{service.intro}</p>
+      <ArrowUpRight size={23} />
+    </Link>
+  );
+}
 
 function Services() {
- const [params,setParams]=useSearchParams();const wing=params.get('wing')||'all';const [search,setSearch]=useState('')
- const filtered=servicePages.filter(service=>(wing==='all'||service.wing===(wing==='general'?'General hospital':'Unani care'))&&`${service.name} ${service.intro}`.toLowerCase().includes(search.toLowerCase()))
- return <div className="mp-page"><Breadcrumb current="Care & services"/><PageTitle title={'A place to start.\nA path to your care.'} description="Choose your care. See the team. Plan your visit."/><div className="mp-directory-tools"><div className="mp-filters" aria-label="Filter care wing">{[['all','All care'],['general','General hospital'],['unani','Unani care']].map(([value,label])=><button aria-pressed={wing===value} key={value} onClick={()=>setParams(value==='all'?{}:{wing:value})}>{label}</button>)}</div><div className="mp-search"><Search size={18}/><Input aria-label="Search services" placeholder="Find a service" value={search} onChange={event=>setSearch(event.target.value)}/></div></div><div className="mp-service-directory">{filtered.map(service=><ServiceLink key={service.slug} service={service}/>)}{!filtered.length&&<div className="mp-empty" role="status"><h2>No service matches that search.</h2><p>Try a different word or show all care.</p><Button variant="outline" onClick={()=>{setSearch('');setParams({})}}>Clear filters</Button></div>}</div><p className="mp-source-note">Please confirm service availability, fees and consultation arrangements with reception.</p><ContactBand/></div>
+  const [params, setParams] = useSearchParams();
+  const wing = params.get("wing") || "all";
+  const [search, setSearch] = useState("");
+  const filtered = servicePages.filter(
+    (service) =>
+      (wing === "all" ||
+        service.wing ===
+          (wing === "general" ? "General hospital" : "Unani care")) &&
+      `${service.name} ${service.intro}`
+        .toLowerCase()
+        .includes(search.toLowerCase()),
+  );
+  return (
+    <div className="mp-page">
+      <Breadcrumb current="Care & services" />
+      <PageTitle
+        title={"A place to start.\nA path to your care."}
+        description="Choose your care. See the team. Plan your visit."
+      />
+      <div className="mp-directory-tools">
+        <div className="mp-filters" aria-label="Filter care wing">
+          {[
+            ["all", "All care"],
+            ["general", "General hospital"],
+            ["unani", "Unani care"],
+          ].map(([value, label]) => (
+            <button
+              aria-pressed={wing === value}
+              key={value}
+              onClick={() => setParams(value === "all" ? {} : { wing: value })}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <div className="mp-search">
+          <Search size={18} />
+          <Input
+            aria-label="Search services"
+            placeholder="Find a service"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
+        </div>
+      </div>
+      <div className="mp-service-directory">
+        {filtered.map((service) => (
+          <ServiceLink key={service.slug} service={service} />
+        ))}
+        {!filtered.length && (
+          <div className="mp-empty" role="status">
+            <h2>No service matches that search.</h2>
+            <p>Try a different word or show all care.</p>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSearch("");
+                setParams({});
+              }}
+            >
+              Clear filters
+            </Button>
+          </div>
+        )}
+      </div>
+      <p className="mp-source-note">
+        Please confirm service availability, fees and consultation arrangements
+        with reception.
+      </p>
+      <ContactBand />
+    </div>
+  );
 }
 function ServiceDetail() {
- const {slug}=useParams(); const service=servicePages.find(item=>item.slug===slug)
- if(!service) return <NotFound/>
- const relatedDoctors=doctorPages.filter(doctor=>service.doctorSlugs.includes(doctor.slug))
- return <div className="mp-page"><Breadcrumb parent="Care & services" to="/site/services" current={service.name}/><div className="mp-detail-hero"><PageTitle title={service.headline} description={service.intro}/><div className="mp-service-stamp">{service.wing==='Unani care'?<Leaf size={48}/>:<Stethoscope size={48}/>}<span>{service.wing}</span><strong>{service.name}</strong></div></div><div className="mp-reading-layout"><div><section className="mp-reading-section"><h2>Understanding your care.</h2><p>{service.overview}</p><h3>What you can discuss</h3><ul className="mp-check-list">{service.topics.map(topic=><li key={topic}><Check size={16}/>{topic}</li>)}</ul></section><section className="mp-reading-section"><h2>Before you visit.</h2><ol className="mp-numbered-list">{service.preparation.map(item=><li key={item}>{item}</li>)}</ol></section><section className="mp-reading-section"><h2>Your questions, welcome.</h2><Accordion type="single" collapsible><AccordionItem value="availability"><AccordionTrigger>How do I check availability and fees?</AccordionTrigger><AccordionContent>Contact reception with the service and your preferred day. Staff confirm the clinician, schedule, fees and any preparation. Online information is not a confirmed appointment.</AccordionContent></AccordionItem><AccordionItem value="prepare"><AccordionTrigger>Will I receive preparation instructions?</AccordionTrigger><AccordionContent>The clinical team provides instructions appropriate to your visit. Do not rely on general online instructions for fasting, stopping medicines or preparing for a procedure.</AccordionContent></AccordionItem><AccordionItem value="limits"><AccordionTrigger>What should I know about this page?</AccordionTrigger><AccordionContent>{service.note}</AccordionContent></AccordionItem></Accordion></section></div><aside className="mp-visit-aside"><h2>Let’s plan<br/><em>your visit.</em></h2><p>{service.name}</p><Action to={`/site/request?service=${service.slug}`}>Ask about this care</Action><a href="tel:+918555086667" className="mp-aside-phone"><Phone size={16}/>+91 85550 86667</a><hr/><h3>Associated care team</h3>{relatedDoctors.length?relatedDoctors.map(doctor=><Link className="mp-related-doctor" key={doctor.slug} to={`/site/doctors/${doctor.slug}`}><span>{doctor.name}<small>{doctor.role}</small></span><ArrowUpRight size={17}/></Link>):<p>The laboratory or pharmacy team can help with current arrangements.</p>}<small>Contact reception before travelling to confirm your arrangements.</small></aside></div><section className="mp-related-services"><h2>Continue exploring.</h2>{servicePages.filter(item=>item.wing===service.wing&&item.slug!==service.slug).slice(0,2).map(item=><ServiceLink service={item} key={item.slug}/>)}</section></div>
+  const { slug } = useParams();
+  const service = servicePages.find((item) => item.slug === slug);
+  if (!service) return <NotFound />;
+  const relatedDoctors = doctorPages.filter((doctor) =>
+    service.doctorSlugs.includes(doctor.slug),
+  );
+  return (
+    <div className="mp-page">
+      <Breadcrumb
+        parent="Care & services"
+        to="/site/services"
+        current={service.name}
+      />
+      <div className="mp-detail-hero">
+        <PageTitle title={service.headline} description={service.intro} />
+        <div className="mp-service-stamp">
+          {service.wing === "Unani care" ? (
+            <Leaf size={48} />
+          ) : (
+            <Stethoscope size={48} />
+          )}
+          <span>{service.wing}</span>
+          <strong>{service.name}</strong>
+        </div>
+      </div>
+      <div className="mp-reading-layout">
+        <div>
+          <section className="mp-reading-section">
+            <h2>Understanding your care.</h2>
+            <p>{service.overview}</p>
+            <h3>What you can discuss</h3>
+            <ul className="mp-check-list">
+              {service.topics.map((topic) => (
+                <li key={topic}>
+                  <Check size={16} />
+                  {topic}
+                </li>
+              ))}
+            </ul>
+          </section>
+          <section className="mp-reading-section">
+            <h2>Before you visit.</h2>
+            <ol className="mp-numbered-list">
+              {service.preparation.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ol>
+          </section>
+          <section className="mp-reading-section">
+            <h2>Your questions, welcome.</h2>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="availability">
+                <AccordionTrigger>
+                  How do I check availability and fees?
+                </AccordionTrigger>
+                <AccordionContent>
+                  Contact reception with the service and your preferred day.
+                  Staff confirm the clinician, schedule, fees and any
+                  preparation. Online information is not a confirmed
+                  appointment.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="prepare">
+                <AccordionTrigger>
+                  Will I receive preparation instructions?
+                </AccordionTrigger>
+                <AccordionContent>
+                  The clinical team provides instructions appropriate to your
+                  visit. Do not rely on general online instructions for fasting,
+                  stopping medicines or preparing for a procedure.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="limits">
+                <AccordionTrigger>
+                  What should I know about this page?
+                </AccordionTrigger>
+                <AccordionContent>{service.note}</AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </section>
+        </div>
+        <aside className="mp-visit-aside">
+          <h2>
+            Let’s plan
+            <br />
+            <em>your visit.</em>
+          </h2>
+          <p>{service.name}</p>
+          <Action to={`/site/request?service=${service.slug}`}>
+            Ask about this care
+          </Action>
+          <a href="tel:+918555086667" className="mp-aside-phone">
+            <Phone size={16} />
+            +91 85550 86667
+          </a>
+          <hr />
+          <h3>Associated care team</h3>
+          {relatedDoctors.length ? (
+            relatedDoctors.map((doctor) => (
+              <Link
+                className="mp-related-doctor"
+                key={doctor.slug}
+                to={`/site/doctors/${doctor.slug}`}
+              >
+                <span>
+                  {doctor.name}
+                  <small>{doctor.role}</small>
+                </span>
+                <ArrowUpRight size={17} />
+              </Link>
+            ))
+          ) : (
+            <p>
+              The laboratory or pharmacy team can help with current
+              arrangements.
+            </p>
+          )}
+          <small>
+            Contact reception before travelling to confirm your arrangements.
+          </small>
+        </aside>
+      </div>
+      <section className="mp-related-services">
+        <h2>Continue exploring.</h2>
+        {servicePages
+          .filter(
+            (item) => item.wing === service.wing && item.slug !== service.slug,
+          )
+          .slice(0, 2)
+          .map((item) => (
+            <ServiceLink service={item} key={item.slug} />
+          ))}
+      </section>
+    </div>
+  );
 }
 function Doctors() {
- const [query,setQuery]=useState('');const filtered=doctorPages.filter(doctor=>`${doctor.name} ${doctor.role}`.toLowerCase().includes(query.toLowerCase()))
- return <div className="mp-page"><Breadcrumb current="Our doctors"/><PageTitle title={'Start with\na human connection.'} description="Meet your care team and find their services."/><div className="mp-doctor-toolbar"><p>Find a clinician by name or area of care.</p><div className="mp-search"><Search size={18}/><Input aria-label="Search clinicians" placeholder="Name or specialty" value={query} onChange={event=>setQuery(event.target.value)}/></div></div><div className="mp-profile-grid">{filtered.map(doctor=><Link to={`/site/doctors/${doctor.slug}`} key={doctor.slug} className="mp-profile-link"><Stethoscope size={30}/><div><h2>{doctor.name}</h2><p>{doctor.role}</p><span>View profile <ArrowUpRight size={17}/></span></div></Link>)}</div>{!filtered.length&&<p className="mp-empty" role="status">No matching clinician. Try “Unani” or “surgery”.</p>}<p className="mp-source-note">Contact reception for current schedules, fees and clinician information.</p></div>
+  const [query, setQuery] = useState("");
+  const filtered = doctorPages.filter((doctor) =>
+    `${doctor.name} ${doctor.role}`.toLowerCase().includes(query.toLowerCase()),
+  );
+  return (
+    <div className="mp-page">
+      <Breadcrumb current="Our doctors" />
+      <PageTitle
+        title={"Start with\na human connection."}
+        description="Meet your care team and find their services."
+      />
+      <div className="mp-doctor-toolbar">
+        <p>Find a clinician by name or area of care.</p>
+        <div className="mp-search">
+          <Search size={18} />
+          <Input
+            aria-label="Search clinicians"
+            placeholder="Name or specialty"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
+        </div>
+      </div>
+      <div className="mp-profile-grid">
+        {filtered.map((doctor) => (
+          <Link
+            to={`/site/doctors/${doctor.slug}`}
+            key={doctor.slug}
+            className="mp-profile-link"
+          >
+            <Stethoscope size={30} />
+            <div>
+              <h2>{doctor.name}</h2>
+              <p>{doctor.role}</p>
+              <span>
+                View profile <ArrowUpRight size={17} />
+              </span>
+            </div>
+          </Link>
+        ))}
+      </div>
+      {!filtered.length && (
+        <p className="mp-empty" role="status">
+          No matching clinician. Try “Unani” or “surgery”.
+        </p>
+      )}
+      <p className="mp-source-note">
+        Contact reception for current schedules, fees and clinician information.
+      </p>
+    </div>
+  );
 }
 function DoctorDetail() {
- const {slug}=useParams();const doctor=doctorPages.find(item=>item.slug===slug);if(!doctor)return <NotFound/>
- return <div className="mp-page"><Breadcrumb parent="Our doctors" to="/site/doctors" current={doctor.name}/><div className="mp-doctor-hero"><div className="mp-doctor-identity"><Stethoscope size={68}/><span>Al-Arif care team</span></div><div><h1>{doctor.name}</h1><p className="mp-doctor-role">{doctor.role}</p><p>{doctor.introduction}</p><Action to={`/site/request?service=${doctor.serviceSlugs[0]}`}>Ask about a consultation</Action></div></div><div className="mp-reading-layout"><section className="mp-reading-section"><h2>Care and consultations.</h2>{servicePages.filter(service=>doctor.serviceSlugs.includes(service.slug)).map(service=><ServiceLink key={service.slug} service={service}/>)}<h3>A little preparation helps</h3><p>Bring relevant reports, previous prescriptions and questions you want to discuss. Reception will confirm the consultation arrangements before you travel.</p></section><aside className="mp-profile-facts"><h2>Consultation information</h2><dl><div><dt>Current schedule</dt><dd>Confirm with reception</dd></div><div><dt>Consultation fee</dt><dd>To be confirmed</dd></div><div><dt>Qualifications & registration</dt><dd>Pending hospital verification</dd></div></dl><p>Reception can help with clinician details and current availability.</p><TextLink to="/site/visit">Contact and directions</TextLink></aside></div></div>
+  const { slug } = useParams();
+  const doctor = doctorPages.find((item) => item.slug === slug);
+  if (!doctor) return <NotFound />;
+  return (
+    <div className="mp-page">
+      <Breadcrumb
+        parent="Our doctors"
+        to="/site/doctors"
+        current={doctor.name}
+      />
+      <div className="mp-doctor-hero">
+        <div className="mp-doctor-identity">
+          <Stethoscope size={68} />
+          <span>Al-Arif care team</span>
+        </div>
+        <div>
+          <h1>{doctor.name}</h1>
+          <p className="mp-doctor-role">{doctor.role}</p>
+          <p>{doctor.introduction}</p>
+          <Action to={`/site/request?service=${doctor.serviceSlugs[0]}`}>
+            Ask about a consultation
+          </Action>
+        </div>
+      </div>
+      <div className="mp-reading-layout">
+        <section className="mp-reading-section">
+          <h2>Care and consultations.</h2>
+          {servicePages
+            .filter((service) => doctor.serviceSlugs.includes(service.slug))
+            .map((service) => (
+              <ServiceLink key={service.slug} service={service} />
+            ))}
+          <h3>A little preparation helps</h3>
+          <p>
+            Bring relevant reports, previous prescriptions and questions you
+            want to discuss. Reception will confirm the consultation
+            arrangements before you travel.
+          </p>
+        </section>
+        <aside className="mp-profile-facts">
+          <h2>Consultation information</h2>
+          <dl>
+            <div>
+              <dt>Current schedule</dt>
+              <dd>Confirm with reception</dd>
+            </div>
+            <div>
+              <dt>Consultation fee</dt>
+              <dd>To be confirmed</dd>
+            </div>
+            <div>
+              <dt>Qualifications & registration</dt>
+              <dd>Pending hospital verification</dd>
+            </div>
+          </dl>
+          <p>
+            Reception can help with clinician details and current availability.
+          </p>
+          <TextLink to="/site/visit">Contact and directions</TextLink>
+        </aside>
+      </div>
+    </div>
+  );
 }
-function About() {return <div className="mp-page"><Breadcrumb current="About Al-Arif"/><PageTitle title={'Rooted in community.\nOpen to you.'} description="General hospital care and Unani medicine, with a shared intention to make the next step in care easier to understand."/><div className="mp-about-layout"><h2>Two care traditions.<br/><em>One welcoming place.</em></h2><div><p>Al-Arif General Hospital & Unani Research Institute is in Bandlaguda, Chandrayangutta, near Dargah Hazrat Syed Noori Shah Sahab.</p><p>It brings together outpatient care, women’s health, surgical consultations, diagnostics and pharmacy alongside Unani consultations and regimental therapy.</p></div></div><section className="mp-about-principles"><article><h3>Clear information</h3><p>Know which service to ask about, who to contact and what happens next.</p></article><article><h3>Individual conversations</h3><p>Clinical decisions begin with a consultation and consideration of the person’s needs.</p></article><article><h3>Connection to community</h3><p>Make visiting, learning and getting in touch straightforward for local families.</p></article></section><div className="mp-editorial-links"><Link to="/site/services">Explore care & services<ArrowUpRight/></Link><Link to="/site/research">Explore the research page<ArrowUpRight/></Link><Link to="/site/education">Explore education options<ArrowUpRight/></Link></div><ContactBand/></div>}
-function Education() {return <div className="mp-page"><Breadcrumb current="Education & learning"/><div className="mp-detail-hero"><PageTitle title={'Care inspires\ncontinued learning.'} description="Information about planned supervised observation, workshops and academic exchange at Al-Arif."/><div className="mp-service-stamp"><BookOpen size={48}/><span>Education & Research</span><strong>Learn. Observe. Ask.</strong></div></div><div className="mp-status-notice"><CircleHelp size={20}/><p>Applications are not open. Programme dates, eligibility and certification are not yet confirmed.</p></div><section className="mp-programme-list"><Link to="/site/education/clinical-observation"><h2>Clinical observation</h2><span>Proposed programme</span><p>Learn about the planned scope of observation and the details to confirm before applying.</p><span className="mp-text-link">Explore clinical observation <ArrowUpRight size={18}/></span></Link><article><h2>Workshops & academic visits</h2><span>Details to be announced</span><p>Dates, topics and participation details will be shared when confirmed.</p><TextLink to="/site/research">View research & publications</TextLink></article></section><section className="mp-reading-section"><h2>Start with information.</h2><p>Contact reception for education inquiries and ask to speak with the programme coordinator.</p><TextLink to="/site/visit">Contact the hospital</TextLink></section></div>}
-function Programme() {const {slug}=useParams();if(slug!=='clinical-observation')return <NotFound/>;return <div className="mp-page"><Breadcrumb parent="Education & learning" to="/site/education" current="Clinical observation"/><PageTitle title={'Learn by observing.\nUnderstand through care.'} description="A planned opportunity for supervised learning. Programme details and applications are not yet available."/><div className="mp-reading-layout"><div><section className="mp-reading-section"><h2>A programme with clear expectations.</h2><p>Before accepting inquiries, the hospital would publish a defined learning scope, supervising clinician, eligible audience and limits on participation. Observation must not imply permission to provide care or access patient records.</p><h3>What the programme page will explain</h3><ul className="mp-check-list">{['Learning objectives and supervised activities','Eligibility and documents needed','Attendance, privacy and conduct expectations','Selection process and coordinator contact'].map(item=><li key={item}><Check size={16}/>{item}</li>)}</ul></section><section className="mp-reading-section"><h2>From interest to participation.</h2><ol className="mp-numbered-list"><li>Read the approved programme and eligibility.</li><li>Contact the education coordinator.</li><li>Receive selection and participation instructions.</li></ol></section></div><aside className="mp-profile-facts"><h2>Programme status</h2><dl>{['Intake dates','Eligibility','Duration','Supervisor','Fees / certification'].map(label=><div key={label}><dt>{label}</dt><dd>Not yet confirmed</dd></div>)}</dl><p>Applications are not open.</p><TextLink to="/site/education">Back to education</TextLink></aside></div></div>}
-function Research() {return <div className="mp-page"><Breadcrumb current="Research & publications"/><PageTitle title={'A place for inquiry.\nA record of learning.'} description="A proposed archive for approved research summaries, institutional publications and academic collaboration."/><div className="mp-research-topics"><h2>Research interests.<br/><em>Areas of inquiry.</em></h2><ul><li>Unani clinical practice</li><li>Formulation standardization</li><li>Observational care studies</li><li>Academic exchange</li></ul></div><section className="mp-publication-empty"><BookOpen size={34}/><h2>Publications & summaries.</h2><p>Publication records are not available here yet. Approved records will include authors, publication details and links to the source.</p><span>Awaiting verified publication records</span></section><section className="mp-reading-section"><h2>Evidence, clearly attributed.</h2><p>Academic summaries will distinguish published findings from proposed work. Patient testimonials will not be used as clinical evidence. Clinical outcomes and study participation require appropriate review and consent processes.</p><TextLink to="/site/education">Education & academic visits</TextLink></section></div>}
-function Visit() {return <div className="mp-page"><Breadcrumb current="Plan your visit"/><PageTitle title={'We’ll help you\nfind your way.'} description="Directions, reception and a little help getting ready."/><div className="mp-location-layout"><div className="mp-address-panel"><MapPin size={37}/><h2>Al-Arif Hospital</h2><p>{address}</p><p>Near Dargah Hazrat Syed Noori Shah Sahab.</p><Button asChild><a href={maps} target="_blank" rel="noreferrer">Open Google Maps <ArrowUpRight size={17}/></a></Button></div><div className="mp-contact-details"><h2>Speak with reception.</h2><a href="tel:+918555086667"><span>Reception</span><strong>+91 85550 86667</strong><Phone size={18}/></a><a href="https://wa.me/919908700336" target="_blank" rel="noreferrer"><span>WhatsApp</span><strong>+91 99087 00336</strong><ArrowUpRight size={18}/></a><div><span>OPD hours</span><strong>Mon–Sat · 9 am–9 pm</strong></div><p>Please confirm Sunday availability, your doctor’s schedule and fees with reception before travelling.</p></div></div><VisitChecklist/><div className="mp-status-notice"><CircleHelp size={20}/><p>For urgent medical needs, seek immediate local emergency help. The dedicated hospital emergency line and capabilities still need confirmation; do not wait for an online inquiry.</p></div><section className="mp-reading-section"><h2>Questions before travelling?</h2><Accordion type="single" collapsible>{[['Accessibility & assistance','Ask reception about step-free access, mobility support and any help needed on arrival. Facility details have not yet been provided.'],['Reports & prescriptions','Bring relevant medical reports, previous prescriptions and a list of current medicines.'],['Walk-ins & consultations','For walk-in OPD care, reception can confirm the appropriate schedule and whether an appointment is needed.']].map(([title,body])=><AccordionItem value={title} key={title}><AccordionTrigger>{title}</AccordionTrigger><AccordionContent>{body}</AccordionContent></AccordionItem>)}</Accordion></section></div>}
+function About() {
+  return (
+    <div className="mp-page">
+      <Breadcrumb current="About Al-Arif" />
+      <PageTitle
+        title={"Rooted in community.\nOpen to you."}
+        description="General hospital care and Unani medicine, with a shared intention to make the next step in care easier to understand."
+      />
+      <div className="mp-about-layout">
+        <h2>
+          Two care traditions.
+          <br />
+          <em>One welcoming place.</em>
+        </h2>
+        <div>
+          <p>
+            Al-Arif General Hospital & Unani Research Institute is in
+            Bandlaguda, Chandrayangutta, near Dargah Hazrat Syed Noori Shah
+            Sahab.
+          </p>
+          <p>
+            It brings together outpatient care, women’s health, surgical
+            consultations, diagnostics and pharmacy alongside Unani
+            consultations and regimental therapy.
+          </p>
+        </div>
+      </div>
+      <section className="mp-about-principles">
+        <article>
+          <h3>Clear information</h3>
+          <p>
+            Know which service to ask about, who to contact and what happens
+            next.
+          </p>
+        </article>
+        <article>
+          <h3>Individual conversations</h3>
+          <p>
+            Clinical decisions begin with a consultation and consideration of
+            the person’s needs.
+          </p>
+        </article>
+        <article>
+          <h3>Connection to community</h3>
+          <p>
+            Make visiting, learning and getting in touch straightforward for
+            local families.
+          </p>
+        </article>
+      </section>
+      <div className="mp-editorial-links">
+        <Link to="/site/services">
+          Explore care & services
+          <ArrowUpRight />
+        </Link>
+        <Link to="/site/research">
+          Explore the research page
+          <ArrowUpRight />
+        </Link>
+        <Link to="/site/education">
+          Explore education options
+          <ArrowUpRight />
+        </Link>
+      </div>
+      <ContactBand />
+    </div>
+  );
+}
+function Education() {
+  return (
+    <div className="mp-page">
+      <Breadcrumb current="Education & learning" />
+      <div className="mp-detail-hero">
+        <PageTitle
+          title={"Care inspires\ncontinued learning."}
+          description="Information about planned supervised observation, workshops and academic exchange at Al-Arif."
+        />
+        <div className="mp-service-stamp">
+          <BookOpen size={48} />
+          <span>Education & Research</span>
+          <strong>Learn. Observe. Ask.</strong>
+        </div>
+      </div>
+      <div className="mp-status-notice">
+        <CircleHelp size={20} />
+        <p>
+          Applications are not open. Programme dates, eligibility and
+          certification are not yet confirmed.
+        </p>
+      </div>
+      <section className="mp-programme-list">
+        <Link to="/site/education/clinical-observation">
+          <h2>Clinical observation</h2>
+          <span>Proposed programme</span>
+          <p>
+            Learn about the planned scope of observation and the details to
+            confirm before applying.
+          </p>
+          <span className="mp-text-link">
+            Explore clinical observation <ArrowUpRight size={18} />
+          </span>
+        </Link>
+        <article>
+          <h2>Workshops & academic visits</h2>
+          <span>Details to be announced</span>
+          <p>
+            Dates, topics and participation details will be shared when
+            confirmed.
+          </p>
+          <TextLink to="/site/research">View research & publications</TextLink>
+        </article>
+      </section>
+      <section className="mp-reading-section">
+        <h2>Start with information.</h2>
+        <p>
+          Contact reception for education inquiries and ask to speak with the
+          programme coordinator.
+        </p>
+        <TextLink to="/site/visit">Contact the hospital</TextLink>
+      </section>
+    </div>
+  );
+}
+function Programme() {
+  const { slug } = useParams();
+  if (slug !== "clinical-observation") return <NotFound />;
+  return (
+    <div className="mp-page">
+      <Breadcrumb
+        parent="Education & learning"
+        to="/site/education"
+        current="Clinical observation"
+      />
+      <PageTitle
+        title={"Learn by observing.\nUnderstand through care."}
+        description="A planned opportunity for supervised learning. Programme details and applications are not yet available."
+      />
+      <div className="mp-reading-layout">
+        <div>
+          <section className="mp-reading-section">
+            <h2>A programme with clear expectations.</h2>
+            <p>
+              Before accepting inquiries, the hospital would publish a defined
+              learning scope, supervising clinician, eligible audience and
+              limits on participation. Observation must not imply permission to
+              provide care or access patient records.
+            </p>
+            <h3>What the programme page will explain</h3>
+            <ul className="mp-check-list">
+              {[
+                "Learning objectives and supervised activities",
+                "Eligibility and documents needed",
+                "Attendance, privacy and conduct expectations",
+                "Selection process and coordinator contact",
+              ].map((item) => (
+                <li key={item}>
+                  <Check size={16} />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </section>
+          <section className="mp-reading-section">
+            <h2>From interest to participation.</h2>
+            <ol className="mp-numbered-list">
+              <li>Read the approved programme and eligibility.</li>
+              <li>Contact the education coordinator.</li>
+              <li>Receive selection and participation instructions.</li>
+            </ol>
+          </section>
+        </div>
+        <aside className="mp-profile-facts">
+          <h2>Programme status</h2>
+          <dl>
+            {[
+              "Intake dates",
+              "Eligibility",
+              "Duration",
+              "Supervisor",
+              "Fees / certification",
+            ].map((label) => (
+              <div key={label}>
+                <dt>{label}</dt>
+                <dd>Not yet confirmed</dd>
+              </div>
+            ))}
+          </dl>
+          <p>Applications are not open.</p>
+          <TextLink to="/site/education">Back to education</TextLink>
+        </aside>
+      </div>
+    </div>
+  );
+}
+function Research() {
+  return (
+    <div className="mp-page">
+      <Breadcrumb current="Research & publications" />
+      <PageTitle
+        title={"A place for inquiry.\nA record of learning."}
+        description="A proposed archive for approved research summaries, institutional publications and academic collaboration."
+      />
+      <div className="mp-research-topics">
+        <h2>
+          Research interests.
+          <br />
+          <em>Areas of inquiry.</em>
+        </h2>
+        <ul>
+          <li>Unani clinical practice</li>
+          <li>Formulation standardization</li>
+          <li>Observational care studies</li>
+          <li>Academic exchange</li>
+        </ul>
+      </div>
+      <section className="mp-publication-empty">
+        <BookOpen size={34} />
+        <h2>Publications & summaries.</h2>
+        <p>
+          Publication records are not available here yet. Approved records will
+          include authors, publication details and links to the source.
+        </p>
+        <span>Awaiting verified publication records</span>
+      </section>
+      <section className="mp-reading-section">
+        <h2>Evidence, clearly attributed.</h2>
+        <p>
+          Academic summaries will distinguish published findings from proposed
+          work. Patient testimonials will not be used as clinical evidence.
+          Clinical outcomes and study participation require appropriate review
+          and consent processes.
+        </p>
+        <TextLink to="/site/education">Education & academic visits</TextLink>
+      </section>
+    </div>
+  );
+}
+function Visit() {
+  return (
+    <div className="mp-page">
+      <Breadcrumb current="Plan your visit" />
+      <PageTitle
+        title={"We’ll help you\nfind your way."}
+        description="Directions, reception and a little help getting ready."
+      />
+      <div className="mp-location-layout">
+        <div className="mp-address-panel">
+          <MapPin size={37} />
+          <h2>Al-Arif Hospital</h2>
+          <p>{address}</p>
+          <p>Near Dargah Hazrat Syed Noori Shah Sahab.</p>
+          <Button asChild>
+            <a href={maps} target="_blank" rel="noreferrer">
+              Open Google Maps <ArrowUpRight size={17} />
+            </a>
+          </Button>
+        </div>
+        <div className="mp-contact-details">
+          <h2>Speak with reception.</h2>
+          <a href="tel:+918555086667">
+            <span>Reception</span>
+            <strong>+91 85550 86667</strong>
+            <Phone size={18} />
+          </a>
+          <a href="https://wa.me/919908700336" target="_blank" rel="noreferrer">
+            <span>WhatsApp</span>
+            <strong>+91 99087 00336</strong>
+            <ArrowUpRight size={18} />
+          </a>
+          <div>
+            <span>OPD hours</span>
+            <strong>Mon–Sat · 9 am–9 pm</strong>
+          </div>
+          <p>
+            Please confirm Sunday availability, your doctor’s schedule and fees
+            with reception before travelling.
+          </p>
+        </div>
+      </div>
+      <VisitChecklist />
+      <div className="mp-status-notice">
+        <CircleHelp size={20} />
+        <p>
+          For urgent medical needs, seek immediate local emergency help. The
+          dedicated hospital emergency line and capabilities still need
+          confirmation; do not wait for an online inquiry.
+        </p>
+      </div>
+      <section className="mp-reading-section">
+        <h2>Questions before travelling?</h2>
+        <Accordion type="single" collapsible>
+          {[
+            [
+              "Accessibility & assistance",
+              "Ask reception about step-free access, mobility support and any help needed on arrival. Facility details have not yet been provided.",
+            ],
+            [
+              "Reports & prescriptions",
+              "Bring relevant medical reports, previous prescriptions and a list of current medicines.",
+            ],
+            [
+              "Walk-ins & consultations",
+              "For walk-in OPD care, reception can confirm the appropriate schedule and whether an appointment is needed.",
+            ],
+          ].map(([title, body]) => (
+            <AccordionItem value={title} key={title}>
+              <AccordionTrigger>{title}</AccordionTrigger>
+              <AccordionContent>{body}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </section>
+    </div>
+  );
+}
 function Inquiry() {
- const [params]=useSearchParams();const initial=params.get('service')||'';const [service,setService]=useState(servicePages.some(item=>item.slug===initial)?initial:'');const [preference,setPreference]=useState('No preference');const [prepared,setPrepared]=useState(false);const [error,setError]=useState('')
- return <div className="mp-page"><Breadcrumb current="Request a visit"/><PageTitle title={'Let’s make\nthe next step clear.'} description="Choose a department and your preferred time, then contact reception to arrange your visit."/><div className="mp-inquiry-layout"><form onSubmit={event=>{event.preventDefault();if(!service){setError('Choose the service you would like to ask about.');return}setError('');setPrepared(true)}}><h2>Plan your inquiry.</h2><p>No patient details are collected or sent.</p><Label htmlFor="inquiry-service">Care or service</Label><select id="inquiry-service" value={service} onChange={event=>{setService(event.target.value);setPrepared(false);setError('')}}><option value="">Choose a service</option>{servicePages.map(item=><option value={item.slug} key={item.slug}>{item.name}</option>)}</select><Label htmlFor="inquiry-time">Time preference</Label><select id="inquiry-time" value={preference} onChange={event=>{setPreference(event.target.value);setPrepared(false)}}><option>No preference</option><option>Morning</option><option>Evening</option></select>{error&&<p className="mp-error" role="alert">{error}</p>}<Button type="submit">Show my next step <ArrowRight size={17}/></Button>{prepared&&<div className="mp-inquiry-result" role="status"><Check size={21}/><div><h3>Your inquiry plan</h3><p>{servicePages.find(item=>item.slug===service)?.name} · {preference}</p><p>Contact reception to discuss a day and clinician. Nothing has been sent or booked.</p></div></div>}</form><aside><h2>Prefer a conversation?</h2><div className="mp-conversation-links"><a href="tel:+918555086667" aria-label="Call reception at +91 85550 86667"><Phone size={22} aria-hidden="true"/><span>+91 85550 86667</span><ArrowUpRight size={20} aria-hidden="true"/></a><a href="https://wa.me/919908700336" target="_blank" rel="noreferrer" aria-label="WhatsApp +91 99087 00336 (opens in a new tab)"><WhatsAppIcon/><span>+91 99087 00336</span><ArrowUpRight size={20} aria-hidden="true"/></a></div><hr/><h3>Arrange your visit</h3><p>Call or message reception with your preferred care and time. The team will confirm the clinician, availability and any preparation.</p><small>Your visit is confirmed only after speaking with reception.</small></aside></div></div>
+  const [params] = useSearchParams();
+  const initial = params.get("service") || "";
+  const [service, setService] = useState(
+    servicePages.some((item) => item.slug === initial) ? initial : "",
+  );
+  const [preference, setPreference] = useState("No preference");
+  const [prepared, setPrepared] = useState(false);
+  const [error, setError] = useState("");
+  return (
+    <div className="mp-page">
+      <Breadcrumb current="Request a visit" />
+      <PageTitle
+        title={"Let’s make\nthe next step clear."}
+        description="Choose a department and your preferred time, then contact reception to arrange your visit."
+      />
+      <div className="mp-inquiry-layout">
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (!service) {
+              setError("Choose the service you would like to ask about.");
+              return;
+            }
+            setError("");
+            setPrepared(true);
+          }}
+        >
+          <h2>Plan your inquiry.</h2>
+          <p>No patient details are collected or sent.</p>
+          <Label htmlFor="inquiry-service">Care or service</Label>
+          <select
+            id="inquiry-service"
+            value={service}
+            onChange={(event) => {
+              setService(event.target.value);
+              setPrepared(false);
+              setError("");
+            }}
+          >
+            <option value="">Choose a service</option>
+            {servicePages.map((item) => (
+              <option value={item.slug} key={item.slug}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+          <Label htmlFor="inquiry-time">Time preference</Label>
+          <select
+            id="inquiry-time"
+            value={preference}
+            onChange={(event) => {
+              setPreference(event.target.value);
+              setPrepared(false);
+            }}
+          >
+            <option>No preference</option>
+            <option>Morning</option>
+            <option>Evening</option>
+          </select>
+          {error && (
+            <p className="mp-error" role="alert">
+              {error}
+            </p>
+          )}
+          <Button type="submit">
+            Show my next step <ArrowRight size={17} />
+          </Button>
+          {prepared && (
+            <div className="mp-inquiry-result" role="status">
+              <Check size={21} />
+              <div>
+                <h3>Your inquiry plan</h3>
+                <p>
+                  {servicePages.find((item) => item.slug === service)?.name} ·{" "}
+                  {preference}
+                </p>
+                <p>
+                  Contact reception to discuss a day and clinician. Nothing has
+                  been sent or booked.
+                </p>
+              </div>
+            </div>
+          )}
+        </form>
+        <aside>
+          <h2>Prefer a conversation?</h2>
+          <div className="mp-conversation-links">
+            <a
+              href="tel:+918555086667"
+              aria-label="Call reception at +91 85550 86667"
+            >
+              <Phone size={22} aria-hidden="true" />
+              <span>+91 85550 86667</span>
+              <ArrowUpRight size={20} aria-hidden="true" />
+            </a>
+            <a
+              href="https://wa.me/919908700336"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="WhatsApp +91 99087 00336 (opens in a new tab)"
+            >
+              <WhatsAppIcon />
+              <span>+91 99087 00336</span>
+              <ArrowUpRight size={20} aria-hidden="true" />
+            </a>
+          </div>
+          <hr />
+          <h3>Arrange your visit</h3>
+          <p>
+            Call or message reception with your preferred care and time. The
+            team will confirm the clinician, availability and any preparation.
+          </p>
+          <small>
+            Your visit is confirmed only after speaking with reception.
+          </small>
+        </aside>
+      </div>
+    </div>
+  );
 }
 
-function NotFound(){return <div className="mp-page mp-empty"><h1>Let’s get you<br/>back on the right path.</h1><p>This page doesn’t exist.</p><Action to="/site">Return home</Action></div>}
-
-function Shell(){
- const header=useRef<HTMLElement>(null);const [headerRaised,setHeaderRaised]=useState(false);const location=useLocation();const [menuOpen,setMenuOpen]=useState(false);const [motionPreference,setMotionPreference]=useState(true);const reduced=useReducedMotion();const enabled=motionPreference&&!reduced;const main=useRef<HTMLElement>(null)
- useEffect(()=>{window.scrollTo({top:0,behavior:'instant'});const heading=main.current?.querySelector('h1');heading?.setAttribute('tabindex','-1');heading?.focus({preventScroll:true});document.title=`${heading?.innerText?.replace(/\s+/g,' ').trim()||'Al-Arif Hospital'} · Al-Arif`},[location.pathname])
- useSiteScroll(enabled,location.pathname)
- useEffect(()=>{
-  if(!menuOpen)return
-  const closeOnEscape=(event:KeyboardEvent)=>{if(event.key==='Escape'){setMenuOpen(false);document.querySelector<HTMLButtonElement>('.mp-menu-toggle')?.focus()}}
-  const closeOnResize=()=>{if(window.innerWidth>1050)setMenuOpen(false)}
-  window.addEventListener('keydown',closeOnEscape)
-  window.addEventListener('resize',closeOnResize)
-  return ()=>{window.removeEventListener('keydown',closeOnEscape);window.removeEventListener('resize',closeOnResize)}
- },[menuOpen])
- useEffect(()=>{
-  const element=header.current
-  if(!element)return
-  const updateHeight=()=>{const height=`${element.getBoundingClientRect().height}px`;element.parentElement?.style.setProperty('--site-header-height',height);document.documentElement.style.setProperty('--site-header-height',height)}
-  const observer=new ResizeObserver(updateHeight)
-  observer.observe(element)
-  updateHeight()
-  return ()=>observer.disconnect()
- },[])
- useEffect(()=>{
-  const updateHeader=()=>setHeaderRaised(window.scrollY>12)
-  updateHeader()
-  window.addEventListener('scroll',updateHeader,{passive:true})
-  return ()=>window.removeEventListener('scroll',updateHeader)
- },[])
- const nav=[['Care & services','/site/services'],['Our doctors','/site/doctors'],['About','/site/about'],['Education','/site/education'],['Research','/site/research'],['Visit us','/site/visit']]
- return <InteractionMotion.Provider value={enabled}><MotionConfig reducedMotion={enabled?"never":"always"}><div className="mp" data-motion={enabled?"on":"off"}><ReadingProgress/><a className="mp-skip" href="#page-content">Skip to content</a>{menuOpen&&<button className="mp-menu-backdrop" aria-label="Close navigation" tabIndex={-1} onClick={()=>setMenuOpen(false)}/>}<header ref={header} className={`mp-header${headerRaised?' is-raised':''}`}><Link className="mp-brand" to="/site"><Leaf size={30}/><span>Al-Arif<small>General Hospital & Unani Research Institute</small></span></Link><nav id="main-navigation" aria-label="Main navigation" className={menuOpen?'is-open':''}>{nav.map(([label,path])=><NavLink onClick={()=>setMenuOpen(false)} key={path} to={path}>{label}</NavLink>)}</nav><QuickFind/><Action to="/site/request">Request a visit</Action><button className="mp-menu-toggle" aria-controls="main-navigation" aria-label={menuOpen?'Close menu':'Open menu'} aria-expanded={menuOpen} onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X/>:<Menu/>}</button></header><main id="page-content" ref={main}><Chapter path={location.pathname} motionEnabled={enabled}><Routes><Route path="/site" element={<HomeStory/>}/><Route path="/site/services" element={<Services/>}/><Route path="/site/services/:slug" element={<ServiceDetail/>}/><Route path="/site/doctors" element={<Doctors/>}/><Route path="/site/doctors/:slug" element={<DoctorDetail/>}/><Route path="/site/about" element={<About/>}/><Route path="/site/education" element={<Education/>}/><Route path="/site/education/:slug" element={<Programme/>}/><Route path="/site/research" element={<Research/>}/><Route path="/site/visit" element={<Visit/>}/><Route path="/site/request" element={<Inquiry key={location.search}/>}/><Route path="/" element={<Navigate to="/site" replace/>}/><Route path="/site/preview" element={<Navigate to="/site" replace/>}/><Route path="/site/system" element={<Navigate to="/site" replace/>}/><Route path="*" element={<NotFound/>}/></Routes></Chapter></main><footer className="mp-footer"><div><Link to="/site" className="mp-footer-brand">Al-Arif</Link><p>Thoughtful care.<br/>Closer to your community.</p></div><div><h3>Explore</h3><Link to="/site/services">Care & services</Link><Link to="/site/doctors">Our doctors</Link><Link to="/site/about">About the hospital</Link></div><div><h3>Learn & visit</h3><Link to="/site/education">Education & learning</Link><Link to="/site/research">Research & publications</Link><Link to="/site/visit">Contact & directions</Link></div><div><h3>Get in touch</h3><a href="tel:+918555086667">Call reception</a><a href="https://wa.me/919908700336" target="_blank" rel="noreferrer">WhatsApp</a></div><div className="mp-footer-bottom">© 2026 Al-Arif Hospital<button aria-pressed={enabled} onClick={()=>setMotionPreference(!motionPreference)} disabled={reduced}>{reduced?"Reduced motion":enabled?"Motion on":"Motion off"}</button></div></footer><div className="mp-mobile-contact" onClick={()=>setMenuOpen(false)}><a href="tel:+918555086667"><Phone size={17}/>Call reception</a><Link to="/site/request"><CalendarDays size={17}/>Request a visit</Link></div></div></MotionConfig></InteractionMotion.Provider>
+function NotFound() {
+  return (
+    <div className="mp-page mp-empty">
+      <h1>
+        Let’s get you
+        <br />
+        back on the right path.
+      </h1>
+      <p>This page doesn’t exist.</p>
+      <Action to="/site">Return home</Action>
+    </div>
+  );
 }
-export default function Website(){return <BrowserRouter><Shell/></BrowserRouter>}
+
+function Shell() {
+  const header = useRef<HTMLElement>(null);
+  const [headerRaised, setHeaderRaised] = useState(false);
+  const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [motionPreference, setMotionPreference] = useState(true);
+  const reduced = useReducedMotion();
+  const enabled = motionPreference && !reduced;
+  const main = useRef<HTMLElement>(null);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+    const heading = main.current?.querySelector("h1");
+    heading?.setAttribute("tabindex", "-1");
+    heading?.focus({ preventScroll: true });
+    document.title = `${heading?.innerText?.replace(/\s+/g, " ").trim() || "Al-Arif Hospital"} · Al-Arif`;
+  }, [location.pathname]);
+  useSiteScroll(enabled, location.pathname);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        document.querySelector<HTMLButtonElement>(".mp-menu-toggle")?.focus();
+      }
+    };
+    const closeOnResize = () => {
+      if (window.innerWidth > 1050) setMenuOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    window.addEventListener("resize", closeOnResize);
+    return () => {
+      window.removeEventListener("keydown", closeOnEscape);
+      window.removeEventListener("resize", closeOnResize);
+    };
+  }, [menuOpen]);
+  useEffect(() => {
+    const element = header.current;
+    if (!element) return;
+    const updateHeight = () => {
+      const height = `${element.getBoundingClientRect().height}px`;
+      element.parentElement?.style.setProperty("--site-header-height", height);
+      document.documentElement.style.setProperty(
+        "--site-header-height",
+        height,
+      );
+    };
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(element);
+    updateHeight();
+    return () => observer.disconnect();
+  }, []);
+  useEffect(() => {
+    const updateHeader = () => setHeaderRaised(window.scrollY > 12);
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    return () => window.removeEventListener("scroll", updateHeader);
+  }, []);
+  const nav = [
+    ["Care & services", "/site/services"],
+    ["Our doctors", "/site/doctors"],
+    ["About", "/site/about"],
+    ["Education", "/site/education"],
+    ["Research", "/site/research"],
+    ["Visit us", "/site/visit"],
+  ];
+  return (
+    <InteractionMotion.Provider value={enabled}>
+      <div className="mp" data-motion={enabled ? "on" : "off"}>
+        <ReadingProgress />
+        <a className="mp-skip" href="#page-content">
+          Skip to content
+        </a>
+        {menuOpen && (
+          <button
+            className="mp-menu-backdrop"
+            aria-label="Close navigation"
+            tabIndex={-1}
+            onClick={() => setMenuOpen(false)}
+          />
+        )}
+        <header
+          ref={header}
+          className={`mp-header${headerRaised ? " is-raised" : ""}`}
+        >
+          <Link className="mp-brand" to="/site">
+            <Leaf size={30} />
+            <span>
+              Al-Arif<small>General Hospital & Unani Research Institute</small>
+            </span>
+          </Link>
+          <nav
+            id="main-navigation"
+            aria-label="Main navigation"
+            className={menuOpen ? "is-open" : ""}
+          >
+            {nav.map(([label, path]) => (
+              <NavLink onClick={() => setMenuOpen(false)} key={path} to={path}>
+                {label}
+              </NavLink>
+            ))}
+          </nav>
+          <QuickFind />
+          <Action to="/site/request">Request a visit</Action>
+          <button
+            className="mp-menu-toggle"
+            aria-controls="main-navigation"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X /> : <Menu />}
+          </button>
+        </header>
+        <main id="page-content" ref={main}>
+          <Chapter path={location.pathname} motionEnabled={enabled}>
+            <Routes>
+              <Route path="/site" element={<HomeStory />} />
+              <Route path="/site/services" element={<Services />} />
+              <Route path="/site/services/:slug" element={<ServiceDetail />} />
+              <Route path="/site/doctors" element={<Doctors />} />
+              <Route path="/site/doctors/:slug" element={<DoctorDetail />} />
+              <Route path="/site/about" element={<About />} />
+              <Route path="/site/education" element={<Education />} />
+              <Route path="/site/education/:slug" element={<Programme />} />
+              <Route path="/site/research" element={<Research />} />
+              <Route path="/site/visit" element={<Visit />} />
+              <Route
+                path="/site/request"
+                element={<Inquiry key={location.search} />}
+              />
+              <Route path="/" element={<Navigate to="/site" replace />} />
+              <Route
+                path="/site/preview"
+                element={<Navigate to="/site" replace />}
+              />
+              <Route
+                path="/site/system"
+                element={<Navigate to="/site" replace />}
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Chapter>
+        </main>
+        <footer className="mp-footer">
+          <div>
+            <Link to="/site" className="mp-footer-brand">
+              Al-Arif
+            </Link>
+            <p>
+              Thoughtful care.
+              <br />
+              Closer to your community.
+            </p>
+          </div>
+          <div>
+            <h3>Explore</h3>
+            <Link to="/site/services">Care & services</Link>
+            <Link to="/site/doctors">Our doctors</Link>
+            <Link to="/site/about">About the hospital</Link>
+          </div>
+          <div>
+            <h3>Learn & visit</h3>
+            <Link to="/site/education">Education & learning</Link>
+            <Link to="/site/research">Research & publications</Link>
+            <Link to="/site/visit">Contact & directions</Link>
+          </div>
+          <div>
+            <h3>Get in touch</h3>
+            <a href="tel:+918555086667">Call reception</a>
+            <a
+              href="https://wa.me/919908700336"
+              target="_blank"
+              rel="noreferrer"
+            >
+              WhatsApp
+            </a>
+          </div>
+          <div className="mp-footer-bottom">
+            © 2026 Al-Arif Hospital
+            <button
+              aria-pressed={enabled}
+              onClick={() => setMotionPreference(!motionPreference)}
+              disabled={reduced}
+            >
+              {reduced
+                ? "Reduced motion"
+                : enabled
+                  ? "Motion on"
+                  : "Motion off"}
+            </button>
+          </div>
+        </footer>
+        <div className="mp-mobile-contact" onClick={() => setMenuOpen(false)}>
+          <a href="tel:+918555086667">
+            <Phone size={17} />
+            Call reception
+          </a>
+          <Link to="/site/request">
+            <CalendarDays size={17} />
+            Request a visit
+          </Link>
+        </div>
+      </div>
+    </InteractionMotion.Provider>
+  );
+}
+export default function Website() {
+  return (
+    <BrowserRouter>
+      <Shell />
+    </BrowserRouter>
+  );
+}

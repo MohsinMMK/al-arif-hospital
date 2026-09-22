@@ -1,2 +1,2 @@
-import { createContext } from 'react'
-export const InteractionMotion = createContext(true)
+import { createContext } from "react";
+export const InteractionMotion = createContext(true);

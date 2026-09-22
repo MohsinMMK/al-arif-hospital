@@ -5,26 +5,26 @@
 ## Platform
 web
 
-## Current accepted scope
-The user approved the selected website on 22 September 2026 and requested removal of review-only UI and creation of a private GitHub repository. The selected site is now the sole public application; design alternatives and management demos are private archives. This acceptance does not independently verify clinical records or authorize deployment.
+## Current scope
+The accepted Community welcome design is a public, English-language informational website deployed to Vercel from the private GitHub repository. It has a long editorial homepage and separate service, doctor, about, education, research, visit and inquiry pages. The user authorized automatic deployment from `main`.
 
-## Original purpose
-Prepare a source-grounded report and three selectable landing-page prototypes for Al-Arif Hospital. The source workbook identifies the institution as Al Arif General Hospital & Unani Research Institute in Bandlaguda, Hyderabad. User confirmed the display spelling Al-Arif. Legal registration typography remains source-dependent.
-
-## Audience and jobs
-The user confirmed equal prominence for general hospital and Unani care. Local patients and families need departments, doctors, visit information and appointment requests; secondary audiences include outstation patients and research visitors. The user additionally requests options for internships and education, without confirming that programmes exist. Explain simple solutions to workbook pain points and let the user choose features before implementing operational systems.
+## Visitors and tasks
+Patients and families need to understand the two care wings, find a clinician, prepare for a visit and contact reception. Education and research visitors need clear information about proposed programmes and available records. General hospital and Unani care receive equal prominence.
 
 ## Stack
-User selected Vite and shadcn/ui, explicitly excluding Next.js. React and TypeScript are proposed implementation choices for interactive local prototypes. Production backend is a recommendation in the report, not implemented or authorized for deployment.
+React, strict TypeScript, Vite and shadcn/ui; no Next.js. GSAP and Lenis coordinate desktop and touch motion. The homepage visit journey uses a deferred Lottie light player and a static SVG fallback. No runtime environment variables are required.
 
-## Evidence
-18-sheet supplied XLSX is the source. Worksheet labels such as Verified or Approved are source assertions, not independent verification or current user approval. Preserve all source rows in a review-only reference. Do not publish example doctor qualifications, unsupported outcomes, fabricated photos, reviews, live queues or booking confirmations.
+## Brand
+Display name: Al-Arif. Preserve warm cream, pastel sage, olive text, Bitter headings and Manrope body text. The homepage presents one readable section at a time, with four service rows per mobile care section and centered, borderless doctor cards. Preserve the approved scrolling, responsive layout and accessible interaction patterns in DESIGN.md.
 
-## Brand commitments
-User requests warm cream and light pastel green, easy navigation, Impeccable, Google's DESIGN.md format and Aura Build guidance. User selected Option 2, Community welcome. Expand this design into separate service, doctor, education, research and visit pages, with a condensed homepage and GSAP/Lottie motion preview before production implementation. No real logo or photography was supplied.
+## Source and content boundaries
+The 18-sheet workbook extraction in `research/workbook.json` is the source record. Source labels such as Verified or Approved are assertions, not independent verification. Keep source conflicts and planning evidence private. Do not fabricate clinician qualifications, portraits, outcomes, testimonials, emergency capabilities or live availability.
 
-## Prototype boundary
-English design previews, not a live medical service. Controls illustrate navigation and feature choices; no patient data is collected. No bookings, payments, clinical records, education admissions or backend workflows are implemented. Urdu RTL and Telugu are proposed production requirements, awaiting reviewed translations. Public content is adapted for patient clarity; internal operational, governance and questionable claims remain in the report and reference rather than promotional copy.
+## Implemented behavior
+Search and filters run locally. The visit checklist and inquiry preferences reset when their pages unmount. Call, WhatsApp and map links require visitor action. The inquiry planner stores no patient information and sends no request; reception confirms visits.
 
-## Open decisions
-Approved service list, emergency contact, operating hours, doctor roster and credentials, fees, hospital assets, domain and hosting, HMS/LIS availability, languages and clinical review ownership.
+## Not implemented
+Booking, patient accounts, payments, clinical records, staff administration, programme admissions, publication management, Urdu RTL and Telugu translations. Historical architecture proposals in `docs/planning/` do not imply these systems exist.
+
+## Pending hospital input
+Approved clinical roster and credentials, current hours and service availability, emergency contact, fees, authentic brand assets, content-review ownership, a custom domain and reviewed translations. The deployed site retains `noindex` until content and indexing are approved.

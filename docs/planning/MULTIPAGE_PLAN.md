@@ -1,3 +1,5 @@
+> Historical planning record (22 September 2026). Proposals here are not a list of live features. See [README](../../README.md), [PRODUCT](../../PRODUCT.md) and [DESIGN](../../DESIGN.md) for the current website.
+
 # Al-Arif — selected website preview
 
 Option 2, Community welcome, is the selected direction. This expanded prototype demonstrates the pages, motion and proposed management flow before production implementation.

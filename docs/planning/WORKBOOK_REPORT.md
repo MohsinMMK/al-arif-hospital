@@ -1,3 +1,5 @@
+> Historical planning record (22 September 2026). Proposals here are not a list of live features. See [README](../../README.md), [PRODUCT](../../PRODUCT.md) and [DESIGN](../../DESIGN.md) for the current website.
+
 # Al Aarif Hospital — website and system options
 
 Prepared 22 September 2026 from the supplied 18-sheet master workbook. This is a decision report and local design study, not a production launch or a verification of the hospital’s claims.

@@ -1,10 +1,10 @@
 @import "tailwindcss";
-@import '@fontsource/manrope/latin-400.css';
-@import '@fontsource/manrope/latin-500.css';
-@import '@fontsource/manrope/latin-600.css';
-@import '@fontsource/manrope/latin-700.css';
-@import '@fontsource/bitter/latin-400.css';
-@import '@fontsource/bitter/latin-400-italic.css';
+@import "@fontsource/manrope/latin-400.css";
+@import "@fontsource/manrope/latin-500.css";
+@import "@fontsource/manrope/latin-600.css";
+@import "@fontsource/manrope/latin-700.css";
+@import "@fontsource/bitter/latin-400.css";
+@import "@fontsource/bitter/latin-400-italic.css";
 
 @theme inline {
   --color-background: #f7f4eb;
@@ -22,7 +22,81 @@
   --color-ring: #527649;
   --color-destructive: #9b352c;
 }
-:root { font-family:Manrope,sans-serif; font-synthesis:none; text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; color:#254c3d; background:#f7f4eb; line-height:1.5; scrollbar-color:#91a37d #f7f4eb }
-[data-slot="button"][data-variant="default"] { color:#fffdf5; background:#254c3d }
-[data-slot="button"][data-variant="default"]:hover { background:#37604c }
-* { box-sizing:border-box }body { margin:0 }a { color:inherit; text-decoration:none }button,input,select { font:inherit }button,a,select { -webkit-tap-highlight-color:transparent }button { cursor:pointer }h1,h2,h3,p { margin:0 }::selection { background:#c6d7b5; color:#254c3d }input,select { caret-color:#254c3d }select { border:1px solid #94a686; border-radius:7px; padding:12px; min-width:0; max-width:100% }select:focus-visible,input:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible { outline:3px solid #527649; outline-offset:4px }svg { flex-shrink:0 }html { scroll-behavior:smooth }small { line-height:1.7 }
+:root {
+  font-family: Manrope, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  color: #254c3d;
+  background: #f7f4eb;
+  line-height: 1.5;
+  scrollbar-color: #91a37d #f7f4eb;
+}
+[data-slot="button"][data-variant="default"] {
+  color: #fffdf5;
+  background: #254c3d;
+}
+[data-slot="button"][data-variant="default"]:hover {
+  background: #37604c;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button,
+a,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+::selection {
+  background: #c6d7b5;
+  color: #254c3d;
+}
+input,
+select {
+  caret-color: #254c3d;
+}
+select {
+  border: 1px solid #94a686;
+  border-radius: 7px;
+  padding: 12px;
+  min-width: 0;
+  max-width: 100%;
+}
+select:focus-visible,
+input:focus-visible,
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #527649;
+  outline-offset: 4px;
+}
+svg {
+  flex-shrink: 0;
+}
+html {
+  scroll-behavior: smooth;
+}
+small {
+  line-height: 1.7;
+}

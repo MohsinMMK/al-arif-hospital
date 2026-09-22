@@ -1,131 +1,64 @@
 # Verification — 22 September 2026
 
-Created three local React/Vite/shadcn landing-page directions and a workbook assessment with simple website, reception and education options. The source workbook remains unchanged, and all its nonempty cell values are available in the local review explorer.
+This record describes the current public website and the performance cleanup. Older design-selection and prototype logs are recoverable in Git history; they are not the current implementation.
 
-## Commands
+## Local checks
 
-Executed from `preview/`:
+Run from the repository root:
 
 ```sh
-npm test
-npm run lint
-npm run build
+npm --prefix preview test
+npm --prefix preview run lint
+npm --prefix preview run build
 ```
 
-- Tests: 4 passed.
-- Lint: clean after removing unused generated component exports.
-- Build: strict TypeScript and Vite passed. Non-blocking warning: one 536.68 kB client chunk because this private review bundle embeds the report and workbook.
+Four tests pass: workbook preservation, conflicting source evidence, clinician/service associations and the public route catalog. Lint and strict TypeScript/Vite build pass. The production build has no oversized-chunk warnings.
 
-Executed from project root:
+Additional cleanup checks:
 
 ```sh
-/Users/mohsinkhan/.agents/skills/impeccable/scripts/impeccable detect --json preview/src/App.tsx preview/src/App.css preview/src/index.css
-```
-
-Detector output: `[]`. Original XLSX re-read with bundled Python/openpyxl and compared against the JSON extraction: every cell matched.
-
-Google-format document validation:
-
-```sh
+(cd preview && npx --yes knip --no-progress)
 npx --yes @google/design.md lint DESIGN.md
+git diff --check
 ```
 
-Result: zero errors, nine warnings. Eight warn about documented color tokens not referenced in the component token subset. One evaluates transparent outline-button backgrounds as transparent black rather than compositing the actual cream surface; the screenshot review checked the rendered colors. The document records the implemented transparent styling instead of inventing a different token to suppress the warning.
+Knip reports no unused files, dependencies, exports or types. Removed obsolete prototypes, the duplicate content module and unused helpers, three direct dependencies, and 39 obsolete/empty CSS rules. The remaining source was formatted; a comparison with formatted pre-cleanup source confirmed that unrelated components and scroll behavior were unchanged. Internal documentation links resolve.
 
-## Browser evidence
+Google DESIGN.md validation reports zero errors and nine warnings for palette tokens outside the two documented component examples. Those colors remain in use in the website and are retained as design documentation.
 
-Playwright CLI session `alaarif` exercised all three options at 1440×1000 and 390×844. No document horizontal overflow at either width; final CTA text color is rgb(255,253,245) on dark green. Full-page screenshots are `.impeccable/review/option-{1,2,3}-{desktop,mobile}.png`; hero captures and report captures are under `output/playwright/`.
+## Measured performance
 
-Passed interactions: department selection with tailored Hijama guidance; mobile navigation open/close and anchor destination; doctor search by specialty; no-results recovery; FAQ disclosure; 18-sheet inventory; source search for example records; retained example wording; source no-results state. The fresh report browser console reported zero errors/warnings after adding the favicon.
+Three cold Chromium mobile runs per version against the production build on localhost: 390×844, 4× CPU slowdown, 150ms network latency, 200,000 bytes/s download and cache disabled. Baseline is commit `5f4eabe`; values below are medians. This is a controlled local comparison, not field Core Web Vitals or a Lighthouse score.
 
-Independent Impeccable finish review: **SHIP for local design selection**, no open material UI findings. See `.impeccable/review/finish-review.md` for coverage and limits. This does not certify publication readiness, full accessibility conformance, Urdu/Telugu content, hospital claims or backend operations.
+| Measurement | Before | After |
+| --- | ---: | ---: |
+| Initial JavaScript transferred, compressed | 272,001 bytes | 181,278 bytes |
+| Largest Contentful Paint | 2,108ms | 1,900ms |
+| Cumulative Layout Shift | 0.009 | 0.000 |
+| First Contentful Paint | 840ms | 1,900ms |
+| Sum of long-task time above 50ms | 68ms | 156ms |
 
-## Environment and delivery
+Initial JavaScript transfer is 33.4% smaller; median main-content paint is about 10% earlier. The old first paint was an intermediate loading message; the new first paint contains the website. Initial rendering is now consolidated, and the measured long-task overhead increased. These measurements do not establish an INP improvement or guarantee timings on physical phones.
 
-No new environment variables. No backend or database. No messages sent to hospital staff, no patient/applicant records collected, and no deployment performed. External call, WhatsApp and map links require a user click. The private report/source explorer must be removed before a public deployment.
+The redundant Motion runtime was replaced with the existing GSAP engine. Lottie downloads only within 400px of its section. React and scroll libraries have separate hashed chunks for independent caching, and three critical local font faces are preloaded. Original workbook data and planning documents are absent from runtime imports and the public output.
 
-## Selected multi-page preview — 22 September 2026
+Raw local evidence is in `output/playwright/performance-{baseline,after}.json` and `performance-{baseline,after}-assets.json`; generated test artifacts remain Git-ignored.
 
-- New `/site` preview with 23 catalogue destinations plus `/site/preview`, a not-found route, 8 service details and 5 doctor profiles.
-- `npm --prefix preview test`: 6 tests pass (source integrity plus cross-page associations and permitted request-state transitions).
-- `npm --prefix preview run lint`: clean.
-- `npm --prefix preview run build`: TypeScript and Vite pass, no chunk-size or eval warnings. Lottie light player is lazy-loaded; original report/study loads separately.
-- Playwright: all 23 destination pages rendered at 1440 and 390 px with no horizontal overflow and no uncaught page errors.
-- Both service filters settled to 4 results each. Search empty state and reset exercised.
-- Service → inquiry preserved the service; local summary appeared without submission; changing time cleared the summary; browser Back returned to the service.
-- Sample request DEMO-101 moved to Contacted. Architecture panel opened. No backend or persistence is represented as implemented.
-- Lottie SVG loaded and its frame advanced to 53 after scrolling; OS reduced motion disabled the motion control. Mobile menu navigated to doctors and closed.
-- Representative captures: `.impeccable/review/multipage-{home,general-medicine,tauheed,education,system}-{desktop,mobile}.png`. Motion off for captures; full-page phone screenshots show the fixed action bar at viewport bottom.
-- One detector pass: profile-facts border warning is inapplicable because that component has square corners. Fresh finish review and documentation are tracked in `.impeccable/review/multipage-*.md`.
-- No environment variables, deployment, patient intake, live admissions, authenticated CMS or operational database added.
-- Private source workbook remains in the local comparison bundle. Do not publish this artifact; production must exclude report/source/reviewer pages and use verified public content.
+## Browser coverage
 
-## Interaction refinement — 22 September 2026
+Production-build checks used Playwright Chromium:
 
-- Motion added for shared selection, content transitions and reading orientation; GSAP remains for chapter arrival and Lottie for the home journey.
-- Desktop 1440 and mobile 390: selecting Unani → Hijama updates the service panel; doctor/service links retain real routes.
-- Search Naima returns one matching profile; result navigation reaches `/site/doctors/naima`. Empty search offers service-directory recovery. Escape closes the dialog and restores trigger focus at both widths.
-- Visit checklist checked all three items and announced 3/3, then unchecked one and returned to 2/3. Decorative checkbox spans no longer intercept clicks; controls have scroll margins for the sticky header and mobile action bar.
-- OS reduced motion maps the app to `data-motion=off`; manual motion toggle works. Browser batch reported no uncaught page errors or horizontal overflow on inspected home/search/visit surfaces.
-- Six current captures: `.impeccable/review/interactions-{home,search,visit}-{1440,390}.png`. Search captures at viewport size; home/visit full-page. Visit recaptured after checkbox correction.
-- Library research/provenance: `research/interaction-libraries.md`. Original adaptations, no verbatim third-party components. Only new runtime dependency is `motion`; no environment variables added.
-- Build, lint and six local tests pass. No backend, deployment or live bookings added.
+- All 22 public catalog routes at 1440px and 390px: heading and title present, route focus correct, reading progress reset, no horizontal overflow, no failed responses or uncaught page errors.
+- Real emulated touch gestures at 390×844 and 375×667: General and Unani sections settle within 0.5px of the header, with all four rows visible above the floating actions and animations complete. Reverse swipes, held-touch interruption and nested search scrolling pass. Desktop wheel settling remains intact.
+- Service filters, empty-state recovery, FAQ expansion, service-to-inquiry context, local inquiry summary, doctor search/navigation, mobile menu navigation and the preparation checklist pass.
+- Reading progress reaches completion after expanded content and resets on route changes; a ResizeObserver updates its range when filters or accordions change page height.
+- No Lottie request at first load; one request near the section; observed frames advance from 0 to 58. Manual motion switching disposes/restores the player. Reduced motion makes no player request. A deliberately blocked player download leaves the static diagram visible.
+- Desktop welcome/journey and compact mobile care screenshots were visually reviewed. Approved colors, borderless doctor cards, typography, navigation and four-row service layout are preserved.
 
-## Homepage story correction — 22 September 2026
+Local results and captures are `output/playwright/cleanup-*` and `mobile-motion-*`. Browser emulation does not replace physical iOS/Android testing or a complete accessibility audit.
 
-The user rejected the previous care-explorer composition as too application-like. `HomeStory.tsx` now provides a longer sequence: welcome, hospital, general care, Unani care, doctors, education, research and visiting. Eight services are visible without a selector; five doctor links and the other principal detail routes appear in their corresponding sections. Home content contains no button controls.
+## Deployment and scope
 
-- Browser: no horizontal overflow at 1440, 1024 or 390 px. Tablet nav correctly collapses and opens; Research is directly available in navigation.
-- GSAP: scrolling to the second general-care feature marks General surgery current; line scale observed at 0.1757. Desktop care intro is sticky. Reduced motion sets washes to no clipping and the line to no transform.
-- Clicking the General surgery feature reached its detail URL. Browser Back restored the homepage route; main Research navigation reached `/site/research`.
-- Final captures: `story-home-{1440,1024,390}.png` and `story-{general,unani}-{1440,390}.png` under `.impeccable/review`. Two initially blank Unani viewport captures were replaced after waiting for compositor frames; all final files inspected.
-- CSS import ordering corrected before final captures to preserve intended heading sizes and tablet menu behavior.
-- One detector pass on new homepage files: no findings. Local suite: six tests pass; lint and TypeScript/Vite build pass.
-- Existing detailed pages, source records, search, checklist and preview-only intake boundaries preserved. No environment variables added.
+Vercel automatically runs tests, lint and build after a push to `main`. Verify its deployment commit matches the pushed SHA, reaches Ready, and the production alias serves the new hashed assets; then check a direct route and a critical navigation flow.
 
-## Mirrored Unani and centered doctors
-
-- Desktop: Unani feature column x=140; introduction x=770. General-care structure unchanged. Phone: both columns x=24, introduction remains above features.
-- Doctors heading, text, cards, directory link and note centered. Five profiles present, 3+2 arrangement desktop and one centered column at 390px.
-- React Bits SpotlightCard adapted with license retained. Pointer movement updates local spotlight coordinates; keyboard focus visible and Enter opens `/site/doctors/tauheed`. Reduced-motion monogram transform is `none`.
-- No horizontal overflow at 1440/390. Isolated section screenshots `centered-{unani,doctors}-{1440,390}.png` suppress fixed overlays solely during capture, without changing component layout.
-- Detector: no findings. Six tests, lint and build pass. No new dependencies or environment variables.
-
-## Shared care line axis
-
-- General and Unani line centers both measured 720px at a 1440px viewport, and 512px at 1024px. At 390px both remain beside cards at 25px. No horizontal overflow at these widths.
-- Desktop connectors and row markers mirror around the shared section axis. Existing scroll animation and mobile stacking preserved.
-- Settled section captures: `.impeccable/review/axis-{general,unani}-{1440,390}.png`; fixed overlays hidden only for capture. CSS detector returned no findings.
-- Verification: `npm --prefix preview test` (six tests), `npm --prefix preview run lint`, `npm --prefix preview run build` all passed. No new dependencies or environment variables.
-
-## Accepted website cleanup
-
-- Removed preview chrome, design selector, report access and management demos from public routes; root and former review routes lead to the hospital homepage.
-- Archived former designs, removed unused care explorer and associated CSS, and removed react-markdown (81 packages).
-- Browser checked all 22 public catalog routes at 1440px and 390px: headings present, no horizontal overflow or review banners, no uncaught page errors. Mobile navigation and local inquiry preparation passed.
-- Six tests, lint and production build passed. No environment variables added. No deployment or booking backend was introduced.
-
-## Lenis / GSAP refinement
-- Desktop homepage uses Lenis and its official snap plugin, driven by the GSAP ticker. Native CSS snapping is disabled only while Lenis is active; mobile keeps native section settling.
-- Care timeline completes at the header offset rather than when the last row crosses 65% of the viewport. Browser verified scaleY=1 at both settled chapters, completed card reveals, forward/reverse transitions, anchor offset, search, route cleanup and reduced-motion handling.
-- Removed decorative link underlines and horizontal list/section separators. Form outlines, focus indicators and the care diagram remain.
-- Sources: https://github.com/darkroomengineering/lenis and https://github.com/darkroomengineering/lenis/blob/main/packages/snap/README.md and https://gsap.com/docs/v3/Plugins/ScrollTrigger/.
-- New dependency: lenis. No environment variables. Tests, lint and build pass.
-
-## Shared website motion — 22 September 2026
-
-- Moved the approved Lenis/GSAP scroll driver into the shared website shell. All public routes use the same 750ms desktop smoothing; only the fitting homepage chapters receive proximity settling.
-- Page transitions now use a 10px shift and 480ms sine ease-in/out. Native touch scrolling, nested search scrolling, form controls, reduced motion and the manual motion toggle remain supported.
-- Playwright checked all 22 public routes. A 420px wheel input on a service detail page measured 157px after 70ms and settled at 420px, with no subsequent section snap. Search, route scroll reset, 1024px pointer smoothing, 390px native scrolling, the inquiry planner and both motion preferences passed with no uncaught page errors.
-- Both homepage care sections settled within 1px of the header with their progress lines at 100%. Reviewed desktop care and about-page screenshots in `.impeccable/review/sitewide-motion-*.png`.
-- Verification commands: `npm --prefix preview test`, `npm --prefix preview run lint`, `npm --prefix preview run build`. No new dependencies or environment variables.
-
-## Mobile touch motion — 22 September 2026
-
-- Removed the desktop-only gate from the shared Lenis driver. Touch synchronization now follows the finger with restrained release inertia; compact homepage chapters use the approved 420ms pause and 900ms sine settling. Native CSS snap remains disabled while Lenis is active.
-- Mobile care rows start 18px lower and move into place with a short stagger. All four rows and their background reveals finish at the section stop. Desktop care animation is unchanged.
-- Chromium mobile emulation with CDP touch gestures passed at 390×844 and 375×667. General and Unani sections settled within 0.5px of the header; every card fit above the floating contact actions with its animation complete. Screenshots: `output/playwright/mobile-motion-*.png`.
-- Reverse swipes, touch interruption, held touches without unintended snapping, nested search scrolling, menu-to-inquiry navigation and the inquiry planner passed. Reduced motion removed the driver and transforms while retaining native touch scrolling. Desktop wheel settling passed; no uncaught page errors.
-- Two-finger gestures and their release remain native; the next single-finger swipe resumes smooth section settling. A detail-page swipe also activated touch smoothing without chapter snapping.
-- Six local tests, lint and TypeScript/Vite build passed using `npm --prefix preview test`, `npm --prefix preview run lint`, and `npm --prefix preview run build`. No dependencies or environment variables added. Tests used browser emulation, not physical phones.
-- Implementation references: [Lenis touch synchronization](https://github.com/darkroomengineering/lenis#settings), [official snap plugin](https://github.com/darkroomengineering/lenis/blob/main/packages/snap/README.md).
+No new environment variables, backend, patient intake, staff system, booking confirmation, analytics or externally submitted messages were introduced. Institutional content review and the existing `noindex` remain unchanged.

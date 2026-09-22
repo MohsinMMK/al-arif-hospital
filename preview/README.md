@@ -1,3 +1,3 @@
-# Al-Arif website
+# Website package
 
-See the parent README.md for local setup, validation and deployment boundaries. This package builds the selected public website; private source records and design history are not bundled.
+See the [project README](../README.md) for setup, verification, deployment and the source map. This package builds the public Al-Arif website; research and historical plans remain private.
