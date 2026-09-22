@@ -1,0 +1,327 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-22T06:50:57.214783+00:00",
+  "title": "Design System: Al-Arif \u2014 Community welcome",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Deep olive"
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Pastel sage"
+      },
+      "tertiary": {
+        "role": "tertiary",
+        "displayName": "Warm sand"
+      },
+      "neutral": {
+        "role": "neutral",
+        "displayName": "Warm cream"
+      },
+      "chapter-line": {
+        "role": "neutral",
+        "displayName": "Chapter rule"
+      },
+      "chapter-text": {
+        "role": "neutral",
+        "displayName": "Chapter paragraph"
+      },
+      "chapter-emphasis": {
+        "role": "secondary",
+        "displayName": "Chapter emphasis"
+      },
+      "story-general": {
+        "displayName": "General care paper",
+        "role": "neutral"
+      },
+      "story-unani": {
+        "displayName": "Unani chapter sage",
+        "role": "secondary"
+      },
+      "story-learning": {
+        "displayName": "Learning paper",
+        "role": "neutral"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Direct display",
+        "purpose": "Shared Manrope hero voice; fluid sizes are documented in DESIGN.md."
+      },
+      "welcome-display": {
+        "displayName": "Welcome display",
+        "purpose": "Bitter introduction in the retained option-two study; selected multi-page headings use chapter-display."
+      },
+      "chapter-display": {
+        "displayName": "Community chapter",
+        "purpose": "Selected multi-page Bitter titles and section headings with -0.04em tracking and 1.14 line height; responsive sizes in DESIGN.md."
+      }
+    },
+    "shadows": [
+      {
+        "name": "mobile-contact-bar",
+        "value": "0 -3px 15px #254c3d18",
+        "purpose": "Separate fixed mobile actions from scrolling content."
+      },
+      {
+        "name": "outline-button",
+        "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "purpose": "Retained shadcn outline-button shadow."
+      },
+      {
+        "name": "chapter-mobile-menu",
+        "value": "0 12px 20px #254c3d15",
+        "purpose": "Selected preview navigation panel below the header at 800px and narrower."
+      },
+      {
+        "name": "quick-find-modal",
+        "value": "0 22px 60px #18312633",
+        "purpose": "Cream Radix search dialog above an olive #18312680 scrim."
+      }
+    ],
+    "motion": [
+      {
+        "name": "care-panel-hover",
+        "value": "background-color .2s",
+        "purpose": "Linked destination hover."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transition:none!important;animation:none!important;scroll-behavior:auto!important",
+        "purpose": "Applied under prefers-reduced-motion: reduce."
+      },
+      {
+        "name": "chapter-arrival",
+        "value": "x:14 \u2192 0; opacity:0.6 \u2192 1; duration:0.38s; ease:power3.out",
+        "purpose": "Chapter only; persistent shell remains outside scoped useGSAP animation. Revert on pathname or motion preference change."
+      },
+      {
+        "name": "visit-journey-scroll",
+        "value": "ScrollTrigger: top 85% \u2192 bottom 35%; Lottie frames 0 \u2192 90",
+        "purpose": "Lazy lottie_light SVG player on Home only; no autoplay or loop. Trigger/player disposed on cleanup."
+      },
+      {
+        "name": "journey-static",
+        "value": "goToAndStop(90,true)",
+        "purpose": "Completed path when user disables motion or OS requests reduced motion; chapter movement skipped and step text remains readable."
+      },
+      {
+        "name": "care-wing-selection",
+        "value": "LayoutGroup indicator: duration 0.25s; disabled 0",
+        "purpose": "Dormant/unmounted care explorer only; superseded on Home by the editorial story. Pressed-state care wing selection, within the selected hospital world."
+      },
+      {
+        "name": "care-detail-change",
+        "value": "AnimatePresence wait; x:12 \u2192 0; opacity:0.55 \u2192 1; exit opacity:0.5; duration:0.18s",
+        "purpose": "Dormant/unmounted care explorer only; superseded on Home by the editorial story. Selected service introduction and route links; zero duration/no initial travel with motion disabled."
+      },
+      {
+        "name": "reading-progress",
+        "value": "useScroll; useSpring stiffness:180, damping:35",
+        "purpose": "3px fixed line; direct scroll progress instead of smoothing with motion disabled."
+      },
+      {
+        "name": "directional-action",
+        "value": "translate(3px,-3px); 0.22s cubic-bezier(.16,1,.3,1)",
+        "purpose": "Existing Action arrow hover/focus feedback; ordinary link arrows use 0.2s."
+      },
+      {
+        "name": "button-press",
+        "value": "scale(.98)",
+        "purpose": "Immediate press feedback; disabled-motion override removes scale."
+      },
+      {
+        "name": "accordion-disclosure",
+        "value": "open:0.23s cubic-bezier(.16,1,.3,1); close:0.18s ease-in",
+        "purpose": "Radix content height and opacity; disabled/reduced motion removes animation."
+      },
+      {
+        "name": "checklist-completion",
+        "value": "transform 0.25s cubic-bezier(.16,1,.3,1)",
+        "purpose": "Local preparation completion track; disabled/reduced motion removes transition."
+      },
+      {
+        "name": "story-care-line",
+        "value": "scaleY:0 \u2192 1; ease:none; scrub:0.3; top 65% \u2192 bottom 65%",
+        "purpose": "Both desktop care chapters share the full positioned container center axis at left:50%, with static feature wrappers and mirrored dots/connectors. Gap:100px, or 55px at 801\u20131100px. At <=800px the line stays beside stacked feature rows."
+      },
+      {
+        "name": "story-care-wash",
+        "value": "general: inset(0 100% 0 0); Unani: inset(0 0 0 100%); both \u2192 inset(0 0% 0 0); duration:0.55s; power3.out",
+        "purpose": "Decorative tonal field at top 72%, play none none reverse; text always visible. Reduced/off shows complete field."
+      },
+      {
+        "name": "story-current-row",
+        "value": "toggleClass:is-current; top 60% \u2192 bottom 60%",
+        "purpose": "Reading-position marker with scoped cleanup; no mandatory selection."
+      },
+      {
+        "name": "story-directional-link",
+        "value": "translate(3px,-3px); 0.25s cubic-bezier(.16,1,.3,1)",
+        "purpose": "Chapter, service and roster link feedback; disabled/reduced CSS removes transition."
+      },
+      {
+        "name": "doctor-spotlight-field",
+        "value": "radial-gradient(240px circle at pointer, #cbdcbb 0%, transparent 75%); opacity .28s ease-out",
+        "purpose": "Fine-pointer hover only; keyboard and reduced/disabled motion use flat sage. Adapted React Bits SpotlightCard with retained license."
+      },
+      {
+        "name": "doctor-spotlight-feedback",
+        "value": "monogram translateY(-4px): .3s; arrow translate(3px,-3px): .25s; cubic-bezier(.16,1,.3,1)",
+        "purpose": "Hover and keyboard focus; positional motion removed under shared disabled/reduced preference."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-alignment-min",
+        "value": "1600px"
+      },
+      {
+        "name": "content-inset-max",
+        "value": "1320px"
+      },
+      {
+        "name": "navigation-collapse-max",
+        "value": "1050px"
+      },
+      {
+        "name": "mobile-max",
+        "value": "700px"
+      },
+      {
+        "name": "chapter-intermediate-max",
+        "value": "1100px"
+      },
+      {
+        "name": "chapter-mobile-max",
+        "value": "800px"
+      },
+      {
+        "name": "chapter-compact-max",
+        "value": "430px"
+      },
+      {
+        "name": "story-tablet-navigation-collapse",
+        "value": "801px\u20131050px"
+      },
+      {
+        "name": "doctor-gallery-single-column-max",
+        "value": "480px"
+      }
+    ],
+    "acceptedWebsiteCleanup": {
+      "reviewChrome": false,
+      "publicEntry": "/site",
+      "motionControl": "footer",
+      "privateArchive": "archive/design-study",
+      "mobileContact": "two floating actions",
+      "contactRows": "matching icon, number and arrow"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Solid inquiry or navigation action.",
+      "html": "<button class=\"ds-primary\">Request a visit</button>",
+      "css": ".ds-primary{font-family:Manrope,sans-serif;font-size:13px;font-weight:600;border-radius:7px;padding:12px 22px;min-height:46px;cursor:pointer;background:var(--color-primary,#254c3d);color:var(--color-primary-foreground,#fffdf5);border:0;transition:all .15s}.ds-primary:hover{background:#37604c}.ds-primary:focus-visible{outline:3px solid #527649;outline-offset:4px}.ds-primary:disabled{opacity:.5;pointer-events:none}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}}"
+    },
+    {
+      "name": "Outline button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary education comparison action.",
+      "html": "<button class=\"ds-outline\">Compare education options</button>",
+      "css": ".ds-outline{font-family:Manrope,sans-serif;font-size:13px;font-weight:600;border-radius:7px;padding:12px 22px;min-height:46px;cursor:pointer;background:transparent;color:#254c3d;border:1px solid #8b997d;box-shadow:0 1px 2px 0 rgb(0 0 0 / .05)}.ds-outline:hover{color:#254c3d}.ds-outline:focus-visible{outline:3px solid #527649;outline-offset:4px}"
+    },
+    {
+      "name": "Doctor search",
+      "kind": "input",
+      "description": "Client-side directory filter; no patient data intake.",
+      "html": "<input class=\"ds-search\" aria-label=\"Search doctors\" placeholder=\"Find a doctor or specialty\">",
+      "css": ".ds-search{font-family:Manrope,sans-serif;font-size:14px;width:100%;height:42px;background:transparent;color:#254c3d;border:1px solid #aebca3;border-radius:6px;padding:4px 12px;box-shadow:none}.ds-search::placeholder{color:#536254}.ds-search:focus-visible{outline:3px solid #527649;outline-offset:4px}"
+    },
+    {
+      "name": "Comparison control",
+      "kind": "nav",
+      "description": "Study-only navigation showing the selected alternative.",
+      "html": "<nav class=\"ds-comparison\" aria-label=\"Compare design options\"><button aria-pressed=\"true\">1 Care pathways</button><button aria-pressed=\"false\">2 Community welcome</button></nav>",
+      "css": ".ds-comparison{display:flex;gap:6px;background:#254c3d;padding:12px;font-family:Manrope,sans-serif}.ds-comparison button{font:inherit;font-size:12px;min-height:36px;padding:8px 12px;border:1px solid #6c8979;border-radius:6px;background:transparent;color:#fffdf5;cursor:pointer}.ds-comparison button[aria-pressed=true]{background:#e2ebd9;color:#254c3d;border-color:#e2ebd9}.ds-comparison button:focus-visible{outline:3px solid #527649;outline-offset:4px}"
+    },
+    {
+      "name": "General care destination",
+      "kind": "card",
+      "refersTo": "care-panel-general",
+      "description": "One of two equally prominent destinations in option one.",
+      "html": "<a class=\"ds-care\" href=\"#services\"><h2>Care for<br>everyday life.</h2><p>General Hospital</p><small>Medicine \u00b7 Women\u2019s health<br>Surgery \u00b7 Diagnostics</small><span>Explore hospital care \u2197</span></a>",
+      "css": ".ds-care{font-family:Manrope,sans-serif;display:flex;flex-direction:column;min-height:397px;padding:30px 25px;border-radius:14px;background:#e2ebd9;color:#254c3d;text-decoration:none;transition:background-color .2s}.ds-care:hover{background:#d5e2ca}.ds-care h2{font-size:32px;font-weight:550;line-height:1.15;letter-spacing:-.04em;margin:42px 0 17px}.ds-care p{font-size:13px;font-weight:700;margin:0 0 12px}.ds-care small{font-size:11px;line-height:1.9;color:#536254}.ds-care span{font-size:11px;font-weight:700;margin-top:auto;padding-top:32px}.ds-care:focus-visible{outline:3px solid #527649;outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-care{transition:none}}"
+    },
+    {
+      "name": "Department selector",
+      "kind": "input",
+      "refersTo": "department-select",
+      "description": "Native select used for inquiry guidance in option three.",
+      "html": "<label class=\"ds-label\" for=\"ds-department\">What kind of care are you looking for?</label><select class=\"ds-select\" id=\"ds-department\"><option>Choose a department</option><option>General medicine</option><option>Unani care</option></select>",
+      "css": ".ds-label{display:block;font-family:Manrope,sans-serif;font-size:12px;color:#254c3d;margin-bottom:12px}.ds-select{font-family:Manrope,sans-serif;font-size:14px;width:100%;padding:12px;border:1px solid #94a686;border-radius:7px;background:#f7f4eb;color:#254c3d}.ds-select:focus-visible{outline:3px solid #527649;outline-offset:4px}"
+    },
+    {
+      "name": "Preparation checkbox",
+      "kind": "input",
+      "description": "Native local checklist control with visible keyboard focus; no patient data or storage.",
+      "html": "<label class=\"ds-preparation\"><input type=\"checkbox\"><span class=\"ds-check-box\" aria-hidden=\"true\">\u2713</span><span>Relevant reports & prescriptions</span></label>",
+      "css": ".ds-preparation{position:relative;display:flex;align-items:center;gap:15px;padding:20px 0;font:14px Manrope,sans-serif;color:#254c3d;cursor:pointer;border-bottom:1px solid #bdc9b5}.ds-preparation input{position:absolute;width:24px;height:24px;opacity:0;z-index:1}.ds-check-box{display:grid;place-items:center;width:24px;height:24px;border:1px solid #789767;border-radius:5px;pointer-events:none;color:transparent;transition:background .15s}.ds-preparation input:checked+.ds-check-box{background:#254c3d;color:#fffdf5}.ds-preparation input:focus-visible+.ds-check-box{outline:3px solid #527649;outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-check-box{transition:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A welcoming reception",
+    "overview": "The selected Option 2 cream/sage/Bitter/Manrope world now has a full editorial homepage, following the user\u2019s explicit correction of the compact web-app-like composition. Visitors read the hospital story, both care chapters with all eight services, five clinicians, education, research and visit guidance before following dedicated routes. Search, checklist and detail pages remain; the care explorer is dormant. This remains a local preview before production.",
+    "keyCharacteristics": [
+      "Selected Community welcome direction",
+      "Cream and sage palette with flat tonal hierarchy",
+      "Bitter chapters and Manrope controls",
+      "Persistent header, real route breadcrumbs and contextual next steps",
+      "Reduced-motion static journey; no raster or stock imagery",
+      "Keyboard page search, sticky navigation and reading orientation",
+      "Local preparation checklist on Visit; Lottie on Home only",
+      "Full editorial homepage with eight visible service summaries and five clinician links",
+      "Equal general and Unani chapters; desktop sticky introductions and mobile static flow",
+      "Mirrored Unani desktop chapter; heading-first mobile flow",
+      "Centered five-clinician gallery, three-plus-two desktop layout and licensed React Bits spotlight adaptation"
+    ],
+    "rules": [
+      {
+        "name": "The Shared Palette Rule",
+        "body": "Compare composition within the confirmed cream and pastel-green commitment.",
+        "section": "colors"
+      },
+      {
+        "name": "The Chapter Continuity Rule",
+        "body": "Animate the chapter inside the persistent shell; use real parent routes for breadcrumbs.",
+        "section": "layout"
+      }
+    ],
+    "dos": [
+      "Do preserve equal prominence for general hospital and Unani care.",
+      "Do retain visible keyboard focus and the local-preview boundary.",
+      "Do use the existing default/outline Button variants through Action links.",
+      "Do keep source workbook, reports and review controls local.",
+      "Do show completed journey frame 90 when motion is off or reduced.",
+      "Do preserve usable search, selection, checkboxes and disclosure with motion disabled.",
+      "Do keep native checkbox targets above decorative boxes and scroll margins around focused controls.",
+      "Do follow research/home-story-brief.md as current homepage authority.",
+      "Do communicate each section\u2019s key information before linking to the detailed page.",
+      "Do retain React Bits attribution/license with DoctorSpotlight; initials are not clinician portraits.",
+      "Do provide flat keyboard/touch-compatible states and remove positional feedback with motion disabled."
+    ],
+    "donts": [
+      "Don't confuse design and display-name selection with approval of clinical claims, legal identity or production launch.",
+      "Don't fabricate hospital assets, credentials or clinical outcomes.",
+      "Don't treat the leaf mark or geometric SVG favicon as the official logo.",
+      "Don't present the care explorer as symptom triage or treatment recommendation.",
+      "Do not restore the dormant care explorer as the homepage composition; the user rejected that app-like presentation."
+    ]
+  }
+}

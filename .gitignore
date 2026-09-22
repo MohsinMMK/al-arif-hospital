@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+dist/
+*.log
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.playwright-cli/
+.impeccable/review/
+output/
+coverage/
+*.tsbuildinfo

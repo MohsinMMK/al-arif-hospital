@@ -1,0 +1,3265 @@
+[
+  {
+    "sheet": "00_Executive_Master_Index",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE — MASTER CONSOLIDATED REPOSITORY"
+        }
+      },
+      {
+        "row": 2,
+        "cells": {
+          "A": "Consolidated Multi-Domain Architecture, Clinical Research, Website Blueprint, and Technical Implementation Framework"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "1. PROJECT OVERVIEW & METADATA"
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "Attribute",
+          "B": "Project Specification",
+          "C": "Operational Details",
+          "D": "Reference / Link",
+          "E": "Status"
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "Hospital Name",
+          "B": "Al Arif General Hospital & Unani Research Institute",
+          "C": "Integrative multi-specialty allopathic care + Unani research facility",
+          "D": "Google Doc & Excel Repositories",
+          "E": "Verified"
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "Physical Address",
+          "B": "18-13-132/41/A & B, Tulsi Nagar, Noori Nagar, Bandlaguda, Chandrayangutta",
+          "C": "Hyderabad, Telangana 500005, India (Near Dargah Hazrat Syed Noori Shah Sahab)",
+          "D": "Google Maps Coordinates",
+          "E": "Verified"
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "Emergency & Help Desk",
+          "B": "+91 85550 86667 (Reception) / +91 99087 00336 (WhatsApp)",
+          "C": "Hospital Open 24/7; General OPD Mon-Sat 9:00 AM - 9:00 PM",
+          "D": "Telecom List",
+          "E": "Active"
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "Google Rating & Sentiment",
+          "B": "4.7 / 5.0 (281 Google Reviews) | 4.9 / 5.0 (334 Justdial Reviews)",
+          "C": "Renowned across Telangana for Bell's palsy, sciatica, joint pain & infertility",
+          "D": "Google & Justdial Listings",
+          "E": "Top Rated"
+        }
+      },
+      {
+        "row": 10,
+        "cells": {
+          "A": "Primary Business Objective",
+          "B": "Complete Digital Healthcare Transformation",
+          "C": "Launch modern trilingual portal, live token queue, Hijama scheduler, and medicine dispatch",
+          "D": "Website & Tech Specifications",
+          "E": "Active Phase"
+        }
+      },
+      {
+        "row": 12,
+        "cells": {
+          "A": "2. MASTER WORKBOOK NAVIGATION DIRECTORY (18 INTEGRATED TABS)"
+        }
+      },
+      {
+        "row": 13,
+        "cells": {
+          "A": "Tab ID",
+          "B": "Worksheet Title",
+          "C": "Scope & Core Subject Matter",
+          "D": "Data Origin / Chat Reference",
+          "E": "Primary Stakeholder"
+        }
+      },
+      {
+        "row": 14,
+        "cells": {
+          "A": "Tab 00",
+          "B": "00_Executive_Master_Index",
+          "C": "Executive project overview, metadata, 18-tab index, and immediate decision roadmap",
+          "D": "Synthesis of Chats 1-4",
+          "E": "Project Lead & Client"
+        }
+      },
+      {
+        "row": 15,
+        "cells": {
+          "A": "Tab 01",
+          "B": "01_Outreach_Master_Row",
+          "C": "Comprehensive single-row outreach master database record with full hospital profile",
+          "D": "Chat 1: Institutional Research",
+          "E": "Outreach / BD Team"
+        }
+      },
+      {
+        "row": 16,
+        "cells": {
+          "A": "Tab 02",
+          "B": "02_Hospital_Overview",
+          "C": "Detailed institutional metrics, 25-yr legacy, bed capacity, catchment areas & pricing",
+          "D": "Chat 1: Institutional Research",
+          "E": "Hospital Administration"
+        }
+      },
+      {
+        "row": 17,
+        "cells": {
+          "A": "Tab 03",
+          "B": "03_Doctors_and_Specialties",
+          "C": "Faculty profiles: Dr. Tauheed, Dr. Sajjad Hussain, Dr. Naima, Dr. Saheen, Dr. Ameena",
+          "D": "Chat 1: Clinical Mapping",
+          "E": "Medical Admin & HR"
+        }
+      },
+      {
+        "row": 18,
+        "cells": {
+          "A": "Tab 04",
+          "B": "04_Clinical_Services",
+          "C": "Matrix of 7 clinical departments: Allopathic surgery, Unani research, Hijama, Lab, Pharmacy",
+          "D": "Chat 1: Clinical Mapping",
+          "E": "Clinical Department Heads"
+        }
+      },
+      {
+        "row": 19,
+        "cells": {
+          "A": "Tab 05",
+          "B": "05_Operational_Pain_Points",
+          "C": "Audit of 5 friction areas: OPD rush, manual tokens, Hijama scheduling, outstation medicine",
+          "D": "Chat 1 & 3: Operations Audit",
+          "E": "Operations & Reception"
+        }
+      },
+      {
+        "row": 20,
+        "cells": {
+          "A": "Tab 06",
+          "B": "06_Tech_Pitch_Modules",
+          "C": "Specifications for 5 proposed software modules: Portal, Queue Tracker, Scheduler, E-Shop",
+          "D": "Chat 1 & 3: Tech Solutioning",
+          "E": "Web Development Lead"
+        }
+      },
+      {
+        "row": 21,
+        "cells": {
+          "A": "Tab 07",
+          "B": "07_Patient_Reviews_Analysis",
+          "C": "Patient review sentiment breakdown, verified recovery case studies & trust signals",
+          "D": "Chat 1: Reputation Audit",
+          "E": "Patient Relations & QA"
+        }
+      },
+      {
+        "row": 22,
+        "cells": {
+          "A": "Tab 08",
+          "B": "08_Website_Content_Blueprint",
+          "C": "Full structured website copy from Google Doc: Hero, About, Facilities, Focus Areas, Forms",
+          "D": "Chat 2: Web Copy Blueprint",
+          "E": "Content & Marketing Lead"
+        }
+      },
+      {
+        "row": 23,
+        "cells": {
+          "A": "Tab 09",
+          "B": "09_Questionnaire_Instructions",
+          "C": "Discovery framework governance, user guidelines, priority definitions & 30-day timeline",
+          "D": "Chat 4: Discovery Framework",
+          "E": "Project Management"
+        }
+      },
+      {
+        "row": 24,
+        "cells": {
+          "A": "Tab 10",
+          "B": "10_Q_Hospital_Profile_Brand",
+          "C": "Discovery intake: Legal name, taglines, spiritual legacy, color palette, multilingual",
+          "D": "Chat 4: Discovery Framework",
+          "E": "Trustees & Marketing"
+        }
+      },
+      {
+        "row": 25,
+        "cells": {
+          "A": "Tab 11",
+          "B": "11_Q_General_Hospital_Services",
+          "C": "Discovery intake: Allopathic specialties, 24/7 casualty, IPD beds, OTs, pathology, pharmacy",
+          "D": "Chat 4: Discovery Framework",
+          "E": "CMO & Nursing Lead"
+        }
+      },
+      {
+        "row": 26,
+        "cells": {
+          "A": "Tab 12",
+          "B": "12_Q_Unani_Wing_and_Research",
+          "C": "Discovery intake: Mizaj, Hijama SOPs, Sunnah days, Leech therapy, herbal formulary, trials",
+          "D": "Chat 4: Discovery Framework",
+          "E": "Chief Unani Medical Officer"
+        }
+      },
+      {
+        "row": 27,
+        "cells": {
+          "A": "Tab 13",
+          "B": "13_Q_Doctors_Staff_Directory",
+          "C": "Discovery intake: Doctor credentials, OPD rosters, consultation fees, bio data & headshots",
+          "D": "Chat 4: Discovery Framework",
+          "E": "Medical Administration"
+        }
+      },
+      {
+        "row": 28,
+        "cells": {
+          "A": "Tab 14",
+          "B": "14_Q_Digital_Portal_and_Tech",
+          "C": "Discovery intake: Booking workflows, WhatsApp API, LIS report download, Next.js hosting",
+          "D": "Chat 4: Discovery Framework",
+          "E": "IT & Software Ops"
+        }
+      },
+      {
+        "row": 29,
+        "cells": {
+          "A": "Tab 15",
+          "B": "15_Q_Sitemap_and_SEO_Strategy",
+          "C": "Discovery intake: 8-page main menu, 5 service landing pages, local Hyderabad SEO terms",
+          "D": "Chat 4: Discovery Framework",
+          "E": "Web Strategy & SEO"
+        }
+      },
+      {
+        "row": 30,
+        "cells": {
+          "A": "Tab 16",
+          "B": "16_Q_Media_Trust_Compliance",
+          "C": "Discovery intake: Photography asset list, patient video consent, AYUSH licenses, privacy",
+          "D": "Chat 4: Discovery Framework",
+          "E": "PR, Legal & Quality QA"
+        }
+      },
+      {
+        "row": 31,
+        "cells": {
+          "A": "Tab 17",
+          "B": "17_Project_Roadmap_and_NextSteps",
+          "C": "30-day phased delivery schedule, RACI matrix, critical milestones & user decision checklist",
+          "D": "Chat 4: Delivery Roadmap",
+          "E": "Executive Leadership"
+        }
+      },
+      {
+        "row": 33,
+        "cells": {
+          "A": "3. KEY DECISION CHECKLIST FOR THE USER (NEXT STEPS)"
+        }
+      },
+      {
+        "row": 34,
+        "cells": {
+          "A": "Item ID",
+          "B": "Decision Domain",
+          "C": "Decision Options / Strategic Choices",
+          "D": "Recommended Path",
+          "E": "User Action Required"
+        }
+      },
+      {
+        "row": 35,
+        "cells": {
+          "A": "DEC-01",
+          "B": "Web Portal Architecture",
+          "C": "Option A: Next.js + Tailwind + Supabase (Fast, Modern) vs Option B: WordPress CMS",
+          "D": "Option A (Next.js Trilingual Web App)",
+          "E": "Approve tech architecture"
+        }
+      },
+      {
+        "row": 36,
+        "cells": {
+          "A": "DEC-02",
+          "B": "Patient Booking Workflow",
+          "C": "Option A: Instant WhatsApp Chat Redirect vs Option B: Direct Slot Booking with SMS",
+          "D": "Hybrid: Form with WhatsApp auto-fill",
+          "E": "Confirm booking preference"
+        }
+      },
+      {
+        "row": 37,
+        "cells": {
+          "A": "DEC-03",
+          "B": "Unani Medicine Dispatch",
+          "C": "Option A: Phase 1 Simple Inquiry Form vs Option B: Full E-Commerce Gateway",
+          "D": "Phase 1 Inquiry -> Phase 2 Razorpay E-Shop",
+          "E": "Confirm dispatch scope"
+        }
+      },
+      {
+        "row": 38,
+        "cells": {
+          "A": "DEC-04",
+          "B": "Media Asset Ingestion",
+          "C": "High-res logo vector, doctor headshots, and hospital facility photos",
+          "D": "Upload to Drive /01_Branding folder",
+          "E": "Share photos/assets"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "01_Outreach_Master_Row",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "HEALTHCARE OUTREACH MASTER DATABASE — AL ARIF HOSPITAL ENTRY"
+        }
+      },
+      {
+        "row": 3,
+        "cells": {
+          "A": "Clinic_Name",
+          "B": "Area_Location",
+          "C": "Key_Doctors",
+          "D": "Specialty",
+          "E": "Phone_Number",
+          "F": "Address",
+          "G": "OPD_Timings",
+          "H": "Current_Website_Status",
+          "I": "Google_Rating",
+          "J": "Operational_Pain_Points",
+          "K": "Tailored_Pitch_Ideas",
+          "L": "Verification_Category",
+          "M": "Recommended_Web_Application_Module"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Al Arif General Hospital and Unani Research Institute",
+          "B": "Bandlaguda / Chandrayangutta, Hyderabad",
+          "C": "Dr. Tauheed (Unani Physician & Researcher), Dr. Sajjad Hussain (General Surgeon), Dr. Naima (Infertility Specialist), Dr. Saheen (Gynecologist & Obstetrician), Dr. Ameena (General Physician)",
+          "D": "Integrative Healthcare, Unani Medicine, Regimental Therapy (Hijama/Cupping), General Surgery (Hernia), Gynecology & Infertility, Paralysis/Facial Palsy Rehab, Joint & Arthritis Care",
+          "E": "+91 85550 86667 / +91 99087 00336",
+          "F": "18-13-132/41/A & B, Tulsi Nagar, Noori Nagar, Near Dargah Hazrat Syed Noori Shah Sahab, Bandlaguda, Chandrayangutta, Hyderabad, Telangana 500005",
+          "G": "Hospital & Emergency: 24 Hours / 7 Days; General & Specialty OPD: Mon-Sat 9:00 AM - 9:00 PM (Sunday Inpatient & Emergency)",
+          "H": "No Custom Interactive Web App (Draft Website Content in Google Docs; Lacks Online Patient Booking & Digital Pharmacy)",
+          "I": "4.7 (281 Google Reviews) / 4.9 (334 Justdial Reviews)",
+          "J": "1. High walk-in patient crowding during peak morning/evening OPD hours near Bandlaguda corridor.\n2. Manual scheduling for specialized Hijama/cupping therapies requiring therapist gender allocation and pre-procedure fasting prep.\n3. Out-of-station and overseas patients lack an online portal to re-order customized Unani herbal formulations.\n4. Long-term infertility and paralysis recovery data tracked on paper files prone to loss.",
+          "K": "1. Integrative Hospital OPD Slot Booking & Live Token Queue Tracking Web App.\n2. Regimental Therapy (Hijama) Gender-Specific Appointment Scheduler with prep guidelines.\n3. Unani Herbal Medicine E-Commerce Re-Order & Courier Dispatch Portal.\n4. Confidential Patient Infertility & Chronic Paralysis Recovery Logbook.",
+          "L": "100% Website-Free (No Interactive Web Presence)",
+          "M": "Integrative Hospital OPD Slot Booking, Regimental Therapy (Hijama) Scheduler & Unani Medicine Dispatch Portal"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "02_Hospital_Overview",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE — INSTITUTION PROFILE"
+        }
+      },
+      {
+        "row": 3,
+        "cells": {
+          "A": "Metric / Attribute",
+          "B": "Detailed Institutional Information",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Legal & Trade Name",
+          "B": "Al Arif General Hospital & Unani Research Institute",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "Core Identity",
+          "B": "Multi-Specialty General Hospital & Specialized Unani Clinical Research Facility",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "Primary Mission",
+          "B": "Integrative healing bridging contemporary allopathic medical/surgical care with evidence-based Unani botanical therapeutics (Ilaj-bil-Dawa) and regimental therapy (Ilaj-bil-Tadbeer).",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "Year Established / Legacy",
+          "B": "25+ Years of community healthcare service in South Hyderabad",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "Complete Physical Address",
+          "B": "18-13-132/41/A & B, Tulsi Nagar, Noori Nagar, Bandlaguda, Chandrayangutta, Hyderabad, Telangana 500005, India",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "Prominent Landmark",
+          "B": "Adjacent to Dargah Hazrat Syed Noori Shah Jeelani Chishti Qadiri (RA), Bandlaguda Road",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 10,
+        "cells": {
+          "A": "Catchment Areas Served",
+          "B": "Bandlaguda, Chandrayangutta, Barkas, Falaknuma, Mailardevpally, Balapur, Shaheen Nagar, and regional patients across Telangana & Andhra Pradesh",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 11,
+        "cells": {
+          "A": "Primary Phone Numbers",
+          "B": "+91 85550 86667 (Direct Reception Desk) / +91 99087 00336 (WhatsApp & Help Desk)",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 12,
+        "cells": {
+          "A": "Operating Schedule (Hospital)",
+          "B": "Open 24 Hours / 7 Days a week (Emergency, Daycare, Inpatient Admissions)",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 13,
+        "cells": {
+          "A": "OPD Consultation Hours",
+          "B": "Monday to Saturday: 9:00 AM – 9:00 PM (Break/Shift rotation around 2:00 PM - 5:00 PM); Sunday: Emergency & Inpatient Rounds",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 14,
+        "cells": {
+          "A": "Google Rating & Reviews",
+          "B": "4.7 / 5.0 (281 verified Google Reviews)",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 15,
+        "cells": {
+          "A": "Justdial Rating & Reviews",
+          "B": "4.9 / 5.0 (334 verified Justdial Reviews)",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 16,
+        "cells": {
+          "A": "Licensing & Accreditations",
+          "B": "Registered Healthcare Establishment, Government of Telangana; Unani Research Facility compliance",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 17,
+        "cells": {
+          "A": "Bed Strength & Infrastructure",
+          "B": "General OPD consultation rooms, Inpatient (IPD) observation beds, Operation Theatre for general surgeries, Dedicated Sterile Hijama / Regimental Therapy suite, In-House Pathology Lab, and Specialized Unani Herbal Dispensing Pharmacy",
+          "C": "",
+          "D": ""
+        }
+      },
+      {
+        "row": 18,
+        "cells": {
+          "A": "Consultation Fee Structure",
+          "B": "Subsidized Community Model (Nominal consultation fees starting at ₹100 for Unani OPD, accessible high-quality care)",
+          "C": "",
+          "D": ""
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "03_Doctors_and_Specialties",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "CLINICAL FACULTY, SPECIALISTS & CONSULTING DOCTORS"
+        }
+      },
+      {
+        "row": 3,
+        "cells": {
+          "A": "Doctor Name",
+          "B": "Designation / Role",
+          "C": "Clinical Department",
+          "D": "Key Specialties & Clinical Focus",
+          "E": "OPD Schedule / Timings",
+          "F": "Consultation Fee",
+          "G": "Patient Impact & Corroborated Cases"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Dr. Tauheed (Dr. Touheed)",
+          "B": "Senior Consultant Unani Physician & Clinical Researcher",
+          "C": "Unani Medicine & Research Wing",
+          "D": "Facial Palsy (Bell's Palsy), Post-Stroke Neurological Rehab, Chronic Arthritis, Sciatica, Degenerative Joint Pain, Chronic Constipation & Gastrointestinal Disorders, General Debility & Fatigue",
+          "E": "Mon-Sat: 10:00 AM - 1:30 PM & 6:00 PM - 9:00 PM",
+          "F": "₹100 - ₹200 (Nominal Subsidized)",
+          "G": "Highly renowned across Telangana; multiple verified patient recoveries from long-term facial palsy, severe sciatica, and chronic gastrointestinal issues using herbal formulations."
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "Dr. Sajjad Hussain",
+          "B": "Senior Consultant General & Laparoscopic Surgeon",
+          "C": "General & Open Surgery",
+          "D": "Open Hernia Repair, Hydrocele Surgery, Appendectomy, Minor Daycare Surgeries, Cyst Excision, Wound Care & Diabetic Foot Debridement",
+          "E": "Mon-Sat: On-Call / Scheduled Surgical Slots & Evening OPD (6:30 PM - 8:30 PM)",
+          "F": "₹200 - ₹300",
+          "G": "Commended for successful hernia surgeries, low-cost surgical intervention, and smooth post-operative recovery."
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "Dr. Naima",
+          "B": "Consultant Infertility Specialist & Unani Physician",
+          "C": "Reproductive Health & Infertility Wing",
+          "D": "Female & Male Infertility Assessment, PCOD/PCOS Management, Ovulatory Dysfunction, Hormonal Balancing, Herbal Conception Protocols (Mughalliz & Muqawwi formulations)",
+          "E": "Mon-Sat: 10:30 AM - 2:00 PM",
+          "F": "₹100 (Justdial Listed)",
+          "G": "Dedicated fertility clinics offering affordable, non-invasive therapeutic alternatives to expensive IVF for couples in Old City and suburban Hyderabad."
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "Dr. Saheen",
+          "B": "Consultant Obstetrician & Gynecologist",
+          "C": "Obstetrics & Gynecology (OBG)",
+          "D": "Antenatal Care (ANC), High-Risk Maternity Screening, Postnatal Care (PNC), Normal & Operative Deliveries, Menstrual Irregularities, Leucorrhea, Pelvic Inflammatory Disease",
+          "E": "Mon-Sat: 11:00 AM - 3:00 PM & 6:00 PM - 8:30 PM",
+          "F": "₹150 - ₹250",
+          "G": "Primary maternity care provider for local mothers in Noori Nagar, Bandlaguda, and Chandrayangutta communities."
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "Dr. Ameena",
+          "B": "Clinical Medical Officer & General Physician",
+          "C": "General Medicine OPD & Emergency Triage",
+          "D": "Acute Seasonal Fevers (Dengue, Typhoid, Malaria), Hypertension, Type 2 Diabetes Screening, Upper Respiratory Infections, Pediatric General Health, First Aid",
+          "E": "Mon-Sat: 9:00 AM - 2:00 PM & 5:00 PM - 9:00 PM",
+          "F": "₹100",
+          "G": "Handles high-volume daily OPD walk-ins, primary diagnostic triaging, and emergency stabilization."
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "Regimental Therapy Unit",
+          "B": "Certified Hijama & Ilaj-bil-Tadbeer Therapists (Male & Female)",
+          "C": "Regimental Therapy / Cupping Center",
+          "D": "Therapeutic Wet & Dry Hijama, Dal'k (Medical Massage Therapy), Nutool (Herbal Pouring/Irrigation), Riyazat (Physical Rehabilitation & Joint Mobilization)",
+          "E": "Daily by Appointment: 9:30 AM - 1:00 PM & 4:30 PM - 8:30 PM",
+          "F": "₹300 - ₹600 per session",
+          "G": "Sterile single-use cup procedures for cervical spondylosis, migraine, lower back ache, chronic skin diseases, and detox therapies."
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "04_Clinical_Services",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "CLINICAL SERVICES, DEPARTMENTS & SPECIALIZED PROCEDURES"
+        }
+      },
+      {
+        "row": 3,
+        "cells": {
+          "A": "Department / Specialty",
+          "B": "Clinical Modality",
+          "C": "Conditions Treated / Procedures Offered",
+          "D": "Diagnostic & Therapeutic Equipment",
+          "E": "Target Patient Demographic",
+          "F": "Key Competitive Advantage"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Unani Research & Botanical Pharmacotherapy",
+          "B": "Ayush / Classical Unani (Ilaj-bil-Dawa & Ilaj-bil-Ghiza)",
+          "C": "Chronic Joint Pain, Osteoarthritis, Sciatica, Vitiligo (Bars), Eczema, Psoriasis, Liver Dysfunction, Kidney Stones (Hisaat-e-Kulyah), Chronic Gastritis & IBS",
+          "D": "Bioactive pure compound Murakkabat (Majun, Habb, Itrifal, Roghan), single herbs (Mufradat), and patient Mizaj diagnostic profiling tools.",
+          "E": "Chronic patients seeking natural, side-effect-free healing without dependency on lifetime immunosuppressants.",
+          "F": "Over 25 years of empirical clinical validation; personalized formulation adjustments according to individual patient Mizaj."
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "Regimental Therapy (Ilaj-bil-Tadbeer)",
+          "B": "Traditional Physical & Regimental Medicine",
+          "C": "Wet Cupping (Hijama Bish-Shart), Dry Cupping, Dal'k (Therapeutic Musculoskeletal Massage), Herbal Steam Fomentation, Hammam therapy",
+          "D": "Clinical-grade autoclaved and disposable vacuum cupping sets, surgical blades, sterile drapes, and herbal extraction apparatus.",
+          "E": "Patients with migraine, chronic spinal pain, hypertension, frozen shoulder, and metabolic sluggishness.",
+          "F": "Strict clinical asepsis, hospital-grade sanitation, separate dedicated wings for male and female patients."
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "Neurological Care & Facial Palsy Rehab",
+          "B": "Neuroprotective Unani Herbal Therapies & Physiotherapy",
+          "C": "Bell's Palsy / Facial Paralysis, Hemiplegia, Post-Stroke Motor Deficit, Peripheral Neuropathies, Neuralgia",
+          "D": "Targeted neuro-stimulatory herbal liniments (Roghan), facial muscle re-education protocols, systemic neuro-tonics (Muqawwi-e-Aasab).",
+          "E": "Post-stroke recovery patients, acute Bell's palsy sufferers, geriatric patients.",
+          "F": "High success rate corroborated by patient reviews from Mahbubnagar, Hyderabad, and rural Telangana."
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "General & Laparoscopic Surgery",
+          "B": "Allopathic Surgical Wing",
+          "C": "Inguinal & Ventral Hernia Repair, Hydrocelectomy, Appendectomy, Abscess Incision & Drainage, Diabetic Foot Debridement",
+          "D": "Dedicated Operating Theatre (OT), sterilization autoclave, vital signs multipara monitors, surgical diathermy.",
+          "E": "Surgical patients seeking low-cost, high-skill surgical care without corporate hospital billing inflation.",
+          "F": "Led by experienced surgeons (Dr. Sajjad Hussain); transparent pricing and rapid post-op discharge."
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "Obstetrics, Gynecology & Infertility",
+          "B": "Integrative Women's Health",
+          "C": "Primary & Secondary Infertility, PCOD/PCOS, Antenatal Maternity Checkups, Normal Deliveries, Postpartum Healing, Menopausal Care",
+          "D": "Fetal Doppler, labor room bed, pelvic examination suites, diagnostic ultrasound referral linkage.",
+          "E": "Mothers and expectant couples in Chandrayangutta and Bandlaguda seeking compassionate, affordable care.",
+          "F": "Combination of allopathic maternal monitoring with natural Unani ovarian/uterine tonics."
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "Diagnostic Pathology Laboratory",
+          "B": "Diagnostic Medicine",
+          "C": "Complete Blood Picture (CBP), Blood Glucose (FBS/PPBS), HbA1c, Lipid Profile, Liver Function Tests (LFT), Renal Profile (KFT), Urine Routine, ESR",
+          "D": "Semi-automated biochemistry analyzers, hematology cell counters, centrifuge, light microscopy.",
+          "E": "Walk-in hospital patients and chronic disease monitoring.",
+          "F": "Rapid turnaround time; integrated directly with physician OPD consultation rooms."
+        }
+      },
+      {
+        "row": 10,
+        "cells": {
+          "A": "In-House Unani & Allopathic Pharmacy",
+          "B": "Pharmaceutical Dispensing",
+          "C": "Dispensing authentic Unani compound preparations, classical syrups (Sharbat), electuaries (Majun), powders (Sufoof), and essential emergency allopathic drugs",
+          "D": "Standardized herbal storage, humidity-controlled apothecary shelves, sealed dosage packaging.",
+          "E": "Outpatients and out-of-station mail-order patients.",
+          "F": "Guaranteed botanical purity, avoiding adulterated commercial OTC herbal mixtures."
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "05_Operational_Pain_Points",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "OPERATIONAL BOTTLENECK ANALYSIS & REVENUE LEAKAGE AUDIT"
+        }
+      },
+      {
+        "row": 3,
+        "cells": {
+          "A": "Operational Area",
+          "B": "Current Manual Workflow / Status Quo",
+          "C": "Identified Friction Points & Patient Pain",
+          "D": "Business / Clinical Impact",
+          "E": "Severity Level"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "OPD Patient Flow & Token Queue",
+          "B": "Patients walk in and register on physical paper register books; manual tokens called verbally across waiting hall.",
+          "C": "High patient rush during morning (10 AM - 1 PM) and evening (6 PM - 9 PM) causes waiting room congestion, long idle wait times (45–90 mins), and reception desk disputes.",
+          "D": "Patient walk-outs, poor first impression for high-value specialty patients, front-desk staff fatigue.",
+          "E": "HIGH"
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "Hijama & Regimental Therapy Scheduling",
+          "B": "Patients arrive unannounced or attempt to book via ad-hoc phone calls to busy reception landlines.",
+          "C": "Hijama requires 20-30 min per patient, sterile suite preparation, pre-session fasting compliance (2-3 hrs), and gender-specific therapist availability (male/female therapists). Manual scheduling causes double-bookings and room bottlenecks.",
+          "D": "Sub-optimal room utilization, delayed procedures, patient embarrassment or rescheduled appointments.",
+          "E": "CRITICAL"
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "Outstation Medicine Re-Ordering",
+          "B": "Chronic arthritis and paralysis patients from Mahbubnagar, Nizamabad, and Gulf NRIs must call reception or send relatives to physically buy medicines.",
+          "C": "No structured e-commerce catalog, payment gateway, or dispatch tracker exists. Inquiries on WhatsApp get buried under routine chat messages.",
+          "D": "Significant revenue loss from chronic refill drop-offs; loss of overseas and regional patient lifetime value.",
+          "E": "HIGH"
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "Infertility & Long-Term Patient Tracking",
+          "B": "Patient case records, ovulation calendars, and herbal prescription histories are kept in physical patient files or carried by patients on paper slips.",
+          "C": "Patients frequently misplace previous cycle records; doctors spend excessive consultation time reviewing fragmented past history.",
+          "D": "Compromised longitudinal clinical tracking, inability to showcase structured clinical outcome statistics.",
+          "E": "MEDIUM"
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "Digital Brand Presence & Search Visibility",
+          "B": "Hospital relies entirely on word-of-mouth, Justdial, and Google Maps listings. While website copy was drafted in a Google Doc, no production website or interactive web app is live.",
+          "C": "Younger demographic, tech-savvy families, and out-of-town patients looking for verified Unani hospitals cannot find verified doctor credentials, treatment guides, or online booking.",
+          "D": "Cedes patient acquisition to modern corporate hospitals and private AYUSH chains with aggressive digital marketing.",
+          "E": "HIGH"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "06_Tech_Pitch_Modules",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "TAILORED WEB DEVELOPMENT & AUTOMATION PITCH ARCHITECTURE"
+        }
+      },
+      {
+        "row": 3,
+        "cells": {
+          "A": "Proposed Software Module",
+          "B": "Functional Specifications & Features",
+          "C": "Targeted User Persona",
+          "D": "Direct Operational Benefit",
+          "E": "Implementation Complexity / Stack"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Module 1: High-Performance Hospital Web Portal",
+          "B": "Next.js / React mobile-first responsive web portal featuring institutional heritage (25+ yrs), department showcases, doctor credentials (Dr. Tauheed, Dr. Sajjad Hussain, etc.), verified patient testimonials, and interactive directions from Falaknuma/Chandrayangutta.",
+          "C": "Prospective patients, family members, overseas NRIs seeking credible Unani healing.",
+          "D": "Builds strong digital authority, stops patient leakage to commercial competitors, and serves as the single digital entry point.",
+          "E": "Frontend: Next.js + Tailwind CSS + Shadcn/UI; Fast CDN hosting."
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "Module 2: Live OPD Token & Digital Queue Tracker",
+          "B": "Real-time token generation web app allowing patients to book priority tokens online. Live queue status dashboard visible on patient mobile phones and wall-mounted waiting room displays showing current serving token.",
+          "C": "Daily walk-in patients, outpatients with chronic conditions, reception staff.",
+          "D": "Eliminates 70% of physical waiting room crowding; reduces patient anxiety; streamlines doctor OPD pacing.",
+          "E": "Full-Stack: Supabase Realtime + WhatsApp Webhook for live queue alerts."
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "Module 3: Hijama & Regimental Therapy Reservation Engine",
+          "B": "Dedicated scheduling workflow featuring therapist gender selection (Male/Female certified practitioners), slot selection (morning/evening), automated pre-procedure fasting prep guidelines (SMS/WhatsApp), and post-cupping care instructions.",
+          "C": "Cupping/Hijama therapy seekers, chronic back pain, migraine, and musculoskeletal patients.",
+          "D": "Optimizes therapy room utilization; ensures zero patient overlap; guarantees patient privacy and compliance.",
+          "E": "Custom Booking Engine + Automated WhatsApp Twilio/Cloud API reminders."
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "Module 4: Unani Herbal Medicine Re-Order & Courier Dispatch",
+          "B": "Secure prescription refill web store where established chronic patients can enter their Hospital Patient ID, select prescribed herbal courses (Majun, Sharbat, Roghan), pay securely via UPI/Cards/Netbanking, and receive trackable courier dispatch updates.",
+          "C": "Chronic arthritis, vitiligo, paralysis patients in regional districts and Gulf countries.",
+          "D": "Unlocks recurring medicine revenue; eliminates manual phone coordination; formalizes shipping logistics.",
+          "E": "E-Commerce: Supabase DB + Razorpay/Stripe Gateway + Shiprocket API integration."
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "Module 5: Digital Infertility & Chronic Care Vitals Vault",
+          "B": "Lightweight, secure patient health portal enabling mothers and chronic disease patients to access digital lab reports, track treatment milestones, and record symptom recovery scales (pain scale, mobility score).",
+          "C": "Infertility patients, paralysis rehab patients, chronic diabetics.",
+          "D": "Enhanced clinical compliance; provides documented recovery case studies for hospital research publications.",
+          "E": "Encrypted Document Vault + PDF report generator."
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "Module 6: WhatsApp Business Smart Triage Bot",
+          "B": "24/7 automated WhatsApp conversational assistant that handles routine inquiries: OPD timings, doctor availability schedule, location map, Hijama preparation instructions, and emergency contact connection.",
+          "C": "All incoming phone callers, local community residents.",
+          "D": "Reduces reception desk phone burden by 60%; instant 24/7 patient response.",
+          "E": "n8n Workflow Automation + WhatsApp Business API."
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "07_Patient_Reviews_Analysis",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "VERIFIED PATIENT REVIEWS, CLINICAL TESTIMONIALS & SENTIMENT AUDIT"
+        }
+      },
+      {
+        "row": 3,
+        "cells": {
+          "A": "Source / Platform",
+          "B": "Reviewer Quote / Case Corroboration",
+          "C": "Treated Condition / Department",
+          "D": "Treating Physician / Service",
+          "E": "Key Sentiment & Marketing Takeaway"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Google Maps Review (Verified)",
+          "B": "\"I am from Mahbubnagar, was fully recovered from facial palsy at Al Arif Unani Hospital in Bandlaguda Hyderabad. Doctor and service is very good. I was fully recovered by herbal Unani medicine thanks to Dr. Tauheed.\"",
+          "C": "Facial Palsy (Bell's Palsy) / Neurological Rehab",
+          "D": "Dr. Tauheed",
+          "E": "Extremely high positive sentiment for specialized neurological recovery; proves regional pull beyond Hyderabad (Mahbubnagar)."
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "Google Maps Review (Verified)",
+          "B": "\"My hernia problem was totally solved after Dr. Sajjad Hussain has done open surgery at Al Arif Hospital of Hyderabad.\"",
+          "C": "General Surgery / Hernia Repair",
+          "D": "Dr. Sajjad Hussain",
+          "E": "Strong surgical endorsement; demonstrates high-caliber open surgical capability alongside Unani care."
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "Google Maps Review (Verified)",
+          "B": "\"I was suffering from chronic joint pains since many years. I was completely healed after visiting Dr. Tauheed at Al Arif General Hospital & Unani Research Institute which is located near Bandlaguda Hyderabad.\"",
+          "C": "Chronic Joint Pain / Arthritis",
+          "D": "Dr. Tauheed",
+          "E": "Validates long-term chronic pain alleviation using authentic Unani formulations."
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "Google Maps Review (Verified)",
+          "B": "\"Al Arif General Hospital & Unani Research Institute, Bandlaguda have good doctors and facilities especially Dr. Touheed who cured my chronic general weakness.\"",
+          "C": "General Debility & Metabolic Care",
+          "D": "Dr. Touheed",
+          "E": "Highlights holistic constitutional tonics and lifestyle rejuvenation."
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "Google Maps Review (Verified)",
+          "B": "\"I have a problem of constipation since 3 months. After I met Dr. Tauheed sir in Al Arif Unani Medical Hospital and Research Institute Bandlaguda Noori Nagar, I got good results. They gave me Unani medicine... Alhamdulillah I am fine right now. I recommend to come and take benefits from this Hospital and Doctors.\"",
+          "C": "Gastrointestinal / Chronic Constipation",
+          "D": "Dr. Tauheed",
+          "E": "Demonstrates effectiveness in difficult chronic gastrointestinal disorders where conventional medicine often relies on habit-forming laxatives."
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "Justdial Verified (334 Reviews, 4.9★)",
+          "B": "Rated 4.9 out of 5 across 334 reviews highlighting Dr. Naima's infertility care (fee ₹100), compassionate nursing staff, and accessible community healthcare.",
+          "C": "Infertility, Gynecology & General OPD",
+          "D": "Dr. Naima, Dr. Saheen, Dr. Ameena",
+          "E": "Affordable community healthcare reputation; exceptional patient trust in maternal and reproductive services."
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "08_Website_Content_Blueprint",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE — PRODUCTION WEBSITE BLUEPRINT"
+        }
+      },
+      {
+        "row": 2,
+        "cells": {
+          "A": "Complete Master Copy, Content Hierarchy, Wireframe Layout & Functional Form Specifications (From Google Doc)"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "1. GLOBAL HEADER & ANNOUNCEMENT BAR"
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "Ref ID",
+          "B": "UI Component",
+          "C": "Display Label / Heading",
+          "D": "Production Body Copy / Text Content",
+          "E": "Target Action / Functional Link",
+          "F": "Strategic Purpose"
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "WB-01",
+          "B": "Top Utility Bar",
+          "C": "Hospital Timings & Location",
+          "D": "Bandlaguda, Chandrayangutta, Hyderabad | OPD: Mon–Sat 9:00 AM – 9:00 PM",
+          "E": "Emergency / Desk [Book Consultation]",
+          "F": "Instant credibility and working hours visibility"
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "WB-02",
+          "B": "Primary Header",
+          "C": "Institution Brand",
+          "D": "Al Arif General Hospital & Unani Research Institute",
+          "E": "Links to Home (#id.g8i6i5jdh05h)",
+          "F": "Authoritative institutional title"
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "WB-03",
+          "B": "Main Navigation",
+          "C": "Menu Bar (6 Links)",
+          "D": "About Us | Clinical Services | Unani & Research | Doctors | Contact & Location",
+          "E": "Page anchor links (#id.d3kebt273y4x etc.)",
+          "F": "Clean 5-item navigation for rapid patient access"
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "WB-04",
+          "B": "Header CTAs",
+          "C": "Quick Contact Buttons",
+          "D": "WhatsApp Help: +91 99087 00336 | Book Appointment",
+          "E": "https://wa.me/919908700336?text=Hello+Al+Arif+Hospital...",
+          "F": "Direct WhatsApp inquiry channel for local patients"
+        }
+      },
+      {
+        "row": 11,
+        "cells": {
+          "A": "2. HERO SECTION & VALUE PROPOSITIONS"
+        }
+      },
+      {
+        "row": 12,
+        "cells": {
+          "A": "Ref ID",
+          "B": "UI Component",
+          "C": "Display Label / Heading",
+          "D": "Production Body Copy / Text Content",
+          "E": "Target Action / Functional Link",
+          "F": "Strategic Purpose"
+        }
+      },
+      {
+        "row": 13,
+        "cells": {
+          "A": "WB-05",
+          "B": "Hero Kicker",
+          "C": "Integrative Healthcare",
+          "D": "Integrative Healthcare & Traditional Excellence",
+          "E": "Text Banner",
+          "F": "Positions dual allopathic + Unani heritage"
+        }
+      },
+      {
+        "row": 14,
+        "cells": {
+          "A": "WB-06",
+          "B": "Hero Main Headline",
+          "C": "H1 Main Headline",
+          "D": "Holistic Care Blending Modern Medicine & Unani Healing",
+          "E": "H1 Typography (#0B4F30)",
+          "F": "Core value proposition driving patient confidence"
+        }
+      },
+      {
+        "row": 15,
+        "cells": {
+          "A": "WB-07",
+          "B": "Hero Sub-headline",
+          "C": "Mission Statement",
+          "D": "Serving the community at Bandlaguda, Chandrayangutta with advanced outpatient and inpatient medical care alongside specialized research-backed Unani regimental therapies.",
+          "E": "Lead Paragraph",
+          "F": "Local community grounding + specialty clarity"
+        }
+      },
+      {
+        "row": 16,
+        "cells": {
+          "A": "WB-08",
+          "B": "Hero Action Buttons",
+          "C": "Dual Call to Action",
+          "D": "Primary: [Consult a Specialist] | Secondary: [Explore Departments]",
+          "E": "Directs to Booking Form / Departments",
+          "F": "Immediate conversion paths for patients"
+        }
+      },
+      {
+        "row": 17,
+        "cells": {
+          "A": "WB-09",
+          "B": "Trust Badges",
+          "C": "Three Proof Points",
+          "D": "1) 25+ Years of Service | 2) 4.9★ Patient Satisfaction | 3) 100% Holistic Care",
+          "E": "Visual Metric Badges",
+          "F": "Social proof overcoming first-time patient skepticism"
+        }
+      },
+      {
+        "row": 19,
+        "cells": {
+          "A": "3. QUICK OPD TOKEN RESERVATION (HOMEPAGE WIDGET)"
+        }
+      },
+      {
+        "row": 20,
+        "cells": {
+          "A": "Ref ID",
+          "B": "UI Component",
+          "C": "Field Name / Step",
+          "D": "Options / Input Type",
+          "E": "Validation & Behavior",
+          "F": "Strategic Purpose"
+        }
+      },
+      {
+        "row": 21,
+        "cells": {
+          "A": "WB-10",
+          "B": "Form Header",
+          "C": "Request an OPD Consultation",
+          "D": "Select your department and preferred time for priority outpatient token reservation.",
+          "E": "Card Container",
+          "F": "Above-the-fold token reservation widget"
+        }
+      },
+      {
+        "row": 22,
+        "cells": {
+          "A": "WB-11",
+          "B": "Input Field 1",
+          "C": "Patient Full Name",
+          "D": "Text Input (Mandatory)",
+          "E": "Min 3 characters required",
+          "F": "Patient identification"
+        }
+      },
+      {
+        "row": 23,
+        "cells": {
+          "A": "WB-12",
+          "B": "Input Field 2",
+          "C": "Phone Number",
+          "D": "Tel Input (WhatsApp Preferred)",
+          "E": "10-digit Indian Mobile validation",
+          "F": "Instant SMS/WhatsApp token confirmation"
+        }
+      },
+      {
+        "row": 24,
+        "cells": {
+          "A": "WB-13",
+          "B": "Dropdown Field 3",
+          "C": "Clinical Department",
+          "D": "Options: General Medicine | Unani Clinical Care | Gynecology & Infertility | Hijama / Regimental Therapy | Orthopedics & Joint Care",
+          "E": "Select menu (Mandatory)",
+          "F": "Routes token to specific doctor OPD room"
+        }
+      },
+      {
+        "row": 25,
+        "cells": {
+          "A": "WB-14",
+          "B": "Date Picker Field 4",
+          "C": "Preferred Date",
+          "D": "Calendar Date Picker (Mon-Sat valid)",
+          "E": "Disallow past dates and Sundays",
+          "F": "Pre-schedules patient OPD flow"
+        }
+      },
+      {
+        "row": 26,
+        "cells": {
+          "A": "WB-15",
+          "B": "Submit CTA & Note",
+          "C": "Submit Consultation Request",
+          "D": "Note: Walk-ins are also accommodated during regular OPD hours.",
+          "E": "Submits form -> triggers WhatsApp message",
+          "F": "Eliminates queue friction at reception desk"
+        }
+      },
+      {
+        "row": 28,
+        "cells": {
+          "A": "4. ABOUT THE INSTITUTION & FOUNDATIONAL PILLARS"
+        }
+      },
+      {
+        "row": 29,
+        "cells": {
+          "A": "Ref ID",
+          "B": "UI Component",
+          "C": "Display Label / Heading",
+          "D": "Production Body Copy / Text Content",
+          "E": "Target Action / Functional Link",
+          "F": "Strategic Purpose"
+        }
+      },
+      {
+        "row": 30,
+        "cells": {
+          "A": "WB-16",
+          "B": "Section Kicker",
+          "C": "Heritage & Rigor",
+          "D": "A Heritage of Healing & Scientific Rigor",
+          "E": "Section Tag",
+          "F": "Sets clinical and historic tone"
+        }
+      },
+      {
+        "row": 31,
+        "cells": {
+          "A": "WB-17",
+          "B": "Main Narrative",
+          "C": "Founding Journey",
+          "D": "Al Arif General Hospital and Unani Research Institute was established to bridge ancient therapeutic wisdom with contemporary clinical standards. Situated in Bandlaguda, Chandrayangutta, near Dargah Hazrat Syed Noori Shah Sahab, the institute provides accessible, high-quality medical services to patients across Hyderabad and surrounding regions.",
+          "E": "Narrative Block",
+          "F": "Builds profound emotional and regional trust"
+        }
+      },
+      {
+        "row": 32,
+        "cells": {
+          "A": "WB-18",
+          "B": "Pillar 1",
+          "C": "Integrative Protocols",
+          "D": "Evidence-Based Integrative Protocols: Combining conventional allopathic emergency and diagnostic support with time-tested Unani herbal therapy.",
+          "E": "Feature Card 1",
+          "F": "Core clinical differentiator"
+        }
+      },
+      {
+        "row": 33,
+        "cells": {
+          "A": "WB-19",
+          "B": "Pillar 2",
+          "C": "Active Research",
+          "D": "Active Research Division: Clinical trials and standardized formulation assessments in chronic ailment therapies.",
+          "E": "Feature Card 2",
+          "F": "Elevates hospital into a research institution"
+        }
+      },
+      {
+        "row": 34,
+        "cells": {
+          "A": "WB-20",
+          "B": "Pillar 3",
+          "C": "Community Commitment",
+          "D": "Community-Centric Commitment: Subsidized consultations (starting at ₹100), diagnostics, and patient-first compassionate care.",
+          "E": "Feature Card 3",
+          "F": "Reinforces benevolent, accessible healthcare"
+        }
+      },
+      {
+        "row": 35,
+        "cells": {
+          "A": "WB-21",
+          "B": "Facility Cards (4)",
+          "C": "Core Infrastructure",
+          "D": "1) General OPD & IPD (observation beds, minor OT) | 2) Unani Pharmacy (pure compound & single herbs) | 3) Clinical Lab (pathology & blood tests) | 4) Regimental Therapy (Hijama, Dal'k, Riyazat)",
+          "E": "Grid Layout (4 Cards)",
+          "F": "At-a-glance facility overview for visitors"
+        }
+      },
+      {
+        "row": 37,
+        "cells": {
+          "A": "5. COMPREHENSIVE MEDICAL CARE (ALLOPATHIC DEPARTMENTS)"
+        }
+      },
+      {
+        "row": 38,
+        "cells": {
+          "A": "Ref ID",
+          "B": "Clinical Department",
+          "C": "Department Overview",
+          "D": "Key Service Bullet Points",
+          "E": "Specialist Faculty",
+          "F": "Strategic Purpose"
+        }
+      },
+      {
+        "row": 39,
+        "cells": {
+          "A": "WB-22",
+          "B": "General Medicine",
+          "C": "General Medicine & Outpatient Care: Diagnosis and management of seasonal fevers, hypertension, metabolic disorders, and acute illnesses.",
+          "D": "• Daily OPD consultations\n• Preventive health checkups\n• Chronic disease monitoring",
+          "E": "Dr. Ameena & Consulting Physicians",
+          "F": "High-volume daily adult outpatient acquisition"
+        }
+      },
+      {
+        "row": 40,
+        "cells": {
+          "A": "WB-23",
+          "B": "Gynecology & Maternity",
+          "C": "Gynecology & Women's Health: Specialized obstetric care, antenatal screening, infertility management, and menstrual health therapies.",
+          "D": "• Infertility evaluations\n• Antenatal & postnatal consultation\n• PCOD & hormone balance care",
+          "E": "Dr. Saheen (OBG) & Dr. Naima (Infertility)",
+          "F": "Captures high-value maternity & infertility patients"
+        }
+      },
+      {
+        "row": 41,
+        "cells": {
+          "A": "WB-24",
+          "B": "Diagnostics & Pharmacy",
+          "C": "In-House Pharmacy & Diagnostics: Full stock of prescribed allopathic formulations and certified pure Unani herbal compounds.",
+          "D": "• On-site clinical testing & blood draws\n• Customized herbal formulation dispensing\n• Patient medication counseling",
+          "E": "Laboratory Technicians & Pharmacists",
+          "F": "Convenience of one-stop diagnostic and drug pickup"
+        }
+      },
+      {
+        "row": 43,
+        "cells": {
+          "A": "6. UNANI RESEARCH WING & ILAJ-BIL-TADBEER (HERBAL & REGIMENTAL THERAPY)"
+        }
+      },
+      {
+        "row": 44,
+        "cells": {
+          "A": "Ref ID",
+          "B": "Therapy / Focus Area",
+          "C": "Clinical Domain",
+          "D": "Detailed Clinical Methodology & Protocols",
+          "E": "Specialty Lead",
+          "F": "Strategic Purpose"
+        }
+      },
+      {
+        "row": 45,
+        "cells": {
+          "A": "WB-25",
+          "B": "Hijama Center",
+          "C": "Therapeutic Wet & Dry Cupping",
+          "D": "Conducted in a sanitized, sterile clinical setting with disposable single-use equipment by trained male and female practitioners adhering strictly to Sunnah timings and clinical asepsis.",
+          "E": "Certified Hijama Practitioners",
+          "F": "Hyderabad's #1 organic healthcare search category"
+        }
+      },
+      {
+        "row": 46,
+        "cells": {
+          "A": "WB-26",
+          "B": "Joint Pain Clinic",
+          "C": "Chronic Joint & Arthritis Management",
+          "D": "Combination of local medicated liniments (Roghan), herbal steam fomentation, and systemic anti-inflammatory herbal regimes for Osteoarthritis, Sciatica, and Spondylosis.",
+          "E": "Dr. Tauheed (Senior Unani Physician)",
+          "F": "Highly effective alternative to surgical joint interventions"
+        }
+      },
+      {
+        "row": 47,
+        "cells": {
+          "A": "WB-27",
+          "B": "Focus Area 1",
+          "C": "Ilaj-bil-Ghiza (Dietotherapy)",
+          "D": "Customized nutritional adjustments according to the patient's Mizaj (temperament) to stimulate innate self-healing (Tabiyat).",
+          "E": "Dietary Unani Consultants",
+          "F": "Holistic metabolic and lifestyle correction"
+        }
+      },
+      {
+        "row": 48,
+        "cells": {
+          "A": "WB-28",
+          "B": "Focus Area 2",
+          "C": "Ilaj-bil-Dawa (Pharmacotherapy)",
+          "D": "Utilization of single herbs (Mufradat) and compound formulations (Murakkabat: Majun, Safoof, Sharbat, Kushta) with quality-tested bioactive purity.",
+          "E": "Unani Dawakhana In-Charge",
+          "F": "Establishes institutional pharmacological rigor"
+        }
+      },
+      {
+        "row": 49,
+        "cells": {
+          "A": "WB-29",
+          "B": "Focus Area 3",
+          "C": "Infertility & Reproductive Care",
+          "D": "Holistic reproductive healthcare combining gynecological assessment with traditional uterine tonic formulations (Mughalliz & Muqawwi) for male and female subfertility.",
+          "E": "Dr. Naima (Infertility Lead)",
+          "F": "Captures long-term reproductive medicine trust"
+        }
+      },
+      {
+        "row": 50,
+        "cells": {
+          "A": "WB-30",
+          "B": "Focus Area 4",
+          "C": "Neurological & Paralysis Support",
+          "D": "Restorative physical massage (Dal'k), regimental stimulation, and neuroprotective herbal compounds for stroke recovery and Bell's palsy (facial paralysis).",
+          "E": "Dr. Tauheed (Neuro Rehab)",
+          "F": "Flagship regional clinical recovery reputation"
+        }
+      },
+      {
+        "row": 52,
+        "cells": {
+          "A": "7. INTERACTIVE APPOINTMENT SCHEDULER & BOOKING INTERFACE"
+        }
+      },
+      {
+        "row": 53,
+        "cells": {
+          "A": "Ref ID",
+          "B": "Form Element",
+          "C": "Field Specification",
+          "D": "Detailed Input Parameters",
+          "E": "User Action / Feedback",
+          "F": "Strategic Purpose"
+        }
+      },
+      {
+        "row": 54,
+        "cells": {
+          "A": "WB-31",
+          "B": "Field 1",
+          "C": "Patient Name *",
+          "D": "Mandatory Text Input",
+          "E": "Logs patient profile",
+          "F": "Patient registration"
+        }
+      },
+      {
+        "row": 55,
+        "cells": {
+          "A": "WB-32",
+          "B": "Field 2",
+          "C": "Phone Number (WhatsApp) *",
+          "D": "Mandatory Tel Input",
+          "E": "Pre-populates WhatsApp chat",
+          "F": "Direct digital communication"
+        }
+      },
+      {
+        "row": 56,
+        "cells": {
+          "A": "WB-33",
+          "B": "Field 3",
+          "C": "Service / Specialization *",
+          "D": "Dropdown: General Medicine OPD | Unani Medicine & Research Consult | Gynecology & Obstetrics | Hijama / Cupping Session | Joint & Bone Pain Clinic",
+          "E": "Selects specialist",
+          "F": "Routes token to specific clinical roster"
+        }
+      },
+      {
+        "row": 57,
+        "cells": {
+          "A": "WB-34",
+          "B": "Field 4",
+          "C": "Preferred Date *",
+          "D": "Calendar Date Picker (Mon-Sat)",
+          "E": "Selects appointment date",
+          "F": "Capacity management"
+        }
+      },
+      {
+        "row": 58,
+        "cells": {
+          "A": "WB-35",
+          "B": "Field 5",
+          "C": "Preferred Time Slot *",
+          "D": "Options: Morning (10:00 AM - 1:00 PM) | Afternoon (2:00 PM - 5:00 PM) | Evening (6:00 PM - 9:00 PM)",
+          "E": "Selects time window",
+          "F": "Distributes walk-in rush across shifts"
+        }
+      },
+      {
+        "row": 59,
+        "cells": {
+          "A": "WB-36",
+          "B": "Field 6",
+          "C": "Brief Symptoms / Inquiries",
+          "D": "Multi-line Textarea (Optional)",
+          "E": "Clinical notes captured",
+          "F": "Helps doctors pre-review case context"
+        }
+      },
+      {
+        "row": 60,
+        "cells": {
+          "A": "WB-37",
+          "B": "Confirmation CTA",
+          "C": "Confirm & Reserve Slot",
+          "D": "Confirmation Prompt: 'Thank you! Your appointment request has been logged. The hospital reception desk will contact you shortly to confirm your token.'",
+          "E": "Displays confirmation modal + SMS/WhatsApp alert",
+          "F": "Reassures patient of prompt booking confirmation"
+        }
+      },
+      {
+        "row": 62,
+        "cells": {
+          "A": "8. PHYSICAL LOCATION, TIMINGS, MAP CONNECTIVITY & FOOTER"
+        }
+      },
+      {
+        "row": 63,
+        "cells": {
+          "A": "Ref ID",
+          "B": "Component",
+          "C": "Heading / Section",
+          "D": "Production Content / Coordinates",
+          "E": "Link / Target",
+          "F": "Strategic Purpose"
+        }
+      },
+      {
+        "row": 64,
+        "cells": {
+          "A": "WB-38",
+          "B": "Location Details",
+          "C": "Visit Us in Bandlaguda",
+          "D": "Near Dargah Hazrat Syed Noori Shah Sahab, Bandlaguda, Chandrayangutta, Hyderabad, Telangana 500005, India.",
+          "E": "Catchment: Chandrayangutta, Falaknuma, Barkas, Mailardevpally",
+          "F": "Local SEO address grounding"
+        }
+      },
+      {
+        "row": 65,
+        "cells": {
+          "A": "WB-39",
+          "B": "Hours of Operation",
+          "C": "Hospital Operating Timings",
+          "D": "Monday – Saturday: 9:00 AM – 9:00 PM | Sunday: Inpatient Services & Emergency Care (Hospital Open 24/7).",
+          "E": "Displayed in footer & top bar",
+          "F": "Prevents off-hour patient arrivals"
+        }
+      },
+      {
+        "row": 66,
+        "cells": {
+          "A": "WB-40",
+          "B": "Google Maps Link",
+          "C": "Interactive Map",
+          "D": "Landmark: Near Dargah Syed Noori Shah Sahab [Open in Google Maps →]",
+          "E": "https://maps.google.com/?q=Al+Arif+General+Hospital+Bandlaguda+Hyderabad",
+          "F": "Direct GPS driving directions for patients"
+        }
+      },
+      {
+        "row": 67,
+        "cells": {
+          "A": "WB-41",
+          "B": "Footer Links",
+          "C": "Quick Links & Specialties",
+          "D": "About Institute | Clinical Services | Unani & Hijama Care | Book Consultation | General OPD | Obstetrics & Gynecology | Ilaj-bil-Tadbeer | Joint & Pain Relief | Standardized Unani Pharmacy",
+          "E": "Internal page navigation",
+          "F": "Complete internal linking for search engines"
+        }
+      },
+      {
+        "row": 68,
+        "cells": {
+          "A": "WB-42",
+          "B": "Legal & Copyright",
+          "C": "Footer Legal Statement",
+          "D": "© 2026 Al Arif General Hospital & Unani Research Institute. All rights reserved.",
+          "E": "Footer base",
+          "F": "Institutional copyright and IP protection"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "09_Questionnaire_Instructions",
+    "rows": [
+      {
+        "row": 2,
+        "cells": {
+          "B": "AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE"
+        }
+      },
+      {
+        "row": 3,
+        "cells": {
+          "B": "Official Website Development Discovery Questionnaire & Content Intake Framework"
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "B": "Framework Section",
+          "C": "Strategic Guidelines & Operational Context",
+          "D": "Responsible Stakeholder"
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "B": "Project Objective",
+          "C": "To build a modern, authoritative, patient-friendly, and bilingual/trilingual web portal for Al Arif General Hospital & Unani Research Institute. The portal will showcase its dual identity: high-quality Allopathic Healthcare & Emergency Services alongside a world-class Unani Medicine & Research Institute with specialized Ilaj-bit-Tadbeer (Regimental Therapy/Hijama) facilities.",
+          "D": "Project Management"
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "B": "Hospital Location",
+          "C": "18-13-132/41/A & B, Noori Nagar, Bandlaguda, Chandrayangutta, Hyderabad, Telangana 500005 (Near Dargah Hazrat Syed Noori Shah Sahab R.A.).",
+          "D": "Administration"
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "B": "Spiritual & Social Legacy",
+          "C": "Founded under the spiritual lineage and patron guidance of Silsila Nooria / Faizan-e-Noori (Hazrat Sheikh Syed Mohammed Arifuddin Jeelani Noorullah Shah Noori & successors), providing accessible healing to the community.",
+          "D": "Trustees / Management"
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "B": "Target Audience",
+          "C": "1. Local patients & families in Old City Hyderabad & Telangana seeking trusted, affordable, 24/7 allopathic emergency, maternity, surgery, and pediatric care.\n2. Regional, national, and international patients seeking authentic, evidence-based Unani treatments (Hijama/cupping, chronic disease therapy, arthritis, skin conditions, wellness).\n3. Medical researchers, students, and AYUSH collaborators.",
+          "D": "Strategy & Marketing"
+        }
+      },
+      {
+        "row": 10,
+        "cells": {
+          "B": "How to Use This Workbook",
+          "C": "This questionnaire is divided into 7 domain-specific worksheets. Each department head or administrative officer should complete their relevant section:\n• 01_Hospital Profile: Administration, Trust & Brand Marketing\n• 02_General Hospital Services: Medical Superintendent, CMO, Nursing Head\n• 03_Unani Wing & Research: Chief Unani Medical Officer, Research In-Charge\n• 04_Doctor & Staff Directory: HR & Medical Admin\n• 05_Digital Portal & Tech: IT, Billing, Reception & Clinic Operations\n• 06_Sitemap & Page Structure: Marketing & Web Strategy Team\n• 07_Media, Compliance & Trust: PR, Legal, Quality Assurance & Media Team",
+          "D": "Hospital Stakeholders"
+        }
+      },
+      {
+        "row": 11,
+        "cells": {
+          "B": "Priority Legend",
+          "C": "• MANDATORY [Red]: Core institutional information required before web architecture and wireframing can begin.\n• HIGHLY RECOMMENDED [Amber]: Key differentiators that enhance patient trust, online bookings, and clinical authority.\n• OPTIONAL / PHASE 2 [Blue]: Advanced modules that can be launched in Phase 2 post-MVP launch.",
+          "D": "Project Team"
+        }
+      },
+      {
+        "row": 12,
+        "cells": {
+          "B": "Digital Asset Folder Structure",
+          "C": "Please place high-resolution photos, documents, certificates, and logos in a shared Google Drive folder structured as follows:\n/01_Branding_and_Logos\n/02_Hospital_Exterior_and_Interior_Photos\n/03_Doctors_Portraits_and_CVs\n/04_Unani_Therapy_and_Research_Media\n/05_Certificates_Licenses_and_Accreditations",
+          "D": "IT & Media Team"
+        }
+      },
+      {
+        "row": 13,
+        "cells": {
+          "B": "Expected Delivery Milestones",
+          "C": "1. Questionnaire Intake Completion & Sign-off: Days 1-5\n2. Information Architecture, Wireframing & Design Approval: Days 6-12\n3. Front-End & CMS Development (Responsive, Trilingual): Days 13-24\n4. Content Ingestion, Testing, Patient Journey QA: Days 25-28\n5. Launch, Google Business Profile & Local SEO Activation: Day 30",
+          "D": "Timeline"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "10_Q_Hospital_Profile_Brand",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE"
+        }
+      },
+      {
+        "row": 2,
+        "cells": {
+          "A": "Sheet 01: Hospital Profile, Institutional Heritage & Brand Identity Discovery"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Item ID",
+          "B": "Category / Topic",
+          "C": "Specific Information Required",
+          "D": "Context, Guidance & Strategic Rationale",
+          "E": "Priority",
+          "F": "Hospital Response / Data Input",
+          "G": "Attachment / Asset Reference",
+          "H": "Responsible Dept / Lead"
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "1. INSTITUTIONAL IDENTITY & GENERAL INFORMATION",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "HP-01",
+          "B": "Hospital Legal & Display Name",
+          "C": "What is the exact registered legal name and preferred brand display name for the website header?",
+          "D": "Essential for header, legal footer, domain branding, and search engine title tags. (e.g., 'Al Arif General Hospital & Unani Research Institute')",
+          "E": "Mandatory",
+          "F": "Al Arif General Hospital & Unani Research Institute",
+          "G": "Hospital Registration Certificate",
+          "H": "Administration"
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "HP-02",
+          "B": "Tagline & Value Proposition",
+          "C": "Do you have an existing institutional motto, slogan, or tagline in English, Urdu, or Arabic?",
+          "D": "Appears on the homepage hero section. Emphasizes the synthesis of modern medical care with traditional holistic healing.",
+          "E": "Mandatory",
+          "F": "e.g., 'Healing with Compassion, Advancing with Tradition & Science' / 'Shifa-e-Kamil bi-Iznillah'",
+          "G": "Existing letterhead / brochure",
+          "H": "Trust & Management"
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "HP-03",
+          "B": "Founding History & Heritage",
+          "C": "Please provide the founding year, historical narrative, and the vision of founder Hazrat Sheikh Syed Mohammed Arifuddin Jeelani (Noorullah Shah Noori) and successors.",
+          "D": "The hospital carries profound spiritual and social trust in Hyderabad (Silsila Nooria). This gives the 'About Us' section immense authenticity.",
+          "E": "Mandatory",
+          "F": "[Please provide 2-3 paragraphs detailing the founding mission, spiritual guidance, and philanthropic journey]",
+          "G": "Institutional Souvenir / History Write-up",
+          "H": "Trustees / Management"
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "HP-04",
+          "B": "Vision & Mission Statements",
+          "C": "What are the formal Vision and Mission statements of the hospital and research institute?",
+          "D": "Guides the institutional ethos, NABH accreditation pages, and public trust.",
+          "E": "Mandatory",
+          "F": "[Vision: Future aspirations; Mission: Daily commitment to compassionate, affordable, integrative care]",
+          "G": "Vision Document",
+          "H": "Administration"
+        }
+      },
+      {
+        "row": 10,
+        "cells": {
+          "A": "HP-05",
+          "B": "Core Pillars / Dual Heritage",
+          "C": "How should the website visually and conceptually balance the Allopathic General Hospital wing and the Unani Research Institute wing?",
+          "D": "Crucial for UI/UX. Visitors must immediately understand that it offers both high-tech allopathic emergency/surgery AND authentic Unani therapies.",
+          "E": "Mandatory",
+          "F": "Recommend a dual-wing homepage showcase with dedicated sub-portals for General Hospital and Unani Research",
+          "G": "Brochures / Leaflets",
+          "H": "Marketing / IT"
+        }
+      },
+      {
+        "row": 11,
+        "cells": {
+          "A": "2. BRAND ASSETS & DESIGN SYSTEM",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 12,
+        "cells": {
+          "A": "HP-06",
+          "B": "Logo & Monogram Files",
+          "C": "Are high-resolution vector logos (SVG, AI, EPS, or transparent PNG) available for the hospital?",
+          "D": "Required for retina displays, dark/light navigation bars, and favicon. Include Urdu calligraphy if part of the logo.",
+          "E": "Mandatory",
+          "F": "[Upload files to /01_Branding_and_Logos folder]",
+          "G": "Logo_Vector.ai / Logo_HighRes.png",
+          "H": "Media / IT"
+        }
+      },
+      {
+        "row": 13,
+        "cells": {
+          "A": "HP-07",
+          "B": "Brand Color Palette",
+          "C": "Do you have designated brand colors, or preferred color themes for the website?",
+          "D": "Recommend Deep Emerald Green / Forest Teal (symbolizing Unani nature, herbal healing, Islamic heritage) paired with Medical Slate Blue and Warm Gold accents.",
+          "E": "Highly Recommended",
+          "F": "Preferred: Emerald Green (#0B4F30), Medical Blue (#1E3A8A), Warm Gold (#D97706)",
+          "G": "Brand Guidelines (if any)",
+          "H": "Marketing"
+        }
+      },
+      {
+        "row": 14,
+        "cells": {
+          "A": "HP-08",
+          "B": "Typography & Language Support",
+          "C": "Should the website support English, Urdu, and Telugu? Is Nastaliq typography required for Urdu sections?",
+          "D": "Bandlaguda and Hyderabad Old City have a large Urdu-speaking demographic; Telugu is state-official; English serves medical and NRI audiences.",
+          "E": "Highly Recommended",
+          "F": "Trilingual recommended: English (Primary), Urdu (Secondary), Telugu (Tertiary)",
+          "G": "Language policy preference",
+          "H": "Administration"
+        }
+      },
+      {
+        "row": 15,
+        "cells": {
+          "A": "3. CONTACT DETAILS, TIMINGS & PHYSICAL LOCATION",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 16,
+        "cells": {
+          "A": "HP-09",
+          "B": "Official Physical Address",
+          "C": "What is the complete verified address including landmarks, pincode, and Google Maps Plus Code?",
+          "D": "Crucial for Schema.org LocalBusiness SEO and patient navigation via Google Maps.",
+          "E": "Mandatory",
+          "F": "18-13-132/41/A & B, Noori Nagar, Bandlaguda, Chandrayangutta, Hyderabad, Telangana 500005 (Near Dargah Hazrat Syed Noori Shah Sahab R.A.)",
+          "G": "Electricity / Tax bill for address proof",
+          "H": "Administration"
+        }
+      },
+      {
+        "row": 17,
+        "cells": {
+          "A": "HP-10",
+          "B": "Key Telephone Lines & Hotlines",
+          "C": "Please provide: 1) 24/7 Emergency / Casualty, 2) OPD Appointment Line, 3) Unani Wing Direct Line, 4) WhatsApp Contact, 5) Admin Office.",
+          "D": "Floating click-to-call buttons on mobile web reduce bounce rate and directly save emergency lives.",
+          "E": "Mandatory",
+          "F": "Emergency: [040-XXXXXXX / +91-XXXXXXXXXX]\nOPD Booking: [Phone / Mobile]\nWhatsApp: [+91-XXXXXXXXXX]",
+          "G": "Hospital Telecom list",
+          "H": "Reception / Telecom"
+        }
+      },
+      {
+        "row": 18,
+        "cells": {
+          "A": "HP-11",
+          "B": "Official Email Addresses",
+          "C": "What are the official email IDs for general inquiries, appointments, billing, research, and careers?",
+          "D": "Required for automated website notification routing and trust badges.",
+          "E": "Mandatory",
+          "F": "info@alarifhospital.org, appointments@alarifhospital.org, unaniresearch@alarifhospital.org",
+          "G": "Domain email setup",
+          "H": "IT Department"
+        }
+      },
+      {
+        "row": 19,
+        "cells": {
+          "A": "HP-12",
+          "B": "Operating Timings & OPD Schedule",
+          "C": "What are the exact hours for: 1) Casualty / Emergency (24/7?), 2) General OPD, 3) Unani OPD, 4) Hijama / Cupping Center, 5) Diagnostic Lab & Pharmacy.",
+          "D": "Must be prominently displayed on homepage, contact page, and Google My Business.",
+          "E": "Mandatory",
+          "F": "Emergency & Pharmacy: 24 Hours / 7 Days\nGeneral OPD: Mon-Sun 9:00 AM - 9:00 PM\nUnani OPD & Hijama: Mon-Sat [Timings]",
+          "G": "OPD Timetable Board",
+          "H": "Medical Superintendent"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "11_Q_General_Hospital_Services",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE"
+        }
+      },
+      {
+        "row": 2,
+        "cells": {
+          "A": "Sheet 02: Allopathic General Hospital Services, Clinical Specialties & Facilities Intake"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Item ID",
+          "B": "Category / Topic",
+          "C": "Specific Information Required",
+          "D": "Context, Guidance & Strategic Rationale",
+          "E": "Priority",
+          "F": "Hospital Response / Data Input",
+          "G": "Attachment / Asset Reference",
+          "H": "Responsible Dept / Lead"
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "1. CLINICAL DEPARTMENTS & SPECIALTIES",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "GH-01",
+          "B": "Obstetrics & Gynecology (Maternity)",
+          "C": "List services offered: Normal Delivery, C-Section, Antenatal/Postnatal Care, High-Risk Pregnancy, Infertility clinic, Laparoscopic Gynae Surgery.",
+          "D": "High-volume department in Bandlaguda. Women patients search extensively for female gynecologists, delivery packages, and newborn care.",
+          "E": "Mandatory",
+          "F": "[Confirm active services, female specialist availability, delivery suite facilities]",
+          "G": "Maternity Brochure / Package details",
+          "H": "HOD Gynecology & Obstetrics"
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "GH-02",
+          "B": "General Medicine & Internal Medicine",
+          "C": "Details on management of diabetes, hypertension, infectious diseases (dengue, malaria, typhoid), cardiac emergencies, and geriatric care.",
+          "D": "Forms the backbone of daily adult OPD. Highlights preventive health and chronic disease management.",
+          "E": "Mandatory",
+          "F": "[List key conditions treated, daily physician availability]",
+          "G": "General Medicine OPD roster",
+          "H": "HOD General Medicine"
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "GH-03",
+          "B": "Pediatrics & Neonatal Care",
+          "C": "What pediatric services are available? (Newborn nursery, phototherapy, pediatric ICU/NICU, vaccination clinics, developmental assessments).",
+          "D": "Crucial for young families. Dedicated pediatric vaccination schedule page drives recurring website visits.",
+          "E": "Mandatory",
+          "F": "[Specify nursery beds, vaccination schedule, on-call pediatrician hours]",
+          "G": "Vaccination Chart",
+          "H": "HOD Pediatrics"
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "GH-04",
+          "B": "General & Laparoscopic Surgery",
+          "C": "List surgical procedures performed: Appendectomy, Hernia repair, Cholecystectomy (gallbladder), Hydrocele, Piles/Fistula, Trauma surgery.",
+          "D": "Dedicated surgery landing pages with pre-op and post-op guidelines build trust and encourage surgical admissions.",
+          "E": "Mandatory",
+          "F": "[List common open and minimally invasive laparoscopic procedures]",
+          "G": "OT Register / Surgical list",
+          "H": "Surgical Team"
+        }
+      },
+      {
+        "row": 10,
+        "cells": {
+          "A": "GH-05",
+          "B": "Orthopedics & Trauma Care",
+          "C": "Details on fracture management, joint pain, arthritis treatment, sports injuries, casting, and orthopedic surgery.",
+          "D": "Synergy with Unani joint therapies (Amraz-e-Mafasil). Patients can choose between allopathic surgical/ortho care and Unani rehab.",
+          "E": "Highly Recommended",
+          "F": "[Describe fracture clinic, trauma handling, orthopedic OPD hours]",
+          "G": "Orthopedic department profile",
+          "H": "Orthopedic Surgeon"
+        }
+      },
+      {
+        "row": 11,
+        "cells": {
+          "A": "GH-06",
+          "B": "Other Specialties & Visiting Clinics",
+          "C": "Do you have ENT, Ophthalmology, Dermatology, Dental, or Urology services (regular or visiting)?",
+          "D": "Ensures full multispecialty representation on the website directory.",
+          "E": "Recommended",
+          "F": "[Specify departments and visiting consultant schedules]",
+          "G": "Visiting Consultant Roster",
+          "H": "Medical Admin"
+        }
+      },
+      {
+        "row": 12,
+        "cells": {
+          "A": "2. EMERGENCY, INPATIENT & CRITICAL INFRASTRUCTURE",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 13,
+        "cells": {
+          "A": "GH-07",
+          "B": "24/7 Emergency & Casualty Wing",
+          "C": "Number of casualty beds, resuscitation equipment, defibrillators, oxygen supply, on-duty CMO coverage, ambulance tie-ups.",
+          "D": "Emergency page must have large, high-contrast emergency dial buttons, Google map navigation, and immediate triage instructions.",
+          "E": "Mandatory",
+          "F": "[Provide casualty bed count, equipment, ambulance contact number]",
+          "G": "Emergency protocol sheet",
+          "H": "Casualty Medical Officer"
+        }
+      },
+      {
+        "row": 14,
+        "cells": {
+          "A": "GH-08",
+          "B": "Inpatient (IPD) Bed Types & Amenities",
+          "C": "What is total bed strength? Breakdown of: General Wards (Male/Female), Semi-Private Sharing, Private AC Rooms, Deluxe Suites.",
+          "D": "Patients and attendants look for room photos, room tariffs, attendant couch policies, and in-room amenities (Wi-Fi, TV, nursing call).",
+          "E": "Mandatory",
+          "F": "[List total beds, room categories, admission protocols, visiting hours]",
+          "G": "Room Tariff Chart & photos",
+          "H": "Nursing Superintendent / IPD Admin"
+        }
+      },
+      {
+        "row": 15,
+        "cells": {
+          "A": "GH-09",
+          "B": "Operation Theatres (OT) & Labor Room",
+          "C": "Number of major/minor OTs, laminar airflow, sterility protocols, anesthesia workstations, dedicated septic/aseptic labor rooms.",
+          "D": "Highlighting sterile surgical infrastructure alleviates patient anxiety regarding infection control.",
+          "E": "Highly Recommended",
+          "F": "[Provide OT specifications and safety protocols]",
+          "G": "OT Infection Control Manual",
+          "H": "OT In-Charge"
+        }
+      },
+      {
+        "row": 16,
+        "cells": {
+          "A": "3. DIAGNOSTICS, PHARMACY & ANCILLARY SERVICES",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 17,
+        "cells": {
+          "A": "GH-10",
+          "B": "Diagnostic Imaging & Radiology",
+          "C": "List on-site imaging modalities: Ultrasound / Color Doppler (Obstetric, Abdominal), Digital X-Ray, ECG, 2D Echo.",
+          "D": "A complete list of imaging scans with preparation instructions (e.g. fasting, full bladder) improves patient compliance.",
+          "E": "Mandatory",
+          "F": "[List available imaging equipment, radiologist timings]",
+          "G": "Radiology test menu",
+          "H": "Radiology Department"
+        }
+      },
+      {
+        "row": 18,
+        "cells": {
+          "A": "GH-11",
+          "B": "Clinical Laboratory & Pathology",
+          "C": "Types of tests: Complete Blood Picture (CBP), Biochemistry (LFT, RFT, Lipid, HbA1c), Microbiology, Urine/Stool, Serology.",
+          "D": "Feature online test menu and turnaround times. Opportunity for online report downloads.",
+          "E": "Mandatory",
+          "F": "[List key diagnostic test packages, sample collection hours]",
+          "G": "Lab Test Master List & Price List",
+          "H": "Lab Director / Pathologist"
+        }
+      },
+      {
+        "row": 19,
+        "cells": {
+          "A": "GH-12",
+          "B": "24/7 In-House Allopathic Pharmacy",
+          "C": "Confirm 24-hour operation, home delivery availability in local vicinity, inventory of emergency life-saving medicines.",
+          "D": "Pharmacy contact number on website helps local residents inquire about drug availability.",
+          "E": "Mandatory",
+          "F": "[Confirm hours, direct phone number, home delivery options]",
+          "G": "Pharmacy Drug License",
+          "H": "Chief Pharmacist"
+        }
+      },
+      {
+        "row": 20,
+        "cells": {
+          "A": "GH-13",
+          "B": "Health Checkup Packages",
+          "C": "Do you offer packaged health checkups? (e.g., Master Health Checkup, Diabetic Care, Well-Woman / Antenatal Screening, Senior Citizen).",
+          "D": "Package comparison tables with pricing or inclusions drive high conversion on medical websites.",
+          "E": "Highly Recommended",
+          "F": "[List package names, test inclusions, pricing if public]",
+          "G": "Health Package Flyers",
+          "H": "Marketing & Billing"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "12_Q_Unani_Wing_and_Research",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE"
+        }
+      },
+      {
+        "row": 2,
+        "cells": {
+          "A": "Sheet 03: Unani Medical Wing, Ilaj-bit-Tadbeer (Hijama) & Research Institute Intake"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Item ID",
+          "B": "Category / Topic",
+          "C": "Specific Information Required",
+          "D": "Context, Guidance & Strategic Rationale",
+          "E": "Priority",
+          "F": "Hospital Response / Data Input",
+          "G": "Attachment / Asset Reference",
+          "H": "Responsible Dept / Lead"
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "1. UNANI PHILOSOPHY, APPROACH & SPECIALIZED CLINICS",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "UN-01",
+          "B": "Unani System Overview & Mizaj Assessment",
+          "C": "How should the Unani healing philosophy (Four Humors/Akhlat: Dam, Balgham, Safra, Sauda; Mizaj/Temperament; Tabiyat/Vis Medicatrix Naturae) be introduced?",
+          "D": "Educates patients on root-cause holistic healing. An interactive 'Understand Your Mizaj' quiz or guide can engage visitors.",
+          "E": "Mandatory",
+          "F": "[Provide introductory text explaining Unani principles at Al Arif Institute]",
+          "G": "Unani Philosophy Pamphlet",
+          "H": "Chief Unani Physician"
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "UN-02",
+          "B": "Amraz-e-Mafasil (Joints & Arthritis Clinic)",
+          "C": "Treatment protocols for Osteoarthritis (Waja-ul-Mafasil), Rheumatoid Arthritis, Sciatica (Irq-un-Nasa), Gout (Niqris), and Spondylosis.",
+          "D": "Unani is renowned for chronic joint disease management without steroid side-effects. High organic search volume in Hyderabad.",
+          "E": "Mandatory",
+          "F": "[Describe specialized herbal treatments, oil therapies, pain relief regimens]",
+          "G": "Arthritis Clinic Case Studies",
+          "H": "Unani Orthopedic / Joints Specialist"
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "UN-03",
+          "B": "Amraz-e-Jild (Skin & Dermatology Clinic)",
+          "C": "Management of Vitiligo/Leucoderma (Bars), Psoriasis (Taqashshur-e-Jild), Eczema (Nar-e-Farsi), Alopecia (Daa-us-Sa'lab), and Acne.",
+          "D": "Skin disorders are a flagship Unani domain. Detailed treatment timelines, dietary advice, and before-after cases build immense authority.",
+          "E": "Mandatory",
+          "F": "[List key skin conditions treated, natural herbal ointments, dietary restrictions]",
+          "G": "Dermatology Protocol Sheet",
+          "H": "Unani Dermatologist"
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "UN-04",
+          "B": "Amraz-e-Meda wa Jigar (GI, Liver & Digestion)",
+          "C": "Protocols for Chronic Gastritis, GERD, Fatty Liver, Jaundice, Ulcerative Colitis, and Constipation.",
+          "D": "Unani focuses heavily on digestive fire (Hazm) and liver strength (Quwwat-e-Jigar) as the origin of wellness.",
+          "E": "Highly Recommended",
+          "F": "[Detail digestive and liver detox regimens]",
+          "G": "GI Protocol documentation",
+          "H": "Unani Internal Medicine"
+        }
+      },
+      {
+        "row": 10,
+        "cells": {
+          "A": "UN-05",
+          "B": "Amraz-e-Niswan & Uqr (Gynecology & Infertility)",
+          "C": "Unani treatment for PCOD/PCOS, irregular menstruation (Ehtebas-e-Tams), leucorrhea (Sayalan-e-Raham), and male/female infertility (Uqr).",
+          "D": "Al Arif has renowned doctors (e.g. Dr. Naima) known for infertility treatments. Combining Unani with allopathic diagnostics is a major unique selling point (USP).",
+          "E": "Mandatory",
+          "F": "[Detail holistic infertility protocols, conceiving programs, success metrics]",
+          "G": "Infertility Program brochure",
+          "H": "Unani Gynecologist / Infertility Lead"
+        }
+      },
+      {
+        "row": 11,
+        "cells": {
+          "A": "UN-06",
+          "B": "Metabolic & Lifestyle Diseases Clinic",
+          "C": "Therapies for Type 2 Diabetes (Ziabetus Shakari), Hypertension (Zaght-ud-Dam Qawi), Obesity (Siman-e-Mufrit), and Dyslipidemia.",
+          "D": "Increasing demand for non-pharmacological, dietary, and herbal lifestyle correction.",
+          "E": "Highly Recommended",
+          "F": "[Describe integrative lifestyle counseling and herbal formulations]",
+          "G": "Lifestyle Clinic Write-up",
+          "H": "Unani Consultant"
+        }
+      },
+      {
+        "row": 12,
+        "cells": {
+          "A": "2. ILAJ-BIT-TADBEER (REGIMENTAL THERAPY & HIJAMA CENTER)",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 13,
+        "cells": {
+          "A": "UN-07",
+          "B": "Hijama (Wet & Dry Cupping Therapy)",
+          "C": "Details of Hijama services: Wet cupping (Hijama-bil-Shart), Dry cupping, Fire cupping, Massage cupping. Separate male and female therapy sections? Sterilization and disposable kit standards?",
+          "D": "Crucial landing page! Patients demand strict hygiene assurance, single-use surgical disposable kits, certified therapists, and privacy (separate purdah facilities for women).",
+          "E": "Mandatory",
+          "F": "[Specify facility setup: separate male/female rooms, certified practitioners, Sunnah day schedules, pricing per cup/session]",
+          "G": "Hijama Clinic SOP & Sterility Guidelines",
+          "H": "Ilaj-bit-Tadbeer Center In-Charge"
+        }
+      },
+      {
+        "row": 14,
+        "cells": {
+          "A": "UN-08",
+          "B": "Fasd (Venesection) & Taleeq (Leech Therapy)",
+          "C": "Are Fasd and medicinal Leech therapy performed for venous disorders, varicose veins, chronic skin ailments, and localized thrombosis?",
+          "D": "Specialized procedures that demonstrate high clinical expertise. Requires clear patient FAQs on indications, safety, and contraindications.",
+          "E": "Highly Recommended",
+          "F": "[Describe clinical indications, sterile leech sourcing, physician supervision]",
+          "G": "Leech Therapy Protocol & Consent Form",
+          "H": "Ilaj-bit-Tadbeer Specialist"
+        }
+      },
+      {
+        "row": 15,
+        "cells": {
+          "A": "UN-09",
+          "B": "Daluk (Therapeutic Massage) & Nutool (Irrigation)",
+          "C": "Medicated oil massages (Daluk) for muscular dystrophy, paralysis, stroke rehabilitation, and herbal head douching (Nutool) for insomnia, migraines, and anxiety.",
+          "D": "Appeals strongly to wellness seekers and post-stroke/neurological rehab patients.",
+          "E": "Recommended",
+          "F": "[List available oils, therapy durations, package offerings]",
+          "G": "Therapy Menu & Pricing",
+          "H": "Regimental Therapy Staff"
+        }
+      },
+      {
+        "row": 16,
+        "cells": {
+          "A": "UN-10",
+          "B": "Hammam (Medicinal Turkish/Herbal Steam) & Riyazat",
+          "C": "Facilities for therapeutic steam baths, detoxification, and personalized corrective exercise (Riyazat).",
+          "D": "Positions Al Arif as a comprehensive holistic hospital with physical rejuvenation facilities.",
+          "E": "Optional / Phase 2",
+          "F": "[Detail current facility status or planned expansion]",
+          "G": "Facility plan",
+          "H": "Operations / Wellness Lead"
+        }
+      },
+      {
+        "row": 17,
+        "cells": {
+          "A": "3. RESEARCH INSTITUTE, PUBLICATIONS & PHARMACY",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 18,
+        "cells": {
+          "A": "UN-11",
+          "B": "Unani Research & Clinical Studies Wing",
+          "C": "What ongoing or completed research initiatives, clinical observational studies, or drug trials is the institute conducting?",
+          "D": "Elevates the portal from a mere local clinic to an esteemed Research Institute. Crucial for academic credibility and government recognition.",
+          "E": "Mandatory",
+          "F": "[List research focus areas, clinical trial themes, academic tie-ups (e.g. CCRUM/AYUSH)]",
+          "G": "Research Papers / Publications / Conference Posters",
+          "H": "Director of Research & Academic Affairs"
+        }
+      },
+      {
+        "row": 19,
+        "cells": {
+          "A": "UN-12",
+          "B": "Published Papers, Monographs & Library",
+          "C": "List of published research articles, authors from the institute, and classical Unani manuscript repositories.",
+          "D": "A searchable 'Research & Publications' archive with downloadable PDF abstracts builds global scientific authority.",
+          "E": "Highly Recommended",
+          "F": "[Provide list of publication titles, journals, dates, and author Hakims]",
+          "G": "PDF copies of research papers",
+          "H": "Academic Committee"
+        }
+      },
+      {
+        "row": 20,
+        "cells": {
+          "A": "UN-13",
+          "B": "In-House Matab (Dispensary) & Herbal Formulations",
+          "C": "Details of the hospital's authentic Unani pharmacy/dawakhana: Classical formulations (Majun, Safoof, Sharbat, Arq, Kushta) and proprietary herbal medicines prepared on-site.",
+          "D": "Patients value genuine, GMP-compliant herbal medicines. Should we feature a medicine catalog or allow online prescription refill ordering?",
+          "E": "Mandatory",
+          "F": "[Detail dispensary operations, top formulations, future e-pharmacy aspirations]",
+          "G": "Herbal Medicine Formulary List",
+          "H": "Pharmacy In-Charge / Dawakhana"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "13_Q_Doctors_Staff_Directory",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE"
+        }
+      },
+      {
+        "row": 2,
+        "cells": {
+          "A": "Sheet 04: Medical Staff, Consulting Physicians & Unani Hakims Directory Template"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Doctor ID",
+          "B": "Full Name with Title",
+          "C": "Qualifications & Degrees",
+          "D": "Department / Specialty",
+          "E": "Designation / Role",
+          "F": "Total Years Experience",
+          "G": "Medical Council / Board Reg No.",
+          "H": "OPD Consultation Days & Timings",
+          "I": "Consultation Fee (INR)",
+          "J": "Languages Spoken",
+          "K": "Brief Professional Bio (50-100 words)",
+          "L": "High-Res Photo Available? (Y/N)",
+          "M": "Accepts Online Appointments? (Y/N)"
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "ALLOPATHIC MEDICAL FACULTY & CONSULTANTS",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": "",
+          "I": "",
+          "J": "",
+          "K": "",
+          "L": "",
+          "M": ""
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "DOC-AL-01",
+          "B": "Dr. Saheen [Example]",
+          "C": "MBBS, DGO / MS (OBG)",
+          "D": "Obstetrics & Gynecology",
+          "E": "Senior Consultant Gynecologist",
+          "F": "12+ Years",
+          "G": "TSMC/XXXXX",
+          "H": "Mon - Sat: 10:00 AM - 2:00 PM",
+          "I": "Rs. 200 - 300",
+          "J": "Urdu, Telugu, Hindi, English",
+          "K": "Specialist in normal & high-risk deliveries, antenatal care, infertility management, and women's health with over a decade of dedicated clinical practice.",
+          "L": "Pending Upload",
+          "M": "Yes"
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "DOC-AL-02",
+          "B": "Dr. Vaheed [Example]",
+          "C": "MBBS, MD (General Medicine)",
+          "D": "General Medicine",
+          "E": "Chief Consultant Physician",
+          "F": "15+ Years",
+          "G": "TSMC/XXXXX",
+          "H": "Mon - Sat: 6:00 PM - 9:00 PM",
+          "I": "Rs. 200",
+          "J": "Urdu, Hindi, English, Telugu",
+          "K": "Expert general physician managing chronic lifestyle disorders, hypertension, type-2 diabetes, infectious diseases, and adult acute emergencies.",
+          "L": "Pending Upload",
+          "M": "Yes"
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "DOC-AL-03",
+          "B": "[Consultant Surgeon]",
+          "C": "MBBS, MS (General Surgery), FMAS",
+          "D": "General & Laparoscopic Surgery",
+          "E": "Consultant Laparoscopic Surgeon",
+          "F": "10+ Years",
+          "G": "TSMC/XXXXX",
+          "H": "Tue, Thu, Sat: 4:00 PM - 6:00 PM",
+          "I": "Rs. 300",
+          "J": "Urdu, Hindi, English",
+          "K": "Experienced in laparoscopic cholecystectomy, hernia repair, appendectomy, trauma surgery, and daycare procedures.",
+          "L": "Pending Upload",
+          "M": "Yes"
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "UNANI MEDICAL FACULTY & RESEARCH CONSULTANTS",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": "",
+          "I": "",
+          "J": "",
+          "K": "",
+          "L": "",
+          "M": ""
+        }
+      },
+      {
+        "row": 10,
+        "cells": {
+          "A": "DOC-UN-01",
+          "B": "Dr. Naima [Example]",
+          "C": "BUMS, MD (Unani - Amraz-e-Niswan / Moalajat)",
+          "D": "Unani Gynecology & Infertility",
+          "E": "Senior Unani Infertility Specialist",
+          "F": "14+ Years",
+          "G": "TBUMC/XXXXX",
+          "H": "Mon - Sat: 11:00 AM - 4:00 PM",
+          "I": "Rs. 100 - 200",
+          "J": "Urdu, Hindi, Telugu, English",
+          "K": "Renowned for holistic management of female infertility, PCOD, hormonal imbalances, and uterine wellness through classical Unani herbal therapy.",
+          "L": "Pending Upload",
+          "M": "Yes"
+        }
+      },
+      {
+        "row": 11,
+        "cells": {
+          "A": "DOC-UN-02",
+          "B": "[Chief Hakim / Unani Physician]",
+          "C": "BUMS, MD (Unani - Ilaj-bit-Tadbeer)",
+          "D": "Ilaj-bit-Tadbeer & Regimental Therapy",
+          "E": "Head, Regimental Therapy & Hijama",
+          "F": "18+ Years",
+          "G": "TBUMC/XXXXX",
+          "H": "Mon - Sat: 9:00 AM - 1:00 PM, 5:00 PM - 8:00 PM",
+          "I": "Rs. 150 - 250",
+          "J": "Urdu, Arabic, Hindi, English",
+          "K": "Pioneering clinical practitioner of Hijama (cupping), Fasd, and Taleeq (leech therapy) for chronic arthritis, migraine, sciatica, and neuromuscular recovery.",
+          "L": "Pending Upload",
+          "M": "Yes"
+        }
+      },
+      {
+        "row": 12,
+        "cells": {
+          "A": "DOC-UN-03",
+          "B": "[Director of Unani Research]",
+          "C": "BUMS, MD (Unani), PhD / Research Fellow",
+          "D": "Clinical Pharmacology & Research",
+          "E": "Director, Unani Research Institute",
+          "F": "20+ Years",
+          "G": "TBUMC/XXXXX",
+          "H": "By Appointment Only",
+          "I": "Consultation by Referral",
+          "J": "Urdu, English, Arabic, Persian",
+          "K": "Leading academician supervising evidence-based clinical trials, herbal standardization, and research publications in peer-reviewed AYUSH journals.",
+          "L": "Pending Upload",
+          "M": "Yes"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "14_Q_Digital_Portal_and_Tech",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE"
+        }
+      },
+      {
+        "row": 2,
+        "cells": {
+          "A": "Sheet 05: Digital Patient Services, Technical Architecture & Software Integrations Intake"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Item ID",
+          "B": "Category / Topic",
+          "C": "Specific Information Required",
+          "D": "Context, Guidance & Strategic Rationale",
+          "E": "Priority",
+          "F": "Hospital Response / Data Input",
+          "G": "Attachment / Asset Reference",
+          "H": "Responsible Dept / Lead"
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "1. PATIENT ENGAGEMENT & ONLINE CLINICAL SERVICES",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "TC-01",
+          "B": "Online Appointment Booking",
+          "C": "What appointment booking model do you require? A) Simple Inquiry / Callback Form, B) Direct Time-Slot Booking with instant confirmation, or C) WhatsApp-integrated booking widget?",
+          "D": "Direct slot booking reduces reception phone congestion. WhatsApp bot integration is the #1 preferred channel for Hyderabad patients.",
+          "E": "Mandatory",
+          "F": "Recommend Phase 1: Interactive Form + Immediate WhatsApp Redirect with pre-filled doctor & date details.",
+          "G": "Appointment Workflow Diagram",
+          "H": "Reception & IT"
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "TC-02",
+          "B": "WhatsApp Business API Integration",
+          "C": "Do you have an active WhatsApp Business number? Should the website feature floating WhatsApp chat with automated quick replies (e.g., 'Book Hijama', 'Doctor Timings', 'Emergency')?",
+          "D": "Over 75% of local patients in Telangana initiate healthcare inquiries via WhatsApp. Dramatically boosts inquiry conversion.",
+          "E": "Mandatory",
+          "F": "[Provide registered WhatsApp business phone number]",
+          "G": "WhatsApp Business Profile screenshot",
+          "H": "Marketing / Reception"
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "TC-03",
+          "B": "Teleconsultation / Video OPD",
+          "C": "Will doctors offer remote video consultations (for outstation/international patients seeking Unani therapies)?",
+          "D": "Unani medicine attracts patients from GCC/Middle East and across India. Teleconsultation expands the institute's geographic reach.",
+          "E": "Highly Recommended",
+          "F": "Yes, especially for Unani chronic care, second opinions, and dietary follow-ups.",
+          "G": "Telemedicine Practice SOP",
+          "H": "Medical Superintendent / IT"
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "TC-04",
+          "B": "Online Diagnostic Lab Reports Download",
+          "C": "Do you currently have a Laboratory Information System (LIS) with online report generation (PDF)? Should patients enter Bill No./Mobile No. on website to download reports?",
+          "D": "Saves patients an extra trip to the hospital. Very high user satisfaction driver.",
+          "E": "Highly Recommended",
+          "F": "[Specify current lab software vendor or if API integration is available]",
+          "G": "Sample Lab Report PDF / Vendor API doc",
+          "H": "Lab In-Charge & IT"
+        }
+      },
+      {
+        "row": 10,
+        "cells": {
+          "A": "TC-05",
+          "B": "Hospital Management System (HMS) Tie-In",
+          "C": "What existing HMS / EHR software is in use at the hospital (e.g. MocDoc, Attune, Practo Ray, local custom software, or paper-based)?",
+          "D": "Determines whether website forms can push directly to hospital database or send email/SMS alerts to staff.",
+          "E": "Mandatory",
+          "F": "[Name of software, database type, or standalone web administration preference]",
+          "G": "HMS Vendor Details",
+          "H": "IT & Billing"
+        }
+      },
+      {
+        "row": 11,
+        "cells": {
+          "A": "2. TECHNICAL INFRASTRUCTURE, HOSTING & DOMAIN",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 12,
+        "cells": {
+          "A": "TC-06",
+          "B": "Domain Name Status",
+          "C": "Do you own a registered domain (e.g. alarifhospital.org, alarifunani.com)? Where is it registered (GoDaddy, Cloudflare, etc.)?",
+          "D": "Determines DNS cutover, SSL certificate generation, and professional institutional email addresses.",
+          "E": "Mandatory",
+          "F": "[Provide registered domain name and registrar login access / point of contact]",
+          "G": "Domain invoice / DNS panel info",
+          "H": "IT / Admin"
+        }
+      },
+      {
+        "row": 13,
+        "cells": {
+          "A": "TC-07",
+          "B": "Hosting Environment & Tech Stack",
+          "C": "Do you have existing server hosting (AWS, Hostinger, cPanel), or would you prefer a fully managed cloud stack (Next.js / Vercel + Headless CMS or WordPress)?",
+          "D": "Next.js / Headless CMS offers sub-second load times, superior mobile speed, top-tier security, and 99.99% uptime.",
+          "E": "Mandatory",
+          "F": "Recommend: Next.js frontend with Tailwind CSS and Supabase/Sanity CMS for lightning-fast hospital portal.",
+          "G": "Hosting credentials / preferences",
+          "H": "Web Development Lead"
+        }
+      },
+      {
+        "row": 14,
+        "cells": {
+          "A": "TC-08",
+          "B": "Security, SSL & Data Encryption",
+          "C": "What security standards are needed? (HTTPS SSL, DDoS mitigation, encrypted patient forms, automated daily backups).",
+          "D": "Mandatory for handling patient medical inquiries and complying with data protection norms.",
+          "E": "Mandatory",
+          "F": "SSL 256-bit encryption, automated cloud backups, GDPR/DPDP compliant form storage.",
+          "G": "Security Guidelines",
+          "H": "IT & Security"
+        }
+      },
+      {
+        "row": 15,
+        "cells": {
+          "A": "TC-09",
+          "B": "Online Payment Gateway",
+          "C": "Will the website accept payments for registration fees, OPD consultation, health packages, or Unani medicines? (Razorpay, PhonePe, PayU, UPI)?",
+          "D": "Requires hospital merchant account KYC (PAN, GST, Bank Account Cancelled Cheque).",
+          "E": "Highly Recommended",
+          "F": "Razorpay or PhonePe Payment Gateway for UPI / QR / Netbanking / Debit Card payments.",
+          "G": "Merchant account KYC status",
+          "H": "Accounts & Finance"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "15_Q_Sitemap_and_SEO_Strategy",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE"
+        }
+      },
+      {
+        "row": 2,
+        "cells": {
+          "A": "Sheet 06: Website Sitemap Architecture, Content Hierarchy & Local SEO Strategy Intake"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Item ID",
+          "B": "Category / Topic",
+          "C": "Specific Information Required",
+          "D": "Context, Guidance & Strategic Rationale",
+          "E": "Priority",
+          "F": "Hospital Response / Data Input",
+          "G": "Attachment / Asset Reference",
+          "H": "Responsible Dept / Lead"
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "1. PROPOSED SITEMAP & NAVIGATION STRUCTURE",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "SM-01",
+          "B": "Primary Header Navigation Menu",
+          "C": "Review and confirm proposed top-level navigation: 1) Home, 2) About Us (Heritage & Leadership), 3) General Hospital (Allopathic), 4) Unani & Research, 5) Ilaj-bit-Tadbeer (Hijama Center), 6) Doctors Directory, 7) Patient Care & Packages, 8) Contact & Emergency.",
+          "D": "A clean, intuitive 8-item navigation ensures patients quickly find their required department within 2 clicks.",
+          "E": "Mandatory",
+          "F": "Approved proposed menu structure. Add 'Research & Publications' under Unani dropdown.",
+          "G": "Navigation Wireframe",
+          "H": "Marketing & Administration"
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "SM-02",
+          "B": "Dedicated Landing Pages for Key Services",
+          "C": "Should dedicated, in-depth sub-pages be built for: A) Hijama Therapy Center, B) Maternity & Normal Delivery, C) Joint & Arthritis Clinic, D) Infertility & Women's Health, E) Emergency & Trauma?",
+          "D": "Crucial for SEO. Specific landing pages rank much higher on Google for queries like 'Hijama in Chandrayangutta' or 'Maternity hospital Bandlaguda'.",
+          "E": "Mandatory",
+          "F": "Yes, mandatory for top 5 search-generating clinical departments.",
+          "G": "Departmental write-ups",
+          "H": "Marketing & Web Strategy"
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "SM-03",
+          "B": "Footer Architecture & Legal Links",
+          "C": "Confirmation of footer elements: 24/7 Helpline, Address & Directions, Quick Links, Department index, Privacy Policy, Medical Disclaimer, Social Media icons.",
+          "D": "Essential for crawlability, user reassurance, and legal compliance.",
+          "E": "Mandatory",
+          "F": "Standard hospital footer with Google Maps embed and accreditation logos.",
+          "G": "Footer layout draft",
+          "H": "Web Development Lead"
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "2. LOCAL SEARCH ENGINE OPTIMIZATION (SEO) & SEARCH DISCOVERY",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 10,
+        "cells": {
+          "A": "SEO-01",
+          "B": "Target Geographical Keywords (Hyderabad / Old City)",
+          "C": "Review priority localized search terms: 'Unani Hospital in Hyderabad', 'Best Hijama Centre Chandrayangutta', 'Maternity Hospital Bandlaguda', 'Unani Arthritis Treatment Hyderabad', 'General Hospital near Noori Nagar'.",
+          "D": "Optimizes on-page metadata (Title tags, H1, Meta Descriptions, Schema tags) to dominate regional Google search.",
+          "E": "Mandatory",
+          "F": "Approved target keyword cluster for Bandlaguda, Chandrayangutta, Falaknuma, Charminar, and greater Hyderabad.",
+          "G": "SEO Keyword Strategy Sheet",
+          "H": "SEO Specialist / Marketing"
+        }
+      },
+      {
+        "row": 11,
+        "cells": {
+          "A": "SEO-02",
+          "B": "Google Business Profile (GBP) Synchronization",
+          "C": "Do you have access to the verified Google Maps / Business profile for 'AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE'?",
+          "D": "Current rating is 4.7 stars (280+ reviews). Syncing the website with GBP generates massive local patient traffic via Google Maps.",
+          "E": "Mandatory",
+          "F": "[Provide GBP manager email address to link website and appointment URL]",
+          "G": "Google Maps Profile link",
+          "H": "Admin / Digital Marketing"
+        }
+      },
+      {
+        "row": 12,
+        "cells": {
+          "A": "SEO-03",
+          "B": "Doctor Profiles & Rich Snippets Schema",
+          "C": "Approval to implement Schema.org 'Hospital', 'MedicalClinic', and 'Physician' structured data markup.",
+          "D": "Displays star ratings, consultation fees, opening hours, and doctor credentials directly inside Google search results.",
+          "E": "Highly Recommended",
+          "F": "Approved for all consultant profiles and clinical departments.",
+          "G": "Schema Markup Specification",
+          "H": "Web Developer"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "16_Q_Media_Trust_Compliance",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE"
+        }
+      },
+      {
+        "row": 2,
+        "cells": {
+          "A": "Sheet 07: Visual Media, Patient Trust, Regulatory Compliance & Legal Intake"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "Item ID",
+          "B": "Category / Topic",
+          "C": "Specific Information Required",
+          "D": "Context, Guidance & Strategic Rationale",
+          "E": "Priority",
+          "F": "Hospital Response / Data Input",
+          "G": "Attachment / Asset Reference",
+          "H": "Responsible Dept / Lead"
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "1. PHOTOGRAPHY, VIDEO & VISUAL ASSETS",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "MC-01",
+          "B": "Hospital Exterior & Facade Photography",
+          "C": "Do you have professional high-res exterior photos of the hospital building, entrance gate, reception, and signage (day & illuminated night)?",
+          "D": "First visual touchpoint. Helps arriving emergency patients immediately recognize the building.",
+          "E": "Mandatory",
+          "F": "[Upload photos to /02_Hospital_Exterior_and_Interior_Photos]",
+          "G": "Exterior_Facade_01.jpg",
+          "H": "Media Team"
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "MC-02",
+          "B": "Clinical Facilities & Wards Photography",
+          "C": "Photos of: Operation Theatres, Labor Room, Neonatal Nursery, Inpatient Rooms (Deluxe, Semi-Private, General Ward), Diagnostic Lab, Ultrasound Room, Pharmacy.",
+          "D": "Authentic photography of clean, well-equipped facilities creates 5x more trust than generic stock photos.",
+          "E": "Mandatory",
+          "F": "[Upload photos of wards and diagnostic rooms]",
+          "G": "Wards_and_OT_Photos.zip",
+          "H": "Nursing / Administration"
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "MC-03",
+          "B": "Unani & Hijama Therapy Center Media",
+          "C": "Photos of: Hijama cupping procedure rooms, single-use sterile cupping kits, herbal dispensary/matab, medicinal oil preparations, research laboratory.",
+          "D": "Dispels hygiene fears and demonstrates clinical grade sterility in traditional therapy.",
+          "E": "Mandatory",
+          "F": "[Upload therapy suite photos showcasing clean, sterile, private rooms]",
+          "G": "Hijama_Facility_Photos.zip",
+          "H": "Unani Department"
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "MC-04",
+          "B": "Doctor Portraits & Clinical Leadership",
+          "C": "Professional studio or well-lit headshots of all consultant doctors in clinical attire / white coats with stethoscopes.",
+          "D": "Patients choose doctors whose faces and credentials they can see. Drastically increases appointment bookings.",
+          "E": "Mandatory",
+          "F": "[Upload doctor photos named with doctor ID, e.g. DOC-AL-01.jpg]",
+          "G": "Doctor_Portraits.zip",
+          "H": "HR / Doctors"
+        }
+      },
+      {
+        "row": 10,
+        "cells": {
+          "A": "2. PATIENT TESTIMONIALS, SOCIAL PROOF & CHARITABLE WORK",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 11,
+        "cells": {
+          "A": "MC-05",
+          "B": "Patient Testimonials & Video Stories",
+          "C": "Do you have written or recorded video testimonials from treated patients (Maternity, Surgery, Chronic Unani recovery, Hijama)?",
+          "D": "Nothing convinces new patients like real community success stories. Patient consent must be obtained.",
+          "E": "Highly Recommended",
+          "F": "[Provide 5-8 verified patient reviews / video links with patient consent]",
+          "G": "Testimonials_Consent_Docs.zip",
+          "H": "Public Relations / Admin"
+        }
+      },
+      {
+        "row": 12,
+        "cells": {
+          "A": "MC-06",
+          "B": "Community Health Camps & Charitable Care",
+          "C": "Details of free medical camps, cataract screenings, subsidized surgeries, or charitable healthcare programs run by the hospital trust.",
+          "D": "Highlights the philanthropic and spiritual heritage of the institution, reinforcing community affection and donor trust.",
+          "E": "Highly Recommended",
+          "F": "[Provide write-up on past medical camps, dates, beneficiaries count, photographs]",
+          "G": "Community_Camps_Report.pdf",
+          "H": "Trust & Community Outreach"
+        }
+      },
+      {
+        "row": 13,
+        "cells": {
+          "A": "3. LEGAL COMPLIANCE, ACCREDITATION & MEDICAL DISCLAIMERS",
+          "B": "",
+          "C": "",
+          "D": "",
+          "E": "",
+          "F": "",
+          "G": "",
+          "H": ""
+        }
+      },
+      {
+        "row": 14,
+        "cells": {
+          "A": "MC-07",
+          "B": "Hospital Registration & Regulatory Licenses",
+          "C": "Details of registration under Telangana Clinical Establishments Act, Fire Safety NOC, Bio-Medical Waste Management authorization, Pharmacy licenses.",
+          "D": "Mandatory for regulatory transparency and NABH pre-assessment documentation.",
+          "E": "Mandatory",
+          "F": "[Specify Registration Number, issuing authority, validity dates]",
+          "G": "Licenses_and_Certificates.pdf",
+          "H": "Legal & Compliance"
+        }
+      },
+      {
+        "row": 15,
+        "cells": {
+          "A": "MC-08",
+          "B": "AYUSH Regulatory Alignment & Disclaimers",
+          "C": "Does the institute adhere to Ministry of AYUSH clinical benchmarks? Exact wording for medical disclaimer regarding integrative therapies.",
+          "D": "Protects hospital legally. Clarifies that Unani therapies are evidence-based and conducted under certified medical supervision.",
+          "E": "Mandatory",
+          "F": "Standard Medical Disclaimer: 'Information on this portal is for educational purposes and not a substitute for clinical diagnosis...'",
+          "G": "Approved Disclaimer Text",
+          "H": "Legal Counsel & Chief Unani Officer"
+        }
+      },
+      {
+        "row": 16,
+        "cells": {
+          "A": "MC-09",
+          "B": "Patient Data Privacy Policy (DPDP Act Compliance)",
+          "C": "Approval of patient data privacy policy for online forms, appointment data, teleconsultation records, and cookie consent.",
+          "D": "Required by Indian Digital Personal Data Protection (DPDP) Act 2023 for healthcare portals.",
+          "E": "Mandatory",
+          "F": "Implement compliant Privacy Policy covering patient data confidentiality and non-sharing.",
+          "G": "Privacy Policy Draft",
+          "H": "Legal & IT"
+        }
+      }
+    ]
+  },
+  {
+    "sheet": "17_Project_Roadmap_and_NextStep",
+    "rows": [
+      {
+        "row": 1,
+        "cells": {
+          "A": "AL ARIF GENERAL HOSPITAL & UNANI RESEARCH INSTITUTE — 30-DAY IMPLEMENTATION ROADMAP"
+        }
+      },
+      {
+        "row": 2,
+        "cells": {
+          "A": "Phased Execution Plan, Deliverables Schedule, Stakeholder RACI Matrix & Client Decision Gates"
+        }
+      },
+      {
+        "row": 4,
+        "cells": {
+          "A": "1. 30-DAY PHASED EXECUTION TIMELINE"
+        }
+      },
+      {
+        "row": 5,
+        "cells": {
+          "A": "Phase ID",
+          "B": "Timeline Window",
+          "C": "Core Focus & Key Deliverables",
+          "D": "Input Dependencies",
+          "E": "Responsible Lead",
+          "F": "Milestone Status"
+        }
+      },
+      {
+        "row": 6,
+        "cells": {
+          "A": "PHASE 1",
+          "B": "Days 1 – 5",
+          "C": "Questionnaire Intake & Discovery Sign-off\n• Finalize brand assets, doctor profiles, and hospital timings\n• Verify clinical departments and emergency protocols\n• Setup Google Drive asset ingestion folders",
+          "D": "Client responses to Tabs 10–16",
+          "E": "Project Manager & Client",
+          "F": "In Progress"
+        }
+      },
+      {
+        "row": 7,
+        "cells": {
+          "A": "PHASE 2",
+          "B": "Days 6 – 12",
+          "C": "Information Architecture & UX Wireframes\n• Finalize 8-page sitemap and landing page layouts\n• Design responsive mobile-first UI for OPD slot booking widget\n• Design Hijama gender-segregated scheduling flow",
+          "D": "Approved discovery intake data",
+          "E": "UI/UX Designer & IT Lead",
+          "F": "Pending"
+        }
+      },
+      {
+        "row": 8,
+        "cells": {
+          "A": "PHASE 3",
+          "B": "Days 13 – 24",
+          "C": "Full-Stack Development (Next.js Trilingual Web Portal)\n• Front-end development in Next.js + Tailwind CSS\n• Multi-language support (English, Urdu Nastaliq, Telugu)\n• Form endpoints integration with WhatsApp Business API\n• Implement live OPD token queue and Unani medicine re-order module",
+          "D": "Approved UI wireframes & hosting credentials",
+          "E": "Full-Stack Web Dev Team",
+          "F": "Pending"
+        }
+      },
+      {
+        "row": 9,
+        "cells": {
+          "A": "PHASE 4",
+          "B": "Days 25 – 28",
+          "C": "Content Ingestion, End-to-End QA & User Journey Testing\n• Ingest verified copy from Tab 08 (Website Blueprint)\n• Test mobile responsiveness across iOS and Android devices\n• Conduct test bookings and WhatsApp notification routing\n• Security & SSL compliance validation",
+          "D": "Staging environment deployment",
+          "E": "QA Engineer & Medical Admin",
+          "F": "Pending"
+        }
+      },
+      {
+        "row": 10,
+        "cells": {
+          "A": "PHASE 5",
+          "B": "Days 29 – 30",
+          "C": "Production Launch & Local SEO Activation\n• Domain DNS cutover and SSL activation\n• Google Business Profile (GMB) synchronization\n• Schema.org LocalBusiness structured data deployment\n• Staff handover training for reception booking dashboard",
+          "D": "Final client sign-off",
+          "E": "DevOps & SEO Lead",
+          "F": "Pending"
+        }
+      },
+      {
+        "row": 12,
+        "cells": {
+          "A": "2. STAKEHOLDER RACI RESPONSIBILITY MATRIX"
+        }
+      },
+      {
+        "row": 13,
+        "cells": {
+          "A": "Project Workstream",
+          "B": "Responsible (R)",
+          "C": "Accountable (A)",
+          "D": "Consulted (C)",
+          "E": "Informed (I)",
+          "F": "Key Deliverable"
+        }
+      },
+      {
+        "row": 14,
+        "cells": {
+          "A": "Brand Assets & History",
+          "B": "Brand Marketing Lead",
+          "C": "Trustees & Management",
+          "D": "Hazrat Syed Noori Shah Trust",
+          "E": "Hospital Staff",
+          "F": "Logo vectors, Silsila Nooria history"
+        }
+      },
+      {
+        "row": 15,
+        "cells": {
+          "A": "Clinical & Doctor Data",
+          "B": "Medical Admin & HR",
+          "C": "Chief Medical Officer (CMO)",
+          "D": "Dr. Tauheed & Dr. Saheen",
+          "E": "OPD Nurses",
+          "F": "Doctor profiles, OPD schedules, fees"
+        }
+      },
+      {
+        "row": 16,
+        "cells": {
+          "A": "Unani Wing & Hijama SOPs",
+          "B": "Chief Unani Physician",
+          "C": "Director of Research",
+          "D": "Hijama Center In-Charge",
+          "E": "Dispensary Staff",
+          "F": "Hijama booking rules, formulary list"
+        }
+      },
+      {
+        "row": 17,
+        "cells": {
+          "A": "Web App & Tech Stack",
+          "B": "Full-Stack Dev Lead",
+          "C": "Project Director",
+          "D": "Hospital IT Officer",
+          "E": "Reception Desk",
+          "F": "Next.js Web Portal, WhatsApp Bot"
+        }
+      },
+      {
+        "row": 18,
+        "cells": {
+          "A": "Local SEO & GMB Profile",
+          "B": "SEO Specialist",
+          "C": "Marketing Head",
+          "D": "Reception Desk (Reviews)",
+          "E": "Management",
+          "F": "Top Google 3-pack local rankings"
+        }
+      },
+      {
+        "row": 20,
+        "cells": {
+          "A": "3. ACTIONABLE DECISION GATES FOR THE CLIENT (TELL US WHAT TO DO NEXT)"
+        }
+      },
+      {
+        "row": 21,
+        "cells": {
+          "A": "Decision #",
+          "B": "Strategic Topic",
+          "C": "Available Options",
+          "D": "Operational Trade-offs",
+          "E": "Recommended Action",
+          "F": "Client Selection"
+        }
+      },
+      {
+        "row": 22,
+        "cells": {
+          "A": "GATE 1",
+          "B": "Web Portal Architecture",
+          "C": "A: Next.js + Tailwind + Supabase (Fast, Secure)\nB: WordPress CMS (Easier client blog editing)",
+          "D": "Next.js provides sub-second load times and native WhatsApp/SMS API integration, while WordPress has maintenance/security overhead.",
+          "E": "Approve Next.js Web App Stack",
+          "F": "Pending Decision"
+        }
+      },
+      {
+        "row": 23,
+        "cells": {
+          "A": "GATE 2",
+          "B": "Hijama Booking Workflow",
+          "C": "A: Hybrid Form + Instant WhatsApp Chat Redirect\nB: Automated Time-Slot Booking with online payment",
+          "D": "Hybrid is 100% preferred by Hyderabad patients and requires zero payment gateway setup. Option B requires full merchant account KYC.",
+          "E": "Approve Hybrid WhatsApp Redirect",
+          "F": "Pending Decision"
+        }
+      },
+      {
+        "row": 24,
+        "cells": {
+          "A": "GATE 3",
+          "B": "Unani Medicine Dispatch Portal",
+          "C": "A: Simple Prescription Re-Order Inquiry Form (Phase 1)\nB: Full E-Commerce Shop with Courier Tracking (Phase 2)",
+          "D": "Option A can go live in 2 weeks. Option B requires inventory cataloging and courier API integration.",
+          "E": "Launch Option A in Phase 1; Option B in Phase 2",
+          "F": "Pending Decision"
+        }
+      },
+      {
+        "row": 25,
+        "cells": {
+          "A": "GATE 4",
+          "B": "Doctor Portraits & Asset Upload",
+          "C": "A: Use provisional stock photos temporarily\nB: Provide real doctor portraits and clinic photos immediately",
+          "D": "Real photos increase patient conversion by over 300% on medical websites in India.",
+          "E": "Collect real photos within Days 1–5",
+          "F": "Pending Decision"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,96 @@
+{
+  "source": "Al Arif Hospital Master Consolidated Project Workbook.xlsx",
+  "extraction": "Read-only openpyxl, original XLSX unchanged; all nonempty rows and cell values retained including empty-string cells in those rows",
+  "sheets": [
+    {
+      "name": "00_Executive_Master_Index",
+      "nonempty_rows": 35,
+      "populated_cells": 155
+    },
+    {
+      "name": "01_Outreach_Master_Row",
+      "nonempty_rows": 3,
+      "populated_cells": 27
+    },
+    {
+      "name": "02_Hospital_Overview",
+      "nonempty_rows": 17,
+      "populated_cells": 33
+    },
+    {
+      "name": "03_Doctors_and_Specialties",
+      "nonempty_rows": 8,
+      "populated_cells": 50
+    },
+    {
+      "name": "04_Clinical_Services",
+      "nonempty_rows": 9,
+      "populated_cells": 49
+    },
+    {
+      "name": "05_Operational_Pain_Points",
+      "nonempty_rows": 7,
+      "populated_cells": 31
+    },
+    {
+      "name": "06_Tech_Pitch_Modules",
+      "nonempty_rows": 8,
+      "populated_cells": 36
+    },
+    {
+      "name": "07_Patient_Reviews_Analysis",
+      "nonempty_rows": 8,
+      "populated_cells": 36
+    },
+    {
+      "name": "08_Website_Content_Blueprint",
+      "nonempty_rows": 60,
+      "populated_cells": 310
+    },
+    {
+      "name": "09_Questionnaire_Instructions",
+      "nonempty_rows": 11,
+      "populated_cells": 29
+    },
+    {
+      "name": "10_Q_Hospital_Profile_Brand",
+      "nonempty_rows": 18,
+      "populated_cells": 109
+    },
+    {
+      "name": "11_Q_General_Hospital_Services",
+      "nonempty_rows": 19,
+      "populated_cells": 117
+    },
+    {
+      "name": "12_Q_Unani_Wing_and_Research",
+      "nonempty_rows": 19,
+      "populated_cells": 117
+    },
+    {
+      "name": "13_Q_Doctors_Staff_Directory",
+      "nonempty_rows": 11,
+      "populated_cells": 95
+    },
+    {
+      "name": "14_Q_Digital_Portal_and_Tech",
+      "nonempty_rows": 14,
+      "populated_cells": 84
+    },
+    {
+      "name": "15_Q_Sitemap_and_SEO_Strategy",
+      "nonempty_rows": 11,
+      "populated_cells": 60
+    },
+    {
+      "name": "16_Q_Media_Trust_Compliance",
+      "nonempty_rows": 15,
+      "populated_cells": 85
+    },
+    {
+      "name": "17_Project_Roadmap_and_NextStep",
+      "nonempty_rows": 22,
+      "populated_cells": 107
+    }
+  ]
+}
