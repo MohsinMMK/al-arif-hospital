@@ -14,6 +14,7 @@ import { servicePages, doctorPages } from './data'
 import type { Service } from './data'
 import { Chapter } from './motion'
 import { useReducedMotion } from './useReducedMotion'
+import { useSiteScroll } from './useSiteScroll'
 import './website.css'
 import './home-story.css'
 
@@ -60,6 +61,7 @@ function NotFound(){return <div className="mp-page mp-empty"><h1>Let’s get you
 function Shell(){
  const header=useRef<HTMLElement>(null);const [headerRaised,setHeaderRaised]=useState(false);const location=useLocation();const [menuOpen,setMenuOpen]=useState(false);const [motionPreference,setMotionPreference]=useState(true);const reduced=useReducedMotion();const enabled=motionPreference&&!reduced;const main=useRef<HTMLElement>(null)
  useEffect(()=>{window.scrollTo({top:0,behavior:'instant'});const heading=main.current?.querySelector('h1');heading?.setAttribute('tabindex','-1');heading?.focus({preventScroll:true});document.title=`${heading?.innerText?.replace(/\s+/g,' ').trim()||'Al-Arif Hospital'} · Al-Arif`},[location.pathname])
+ useSiteScroll(enabled,location.pathname)
  useEffect(()=>{
   if(!menuOpen)return
   const closeOnEscape=(event:KeyboardEvent)=>{if(event.key==='Escape'){setMenuOpen(false);document.querySelector<HTMLButtonElement>('.mp-menu-toggle')?.focus()}}

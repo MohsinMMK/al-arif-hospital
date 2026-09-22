@@ -34,3 +34,5 @@
 .mp a,.mp button{text-decoration:none}
 .mp hr{display:none}
 .mp [data-slot=accordion-item]{border-bottom:0}
+/* Lenis owns scroll interpolation on every supported route. */
+html.lenis{scroll-behavior:auto!important;scroll-padding-top:var(--site-header-height,90px)}

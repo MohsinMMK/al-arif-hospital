@@ -111,3 +111,11 @@ The user rejected the previous care-explorer composition as too application-like
 - Removed decorative link underlines and horizontal list/section separators. Form outlines, focus indicators and the care diagram remain.
 - Sources: https://github.com/darkroomengineering/lenis and https://github.com/darkroomengineering/lenis/blob/main/packages/snap/README.md and https://gsap.com/docs/v3/Plugins/ScrollTrigger/.
 - New dependency: lenis. No environment variables. Tests, lint and build pass.
+
+## Shared website motion — 22 September 2026
+
+- Moved the approved Lenis/GSAP scroll driver into the shared website shell. All public routes use the same 750ms desktop smoothing; only the fitting homepage chapters receive proximity settling.
+- Page transitions now use a 10px shift and 480ms sine ease-in/out. Native touch scrolling, nested search scrolling, form controls, reduced motion and the manual motion toggle remain supported.
+- Playwright checked all 22 public routes. A 420px wheel input on a service detail page measured 157px after 70ms and settled at 420px, with no subsequent section snap. Search, route scroll reset, 1024px pointer smoothing, 390px native scrolling, the inquiry planner and both motion preferences passed with no uncaught page errors.
+- Both homepage care sections settled within 1px of the header with their progress lines at 100%. Reviewed desktop care and about-page screenshots in `.impeccable/review/sitewide-motion-*.png`.
+- Verification commands: `npm --prefix preview test`, `npm --prefix preview run lint`, `npm --prefix preview run build`. No new dependencies or environment variables.

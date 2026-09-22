@@ -11,7 +11,7 @@ export function Chapter({ children, path, motionEnabled }: {children:React.React
   useGSAP(()=>{
     const main=root.current
     if(!main) return
-    if(motionEnabled) gsap.fromTo(main,{x:14,opacity:.6},{x:0,opacity:1,duration:.38,ease:'power3.out',clearProps:'transform,opacity'})
+    if(motionEnabled) gsap.fromTo(main,{x:10,opacity:.72},{x:0,opacity:1,duration:.48,ease:'sine.inOut',clearProps:'transform,opacity'})
   },{scope:root,dependencies:[path,motionEnabled],revertOnUpdate:true})
   return <div ref={root} className="mp-chapter">{children}</div>
 }

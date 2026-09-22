@@ -8,7 +8,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { InteractionMotion } from './interaction-context'
 import { doctorPages, servicePages } from './data'
 import { VisitJourney } from './motion'
-import { useCareScroll } from './useCareScroll'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 function StoryLink({to,children}:{to:string;children:React.ReactNode}) {return <Link className="story-link" to={to}>{children}<ArrowUpRight size={19}/></Link>}
@@ -48,7 +47,6 @@ function CareChapter({unani=false}:{unani?:boolean}) {
 
 export default function HomeStory(){
  const enabled=useContext(InteractionMotion)
- useCareScroll(enabled)
  useEffect(()=>{
   if(!enabled)return
   document.documentElement.classList.add('care-chapter-scroll')
