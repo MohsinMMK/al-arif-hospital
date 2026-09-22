@@ -28,3 +28,18 @@
 .story-opening{display:flex;flex-direction:column;min-height:calc(100svh - var(--site-header-height,90px))}
 .story-opening>.story-hero{width:100%;flex-shrink:0}
 .story-opening>.story-about{width:100%;margin:0 auto;flex:1;align-content:center}
+
+/* Desktop care chapters settle as complete screens; smaller screens flow naturally. */
+@media(min-width:1101px) and (min-height:800px){
+ html.care-chapter-scroll{scroll-snap-type:y proximity;scroll-padding-top:var(--site-header-height,90px)}
+ .story-care{min-height:calc(100svh - var(--site-header-height,90px));padding:clamp(32px,5svh,64px) 0;display:flex;align-items:center;scroll-snap-align:start;scroll-snap-stop:always}
+ .story-care-inner{width:100%}
+ .story-care-intro{position:static}
+ .story-care-feature{min-height:clamp(140px,17svh,200px);padding-top:28px;padding-bottom:28px}
+ .story-care-feature:before{top:45px}
+ .story-care-feature:after{top:50px}
+ .story-care-feature p{margin-top:15px}
+ .home-story .story-care[id]{scroll-margin-top:0}
+ .story-doctors{scroll-snap-align:start;scroll-margin-top:0}
+}
+@media(prefers-reduced-motion:reduce){html.care-chapter-scroll{scroll-snap-type:none}}

@@ -71,7 +71,7 @@ function Shell(){
  useEffect(()=>{
   const element=header.current
   if(!element)return
-  const updateHeight=()=>element.parentElement?.style.setProperty('--site-header-height',`${element.getBoundingClientRect().height}px`)
+  const updateHeight=()=>{const height=`${element.getBoundingClientRect().height}px`;element.parentElement?.style.setProperty('--site-header-height',height);document.documentElement.style.setProperty('--site-header-height',height)}
   const observer=new ResizeObserver(updateHeight)
   observer.observe(element)
   updateHeight()

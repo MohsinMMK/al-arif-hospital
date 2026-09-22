@@ -1,5 +1,5 @@
 import { DoctorSpotlight } from '@/components/react-bits/DoctorSpotlight'
-import { useContext, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowDown, ArrowUpRight, BookOpen, Leaf, MapPin, Stethoscope } from 'lucide-react'
 import gsap from 'gsap'
@@ -32,6 +32,11 @@ function CareChapter({unani=false}:{unani?:boolean}) {
 
 export default function HomeStory(){
  const enabled=useContext(InteractionMotion)
+ useEffect(()=>{
+  if(!enabled)return
+  document.documentElement.classList.add('care-chapter-scroll')
+  return ()=>document.documentElement.classList.remove('care-chapter-scroll')
+ },[enabled])
  return <div className="home-story"><div className="story-opening">
   <section className="story-hero"><div><h1>Care that feels<br/><em>close to home.</em></h1><p>Al-Arif brings general hospital care and Unani medicine<br className="story-desktop-break"/> together in Bandlaguda, Hyderabad.</p><a className="story-scroll-link" href="#general-care">Discover your care<ArrowDown size={18}/></a></div><div className="story-hero-ground"><span><Stethoscope size={21}/>General hospital</span><span><Leaf size={21}/>Unani care</span><Link to="/site/visit"><MapPin size={18}/>Plan your visit<ArrowUpRight size={16}/></Link></div></section>
   <section className="story-about story-section" id="hospital"><h2>A hospital in your neighbourhood.<br/><em>A welcome for your family.</em></h2><div><p>Here in Bandlaguda, Al-Arif brings two approaches to care into one institution: general hospital services and Unani consultations.</p><p>Get to know the hospital, its community roots and the people who help you take the next step.</p><StoryLink to="/site/about">The story of Al-Arif</StoryLink></div></section>
