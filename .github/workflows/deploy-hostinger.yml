@@ -57,3 +57,9 @@ jobs:
           local-dir: ./preview/dist/
           # The domain's FTP account already opens inside public_html.
           server-dir: ./
+
+      # Every page's HTML changes with each build, so ask Bing and other IndexNow engines to recrawl
+      # the sitemap now. The site is already live by this point, so a failed ping doesn't fail the deploy.
+      - name: Notify IndexNow
+        continue-on-error: true
+        run: node preview/scripts/indexnow.mjs
