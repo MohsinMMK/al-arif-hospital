@@ -370,7 +370,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={push}>
       {children}
-      {createPortal(
+      {/* No body to portal into while prerendering at build time. */}
+      {typeof document !== "undefined" && document.body && createPortal(
         <div
           ref={deck}
           className="mu-toast-deck"

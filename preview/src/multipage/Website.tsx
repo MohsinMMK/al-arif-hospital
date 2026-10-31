@@ -102,6 +102,7 @@ import {
 } from "./primitives";
 import { Chapter } from "./Chapter";
 import { useReducedMotion } from "./useReducedMotion";
+import { applyHead } from "@/seo";
 import { useSiteScroll } from "./useSiteScroll";
 import "./website.css";
 import "./home-story.css";
@@ -1397,7 +1398,7 @@ function Inquiry() {
   );
 }
 
-function Shell() {
+export function Shell() {
   const header = useRef<HTMLElement>(null);
   const [headerRaised, setHeaderRaised] = useState(false);
   const location = useLocation();
@@ -1411,7 +1412,10 @@ function Shell() {
     const heading = main.current?.querySelector("h1");
     heading?.setAttribute("tabindex", "-1");
     heading?.focus({ preventScroll: true });
-    document.title = `${heading?.innerText?.replace(/\s+/g, " ").trim() || "Al-Arif Hospital"} · Al-Arif`;
+    applyHead(
+      location.pathname,
+      heading?.innerText?.replace(/\s+/g, " ").trim() || "Al-Arif Hospital",
+    );
   }, [location.pathname]);
   useSiteScroll(enabled, location.pathname);
   useEffect(() => {

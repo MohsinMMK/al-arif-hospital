@@ -1,2 +1,6 @@
+# Search engines and AI assistants are welcome to read the whole site.
 User-agent: *
 Allow: /
+
+# A plain-text summary of the site for AI assistants: https://alarifgeneralhospital.com/llms.txt
+Sitemap: https://alarifgeneralhospital.com/sitemap.xml
