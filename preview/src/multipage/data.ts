@@ -681,11 +681,4 @@ export const pageCatalog = [
     description: "Address, reception, practical guidance and directions.",
     kind: "Patient information",
   },
-  {
-    path: "/site/request",
-    title: "Request a visit",
-    description:
-      "Prepare your preferences and contact reception to arrange a visit.",
-    kind: "Inquiry",
-  },
 ];

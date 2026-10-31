@@ -1,0 +1,295 @@
+/* Contact dock: a resting cluster of overlapping circles in the bottom-right corner
+   that springs into a straight column with labels when hovered or tapped. */
+.cd {
+  --cd-size: 56px;
+  --cd-gap: 12px;
+  --cd-spring: cubic-bezier(0.34, 1.42, 0.5, 1);
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 45;
+  width: var(--cd-size);
+  height: var(--cd-size);
+}
+/* A tapped-open stack softens the page behind it; a tap on the scrim closes it. */
+.cd::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgb(247 244 235 / 0.72);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms;
+}
+.cd[data-pinned]::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+/* An invisible margin around the open stack, so a cursor crossing the gaps
+   between circles and cards keeps it open; it folds only once the cursor
+   leaves this whole area. */
+.cd::after {
+  content: "";
+  position: absolute;
+  right: -28px;
+  bottom: -28px;
+  width: calc(var(--cd-size) + 300px);
+  height: calc(
+    (var(--cd-count) + 1) * (var(--cd-size) + var(--cd-gap)) + 56px
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+.cd[data-open]::after {
+  pointer-events: auto;
+}
+.cd-list {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cd-item {
+  position: absolute;
+  inset: 0;
+  z-index: var(--cd-rest-z);
+  transform: translate(var(--cd-rest-x), var(--cd-rest-y))
+    scale(var(--cd-rest-scale)) rotate(var(--cd-rest-turn));
+  transition: transform 640ms var(--cd-spring);
+}
+.cd[data-open] .cd-item {
+  z-index: 1;
+  transform: translateY(
+    calc(-1 * (var(--cd-index) + 1) * (var(--cd-size) + var(--cd-gap)))
+  );
+  transition-delay: calc(var(--cd-index) * 45ms);
+}
+.cd-item > a {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.cd-icon {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--cd-tone);
+  background: #fffdf5;
+  border: 1px solid #becbb4;
+  box-shadow:
+    0 10px 24px -8px #254c3d40,
+    0 2px 5px #254c3d14;
+  transition:
+    transform 300ms var(--cd-spring),
+    border-color 300ms,
+    box-shadow 300ms;
+}
+.cd-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Cream circles throughout; only the icon carries each line's colour. */
+[data-channel="emergency"] {
+  --cd-tone: #b23a2f;
+}
+[data-channel="call"] {
+  --cd-tone: #254c3d;
+}
+[data-channel="whatsapp"] {
+  --cd-tone: #1a8a4c;
+}
+[data-channel="email"] {
+  --cd-tone: #b08a2e;
+}
+[data-channel="facebook"] {
+  --cd-tone: #1877f2;
+}
+[data-channel="instagram"] {
+  --cd-tone: #d62976;
+}
+
+/* The emergency circle breathes a soft ring while the cluster rests. */
+[data-channel="emergency"] .cd-icon::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 2px solid #b23a2f;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cd-label {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 12px);
+  display: grid;
+  gap: 1px;
+  padding: 8px 16px 9px;
+  border-radius: 14px;
+  border: 1px solid #becbb4;
+  background: #fffdf5;
+  box-shadow: 0 10px 26px -12px #254c3d40;
+  white-space: nowrap;
+  text-align: left;
+  line-height: 1.25;
+  opacity: 0;
+  transform: translate(16px, -50%) scale(0.9);
+  transform-origin: right center;
+  pointer-events: none;
+  transition:
+    opacity 180ms,
+    transform 360ms var(--cd-spring),
+    border-color 200ms;
+}
+.cd-label strong {
+  color: #254c3d;
+  font-size: 14px;
+  font-weight: 700;
+}
+.cd-label > span {
+  color: #536254;
+  font-size: 12px;
+  font-weight: 500;
+}
+.cd[data-open] .cd-label {
+  opacity: 1;
+  transform: translate(0, -50%) scale(1);
+  pointer-events: auto;
+  transition-delay: calc(140ms + var(--cd-index) * 50ms);
+}
+
+/* Closed: the toggle is an invisible hit area over the whole cluster.
+   Open: it becomes the close circle where the front icon used to sit. */
+.cd-toggle {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  color: transparent;
+  background: transparent;
+  transition:
+    background 260ms,
+    color 260ms,
+    border-color 260ms,
+    box-shadow 260ms;
+}
+.cd-toggle::before {
+  content: "";
+  position: absolute;
+  inset: -62px -4px -4px -58px;
+  border-radius: 44px;
+}
+.cd-toggle svg {
+  transform: rotate(-90deg) scale(0.4);
+  transition: transform 420ms var(--cd-spring);
+}
+.cd-toggle:focus-visible {
+  outline: none;
+}
+.cd-toggle:focus-visible::before {
+  outline: 3px solid #789767;
+  outline-offset: 2px;
+}
+.cd[data-open] .cd-toggle {
+  color: #254c3d;
+  background: #fffdf5;
+  border-color: #becbb4;
+  box-shadow: 0 10px 24px -8px #254c3d40;
+}
+.cd[data-open] .cd-toggle::before {
+  inset: 0;
+}
+.cd[data-open] .cd-toggle svg {
+  transform: rotate(45deg) scale(1);
+}
+.cd[data-open] .cd-toggle:focus-visible {
+  outline: 3px solid #789767;
+  outline-offset: 3px;
+}
+.cd[data-open] .cd-toggle:focus-visible::before {
+  outline: none;
+}
+.cd-item > a:focus-visible {
+  outline: none;
+}
+.cd-item > a:focus-visible .cd-icon {
+  outline: 3px solid #789767;
+  outline-offset: 3px;
+}
+.cd-item > a:focus-visible .cd-label {
+  border-color: #527649;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cd[data-open] .cd-item > a:hover .cd-icon {
+    transform: scale(1.08);
+    border-color: #789767;
+    box-shadow:
+      0 14px 28px -8px #254c3d52,
+      0 2px 6px #254c3d1f;
+  }
+  .cd[data-open] .cd-item > a:hover .cd-label {
+    border-color: #789767;
+    transform: translate(-4px, -50%) scale(1);
+    transition-delay: 0s;
+  }
+  .cd[data-open] .cd-toggle:hover {
+    border-color: #789767;
+  }
+}
+
+.mp[data-motion="on"] .cd:not([data-open]) .cd-list {
+  animation: cd-float 4.2s ease-in-out infinite;
+}
+.mp[data-motion="on"] .cd:not([data-open]) [data-channel="emergency"] .cd-icon::after {
+  animation: cd-ring 2.6s ease-out infinite;
+}
+@keyframes cd-float {
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@keyframes cd-ring {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+}
+.mp[data-motion="off"] .cd *,
+.mp[data-motion="off"] .cd *::after {
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+  animation: none !important;
+}
+
+@media (max-width: 800px) {
+  .cd {
+    --cd-size: 52px;
+    --cd-gap: 10px;
+    right: 16px;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+  }
+}
+@media print {
+  .cd {
+    display: none;
+  }
+}

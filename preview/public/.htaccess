@@ -13,6 +13,12 @@ RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 # The site lives under /site
 RewriteRule ^$ /site [L,R=301]
 
+# Visit requests moved onto the Visit page; the query (a chosen service) carries over,
+# placed before the #request fragment so the browser keeps it
+RewriteCond %{QUERY_STRING} ^(.+)$
+RewriteRule ^site/request/?$ /site/visit?%1#request [L,R=301,NE]
+RewriteRule ^site/request/?$ /site/visit#request [L,R=301,NE]
+
 # Serve each route's prerendered HTML (built into /prerendered so no real folder shadows a route)
 RewriteCond %{DOCUMENT_ROOT}/prerendered/$1/index.html -f
 RewriteRule ^(site(?:/[^/]+)*)/?$ prerendered/$1/index.html [L]

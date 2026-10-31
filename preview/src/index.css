@@ -21,6 +21,13 @@
   --color-input: #94a686;
   --color-ring: #527649;
   --color-destructive: #9b352c;
+  --color-destructive-foreground: #9b352c;
+  --color-info: #3f6f8a;
+  --color-info-foreground: #2f5a72;
+  --color-success: #527649;
+  --color-success-foreground: #3d5d36;
+  --color-warning: #b07d1e;
+  --color-warning-foreground: #8a6d24;
 }
 :root {
   font-family: Manrope, sans-serif;
@@ -31,13 +38,6 @@
   background: #f7f4eb;
   line-height: 1.5;
   scrollbar-color: #91a37d #f7f4eb;
-}
-[data-slot="button"][data-variant="default"] {
-  color: #fffdf5;
-  background: #254c3d;
-}
-[data-slot="button"][data-variant="default"]:hover {
-  background: #37604c;
 }
 * {
   box-sizing: border-box;

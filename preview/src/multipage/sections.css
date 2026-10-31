@@ -725,6 +725,10 @@
   font-size: 12px;
 }
 
+.sx-request .sx-steps {
+  margin: 0 0 40px;
+}
+
 /* Clinician finder: a centred search above wing filters */
 .sx-finder {
   display: grid;
@@ -776,6 +780,36 @@
   background: #37604c;
 }
 .sx-filter button:focus-visible {
+  outline: 3px solid #527649;
+  outline-offset: 3px;
+}
+.sx-department {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 14px;
+  margin: 0;
+  color: #254c3d;
+  font-size: 14px;
+  font-weight: 600;
+}
+.sx-department button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid #becbb4;
+  border-radius: 999px;
+  color: #527649;
+  font-size: 13px;
+}
+.sx-department button:hover {
+  border-color: #254c3d;
+  color: #254c3d;
+}
+.sx-department button:focus-visible {
   outline: 3px solid #527649;
   outline-offset: 3px;
 }

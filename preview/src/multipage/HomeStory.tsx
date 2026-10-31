@@ -11,6 +11,7 @@ import {
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowButton } from "@/components/ui/arrow-button";
 import { InteractionMotion } from "./interaction-context";
 import { landmark, servicePages } from "./data";
 import { departmentPath, departments } from "./department-data";
@@ -30,10 +31,12 @@ function StoryLink({
 }) {
   const magnet = useMagnetic<HTMLAnchorElement>();
   return (
-    <Link ref={magnet} className="story-link mu-magnetic" to={to}>
+    <ArrowButton
+      className="story-link mu-magnetic"
+      render={<Link ref={magnet} to={to} />}
+    >
       {children}
-      <ArrowUpRight size={19} />
-    </Link>
+    </ArrowButton>
   );
 }
 
@@ -454,7 +457,7 @@ export default function HomeStory() {
               Check the service, clinician and timing with reception before you
               travel.
             </p>
-            <StoryLink to="/site/request">Plan an inquiry</StoryLink>
+            <StoryLink to="/site/visit#request">Plan an inquiry</StoryLink>
             <small>Preview only. No appointment is booked online.</small>
           </div>
         </div>

@@ -26,8 +26,9 @@ describe("multi-page content relationships", () => {
     expect(
       pageCatalog.some((page) => /preview|system|report/.test(page.path)),
     ).toBe(false);
+    // Requests are a section of the Visit page now; the old URL redirects there.
     expect(pageCatalog.some((page) => page.path === "/site/request")).toBe(
-      true,
+      false,
     );
   });
   it("links stories and milestones to real pages", () => {

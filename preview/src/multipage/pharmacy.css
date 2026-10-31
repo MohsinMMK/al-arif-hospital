@@ -345,6 +345,9 @@
   }
   .ph-step-nav [data-slot="button"] {
     flex: 1 1 0;
+  }
+  .ph-step-nav [data-arrow-label] {
+    flex: 1;
     padding-inline: 14px;
   }
   .ph-store {

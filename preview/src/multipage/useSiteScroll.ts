@@ -26,7 +26,7 @@ export function useSiteScroll(enabled: boolean, path: string) {
           document.querySelector(".mp-header")?.getBoundingClientRect()
             .height ?? 90;
         const nativeScrollSelector =
-          ".mp-search-dialog, .mp-search-overlay, .mp-header nav, .mp-menu-backdrop, select, textarea";
+          ".mp-header nav, .cm-panel, .mp-menu-backdrop, select, textarea";
         let pinchGesture = false;
         const lenis = new Lenis({
           autoRaf: false,

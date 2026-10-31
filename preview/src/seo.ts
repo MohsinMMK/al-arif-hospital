@@ -87,11 +87,6 @@ const fixed: Record<string, { title: string; description: string }> = {
     title: `Plan Your Visit – Address, OPD & Directions | ${brand}`,
     description: `Al-Arif Hospital is open 24 hours at ${fullAddress}. ${landmark}. Reception ${hospital.reception}.`,
   },
-  "/site/request": {
-    title: `Request a Visit | ${brand}, Hyderabad`,
-    description:
-      "Choose a department and preferred time, then contact Al-Arif Hospital reception by phone or WhatsApp on +91 85550 86667 to arrange your visit.",
-  },
 };
 
 const trim = (text: string, length = 160) =>

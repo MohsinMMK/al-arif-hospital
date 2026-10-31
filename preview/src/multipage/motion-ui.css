@@ -768,19 +768,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.mu-swap-next {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 18px;
-  border: 0;
-  border-radius: 7px;
-  background: #e2ebd9;
-  color: #254c3d;
-  font-size: 14px;
-  font-weight: 700;
-}
 
 @media (max-width: 800px) {
   .mu-swap {

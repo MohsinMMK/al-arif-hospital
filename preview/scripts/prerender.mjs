@@ -12,7 +12,7 @@ const server = await import(resolve(root, "dist-ssr/entry-server.js"));
 // Just enough browser surface for components that read it while rendering. Set after the import
 // so libraries that register at load time (gsap) still see a server environment.
 const media = { matches: false, addEventListener() {}, removeEventListener() {} };
-globalThis.window = { matchMedia: () => media };
+globalThis.window = { matchMedia: () => media, addEventListener() {}, removeEventListener() {} };
 globalThis.document = { hidden: false };
 
 const template = await readFile(resolve(dist, "index.html"), "utf8");

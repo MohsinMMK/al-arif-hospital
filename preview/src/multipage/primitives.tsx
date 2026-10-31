@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowButton } from "@/components/ui/arrow-button";
 import type { Service } from "./data";
 import { InteractionMotion } from "./interaction-context";
 import { useMagnetic } from "./motion-ui";
@@ -21,12 +21,13 @@ export function Action({
   // Drifts a few pixels toward a fine pointer; the hook stays idle on touch.
   const magnet = useMagnetic<HTMLAnchorElement>();
   return (
-    <Button asChild variant={outline ? "outline" : "default"}>
-      <Link ref={magnet} className="mp-action mu-magnetic" to={to}>
-        <span>{children}</span>
-        <ArrowUpRight size={17} />
-      </Link>
-    </Button>
+    <ArrowButton
+      tone={outline ? "soft" : "solid"}
+      className="mu-magnetic"
+      render={<Link ref={magnet} to={to} />}
+    >
+      {children}
+    </ArrowButton>
   );
 }
 export function TextLink({
@@ -116,7 +117,7 @@ export function ContactBand({ service }: { service?: string }) {
           you.
         </p>
       </div>
-      <Action to={`/site/request${service ? `?service=${service}` : ""}`}>
+      <Action to={`/site/visit${service ? `?service=${service}` : ""}#request`}>
         Plan an inquiry
       </Action>
     </section>

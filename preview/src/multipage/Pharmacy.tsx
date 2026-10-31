@@ -2,8 +2,6 @@ import { useRef, useState } from "react";
 import type { CSSProperties, KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
 import {
-  ArrowLeft,
-  ArrowRight,
   ArrowUpRight,
   Check,
   CircleHelp,
@@ -21,7 +19,7 @@ import {
   Warehouse,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowButton } from "@/components/ui/arrow-button";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { servicePages } from "./data";
 import type { Service } from "./data";
@@ -278,27 +276,25 @@ function ProductionStepper() {
         </div>
       </div>
       <div className="ph-step-nav">
-        <Button
-          type="button"
-          variant="outline"
+        <ArrowButton
+          tone="soft"
+          direction="left"
           aria-disabled={active === 0}
           onClick={() => {
             if (active > 0) select(active - 1);
           }}
         >
-          <ArrowLeft size={17} aria-hidden="true" />
           Previous
-        </Button>
-        <Button
-          type="button"
+        </ArrowButton>
+        <ArrowButton
+          direction="right"
           aria-disabled={active === last}
           onClick={() => {
             if (active < last) select(active + 1);
           }}
         >
           Next
-          <ArrowRight size={17} aria-hidden="true" />
-        </Button>
+        </ArrowButton>
       </div>
     </section>
   );
@@ -307,19 +303,20 @@ function ProductionStepper() {
 function StoreButton({ href }: { href: string }) {
   const magnet = useMagnetic<HTMLAnchorElement>();
   return (
-    <Button asChild>
-      <a
-        ref={magnet}
-        className="mp-action mu-magnetic"
-        href={href}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Visit the online store (opens in a new tab)"
-      >
-        Visit the online store
-        <ArrowUpRight size={17} aria-hidden="true" />
-      </a>
-    </Button>
+    <ArrowButton
+      className="mu-magnetic"
+      render={
+        <a
+          ref={magnet}
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Visit the online store (opens in a new tab)"
+        />
+      }
+    >
+      Visit the online store
+    </ArrowButton>
   );
 }
 

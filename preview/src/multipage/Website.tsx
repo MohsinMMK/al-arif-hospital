@@ -8,7 +8,10 @@ import { Departments } from "./Departments";
 import { departmentPath, departments, wardBeds } from "./department-data";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { InteractionMotion } from "./interaction-context";
-import { QuickFind, ReadingProgress, VisitChecklist } from "./interactive";
+import { ContactDock } from "./ContactDock";
+import { CareLinks } from "./CareMenu";
+import { GooeyNav } from "@/components/ui/gooey-nav";
+import { ReadingProgress, VisitChecklist } from "./interactive";
 import { useEffect, useRef, useState } from "react";
 import {
   BrowserRouter,
@@ -23,7 +26,7 @@ import {
 } from "react-router-dom";
 import {
   ArrowUpRight,
-  ArrowRight,
+  ChevronDown,
   Leaf,
   Stethoscope,
   Menu,
@@ -67,7 +70,7 @@ import {
   Users,
   Warehouse,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowButton } from "@/components/ui/arrow-button";
 import { Input } from "@/components/ui/input";
 import {
   Accordion,
@@ -218,7 +221,7 @@ function ServiceDetail() {
             <em>your visit.</em>
           </h2>
           <p>{service.name}</p>
-          <Action to={`/site/request?service=${service.slug}`}>
+          <Action to={`/site/visit?service=${service.slug}#request`}>
             Ask about this care
           </Action>
           <a href="tel:+918555086667" className="mp-aside-phone">
@@ -276,10 +279,17 @@ const wingOf = (doctor: DoctorProfile) =>
 function Doctors() {
   const [query, setQuery] = useState("");
   const [wing, setWing] = useState<Service["wing"] | "All">("All");
-  const matches = doctorPages.filter((doctor) =>
-    `${doctor.name} ${doctor.honorific ?? ""} ${doctor.designation} ${doctor.department} ${doctor.degrees}`
-      .toLowerCase()
-      .includes(query.toLowerCase().trim()),
+  // The Care menu links here with ?department= to show one department's team.
+  const [params, setParams] = useSearchParams();
+  const department = departments.find(
+    (item) => item.slug === params.get("department"),
+  );
+  const matches = doctorPages.filter(
+    (doctor) =>
+      (!department || department.doctorSlugs?.includes(doctor.slug)) &&
+      `${doctor.name} ${doctor.honorific ?? ""} ${doctor.designation} ${doctor.department} ${doctor.degrees}`
+        .toLowerCase()
+        .includes(query.toLowerCase().trim()),
   );
   const groups = doctorWings
     .filter((group) => wing === "All" || group.name === wing)
@@ -333,6 +343,15 @@ function Doctors() {
               </button>
             ))}
           </div>
+          {department && (
+            <p className="sx-department" role="status">
+              Showing the {department.english ?? department.name} team
+              <button type="button" onClick={() => setParams({})}>
+                <X size={14} aria-hidden="true" />
+                Show all doctors
+              </button>
+            </p>
+          )}
         </div>
       </PageTitle>
       {groups.map(({ id, name, icon: Icon, doctors }) => (
@@ -385,7 +404,7 @@ function DoctorDetail() {
             {[doctor.honorific, doctor.designation].filter(Boolean).join(" · ")}
           </p>
           <p>{doctor.introduction}</p>
-          <Action to={`/site/request?service=${doctor.serviceSlugs[0]}`}>
+          <Action to={`/site/visit?service=${doctor.serviceSlugs[0]}#request`}>
             Ask about a consultation
           </Action>
         </div>
@@ -432,7 +451,21 @@ function DoctorDetail() {
           <dl>
             <div>
               <dt>Department</dt>
-              <dd>{doctor.department}</dd>
+              <dd>
+                {doctor.department}
+                {departments
+                  .filter((item) => item.doctorSlugs?.includes(doctor.slug))
+                  .map((item) => (
+                    <Link
+                      key={item.slug}
+                      className="mp-department-link"
+                      to={departmentPath(item.slug)}
+                    >
+                      See the {item.english ?? item.name} department
+                      <ArrowUpRight size={14} aria-hidden="true" />
+                    </Link>
+                  ))}
+              </dd>
             </div>
             <div>
               <dt>Qualifications</dt>
@@ -1163,6 +1196,34 @@ const visitQuestions = [
   ],
 ];
 function Visit() {
+  const { hash, search, key } = useLocation();
+  useEffect(() => {
+    if (hash !== "#request") return;
+    let cancelled = false;
+    let frame = 0;
+    // The shell scrolls a new page to the top after this effect, so wait a frame.
+    void document.fonts.ready.then(() => {
+      if (cancelled) return;
+      frame = requestAnimationFrame(() => {
+        const target = document.getElementById("request");
+        if (!target) return;
+        const header =
+          document.querySelector(".mp-header")?.getBoundingClientRect().height ?? 90;
+        window.scrollTo({
+          top: target.getBoundingClientRect().top + window.scrollY - header - 16,
+          behavior: "instant",
+        });
+        const heading = target.querySelector("h2");
+        heading?.setAttribute("tabindex", "-1");
+        heading?.focus({ preventScroll: true });
+      });
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(frame);
+    };
+    // A new key means a fresh click, even on a link to the hash already shown.
+  }, [hash, key]);
   return (
     <div className="mp-page">
       <PageTitle
@@ -1203,6 +1264,7 @@ function Visit() {
           <strong>aaghuri@gmail.com</strong>
         </a>
       </nav>
+      <VisitRequest key={search} />
       <section className="sx-section" aria-labelledby="visit-hours">
         <SectionHead
           id="visit-hours"
@@ -1218,11 +1280,11 @@ function Visit() {
           <MapPin size={37} aria-hidden="true" />
           <h2 id="visit-address">Al-Arif Hospital</h2>
           <p>{address}</p>
-          <Button asChild>
-            <a href={maps} target="_blank" rel="noreferrer">
-              Open Google Maps <ArrowUpRight size={17} aria-hidden="true" />
-            </a>
-          </Button>
+          <ArrowButton
+            render={<a href={maps} target="_blank" rel="noreferrer" />}
+          >
+            Open Google Maps
+          </ArrowButton>
         </div>
         <ul className="sx-place-notes">
           <li>
@@ -1267,7 +1329,8 @@ function Visit() {
     </div>
   );
 }
-function Inquiry() {
+// Plans an inquiry in the browser only; nothing is collected or sent.
+function VisitRequest() {
   const [params] = useSearchParams();
   const initial = params.get("service") || "";
   const [service, setService] = useState(
@@ -1279,18 +1342,16 @@ function Inquiry() {
   // Remounts the alert on every blocked submit so the nudge and announcement repeat.
   const [attempt, setAttempt] = useState(0);
   return (
-    <div className="mp-page">
-      <PageTitle
-        align="center"
-        title={"Let’s make\nthe next step clear."}
-        description="Choose a department and your preferred time, then contact reception to arrange your visit."
-      >
-        <ol className="sx-steps" aria-label="Three steps">
-          <li>Choose care</li>
-          <li>Pick a time</li>
-          <li>Call reception</li>
-        </ol>
-      </PageTitle>
+    <section
+      id="request"
+      className="sx-section sx-request"
+      aria-labelledby="visit-request"
+    >
+      <ol className="sx-steps" aria-label="Three steps">
+        <li>Choose care</li>
+        <li>Pick a time</li>
+        <li>Call reception</li>
+      </ol>
       <div className="mp-inquiry-layout">
         <form
           onSubmit={(event) => {
@@ -1304,8 +1365,11 @@ function Inquiry() {
             setPrepared(true);
           }}
         >
-          <h2>Plan your inquiry.</h2>
-          <p>No patient details are collected or sent.</p>
+          <h2 id="visit-request">Request a visit.</h2>
+          <p>
+            Choose a department and your preferred time, then contact reception
+            to arrange your visit. No patient details are collected or sent.
+          </p>
           <FloatField
             id="inquiry-service"
             label="Care or service"
@@ -1355,9 +1419,9 @@ function Inquiry() {
               {error}
             </p>
           )}
-          <Button type="submit">
-            Show my next step <ArrowRight size={17} />
-          </Button>
+          <ArrowButton type="submit" direction="right">
+            Show my next step
+          </ArrowButton>
           {prepared && (
             <div className="mp-inquiry-result" role="status">
               <Check size={21} />
@@ -1408,7 +1472,7 @@ function Inquiry() {
           </small>
         </aside>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -1417,6 +1481,8 @@ export function Shell() {
   const [headerRaised, setHeaderRaised] = useState(false);
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [careOpen, setCareOpen] = useState(false);
+  const [drawerCareOpen, setDrawerCareOpen] = useState(false);
   const [motionPreference, setMotionPreference] = useState(true);
   const reduced = useReducedMotion();
   const enabled = motionPreference && !reduced;
@@ -1432,6 +1498,33 @@ export function Shell() {
     );
   }, [location.pathname]);
   useSiteScroll(enabled, location.pathname);
+  // Any navigation, including a jump to a department on the same page, folds the Care map away.
+  const routeKey = `${location.pathname}${location.search}${location.hash}`;
+  const [seenRoute, setSeenRoute] = useState(routeKey);
+  if (routeKey !== seenRoute) {
+    setSeenRoute(routeKey);
+    setCareOpen(false);
+    setMenuOpen(false);
+  }
+  useEffect(() => {
+    if (!careOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setCareOpen(false);
+      document
+        .querySelector<HTMLButtonElement>('[aria-controls="care-panel"]')
+        ?.focus();
+    };
+    const closeOnResize = () => {
+      if (window.innerWidth <= 1050) setCareOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    window.addEventListener("resize", closeOnResize);
+    return () => {
+      window.removeEventListener("keydown", closeOnEscape);
+      window.removeEventListener("resize", closeOnResize);
+    };
+  }, [careOpen]);
   useEffect(() => {
     if (!menuOpen) return;
     const closeOnEscape = (event: KeyboardEvent) => {
@@ -1472,13 +1565,21 @@ export function Shell() {
     window.addEventListener("scroll", updateHeader, { passive: true });
     return () => window.removeEventListener("scroll", updateHeader);
   }, []);
-  // Four routes up top; the rest of the site is a footer link or a search away.
+  // Care opens a map of both wings; the other three are pages.
   const nav = [
-    ["Departments", "/site/departments"],
-    ["Our doctors", "/site/doctors"],
+    ["Doctors", "/site/doctors"],
     ["About", "/site/about"],
     ["Visit us", "/site/visit"],
   ];
+  const carePaths = ["/site/departments", "/site/services", "/site/pharmacy"];
+  const onPath = (path: string) =>
+    location.pathname === path || location.pathname.startsWith(`${path}/`);
+  const pageIndex = nav.findIndex(([, path]) => onPath(path));
+  const routeIndex = carePaths.some(onPath)
+    ? 0
+    : pageIndex === -1
+      ? -1
+      : pageIndex + 1;
   return (
     <InteractionMotion.Provider value={enabled}>
       <div className="mp" data-motion={enabled ? "on" : "off"}>
@@ -1487,6 +1588,14 @@ export function Shell() {
           <a className="mp-skip" href="#page-content">
             Skip to content
           </a>
+          {careOpen && (
+            <button
+              className="cm-backdrop"
+              aria-label="Close care menu"
+              tabIndex={-1}
+              onClick={() => setCareOpen(false)}
+            />
+          )}
           {menuOpen && (
             <button
               className="mp-menu-backdrop"
@@ -1505,19 +1614,65 @@ export function Shell() {
                 Al-Arif<small>General Hospital & Unani Research Institute</small>
               </span>
             </Link>
+            <GooeyNav
+              className="mp-gooey"
+              aria-label="Main navigation"
+              items={[
+                {
+                  label: "Care",
+                  trailing: (
+                    <ChevronDown className="mp-care-chevron" aria-hidden="true" />
+                  ),
+                  expanded: careOpen,
+                  controls: "care-panel",
+                },
+                ...nav.map(([label, href]) => ({ label, href })),
+              ]}
+              value={careOpen ? 0 : routeIndex}
+              onChange={(index) => setCareOpen(index === 0 && !careOpen)}
+              activeColor="#254c3d"
+              activeLabelColor="#fffdf5"
+              reducedMotion={!enabled}
+            />
+            <div
+              id="care-panel"
+              className="cm-panel"
+              role="region"
+              aria-label="Care at Al-Arif"
+              data-open={careOpen ? "" : undefined}
+              inert={!careOpen}
+            >
+              <CareLinks onNavigate={() => setCareOpen(false)} />
+            </div>
             <nav
               id="main-navigation"
               aria-label="Main navigation"
-              className={menuOpen ? "is-open" : ""}
+              className={`mp-drawer${menuOpen ? " is-open" : ""}`}
             >
+              <button
+                type="button"
+                className="mp-drawer-care"
+                aria-expanded={drawerCareOpen}
+                aria-controls="drawer-care"
+                onClick={() => setDrawerCareOpen(!drawerCareOpen)}
+              >
+                Care: departments & services
+                <ChevronDown
+                  className="mp-care-chevron"
+                  size={18}
+                  aria-hidden="true"
+                />
+              </button>
+              <div id="drawer-care" className="cm-drawer" hidden={!drawerCareOpen}>
+                <CareLinks onNavigate={() => setMenuOpen(false)} />
+              </div>
               {nav.map(([label, path]) => (
                 <NavLink onClick={() => setMenuOpen(false)} key={path} to={path}>
                   {label}
                 </NavLink>
               ))}
             </nav>
-            <QuickFind />
-            <Action to="/site/request">Request a visit</Action>
+            <Action to="/site/visit#request">Request a visit</Action>
             <button
               className="mp-menu-toggle"
               aria-controls="main-navigation"
@@ -1548,7 +1703,12 @@ export function Shell() {
                 <Route path="/site/visit" element={<Visit />} />
                 <Route
                   path="/site/request"
-                  element={<Inquiry key={location.search} />}
+                  element={
+                    <Navigate
+                      to={`/site/visit${location.search}#request`}
+                      replace
+                    />
+                  }
                 />
                 <Route path="/" element={<Navigate to="/site" replace />} />
                 <Route
@@ -1629,16 +1789,7 @@ export function Shell() {
               </button>
             </div>
           </footer>
-          <div className="mp-mobile-contact" onClick={() => setMenuOpen(false)}>
-            <a href="tel:+918555086667">
-              <Phone size={17} />
-              Call reception
-            </a>
-            <Link to="/site/request">
-              <CalendarDays size={17} />
-              Request a visit
-            </Link>
-          </div>
+          <ContactDock />
         </ToastProvider>
       </div>
     </InteractionMotion.Provider>

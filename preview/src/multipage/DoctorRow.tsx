@@ -9,9 +9,9 @@ import {
   type Ref,
 } from "react";
 import { Link } from "react-router-dom";
+import { ArrowButton } from "@/components/ui/arrow-button";
 import {
   ArrowRight,
-  ArrowUpRight,
   Building2,
   CalendarDays,
   Check,
@@ -307,15 +307,14 @@ function DoctorDetails({
           ))}
         </ul>
         <div className="doctor-details-actions">
-          <Link
-            to={`/site/doctors/${doctor.slug}`}
-            className="doctor-details-primary"
+          <ArrowButton
+            size="sm"
+            render={<Link to={`/site/doctors/${doctor.slug}`} />}
           >
             View full profile
-            <ArrowUpRight size={16} aria-hidden="true" />
-          </Link>
+          </ArrowButton>
           <Link
-            to={`/site/request?service=${doctor.serviceSlugs[0]}`}
+            to={`/site/visit?service=${doctor.serviceSlugs[0]}#request`}
             className="doctor-details-secondary"
           >
             Ask about a consultation

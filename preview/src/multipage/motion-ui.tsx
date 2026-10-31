@@ -18,7 +18,8 @@ import type {
   RefObject,
 } from "react";
 import { createPortal } from "react-dom";
-import { ArrowRight, X } from "lucide-react";
+import { X } from "lucide-react";
+import { ArrowButton } from "@/components/ui/arrow-button";
 import { InteractionMotion } from "./interaction-context";
 import "./motion-ui.css";
 
@@ -888,16 +889,17 @@ export function CardSwap({
           <span aria-hidden="true">
             {pad(current + 1)} / {pad(count)}
           </span>
-          <button
-            type="button"
-            className="mu-swap-next"
+          <ArrowButton
+            tone="soft"
+            size="sm"
+            direction="right"
             onClick={() => {
               const next = show(current + 1);
               setAnnouncement(`${next + 1} of ${count}: ${items[next].title}`);
             }}
           >
-            {nextLabel} <ArrowRight size={16} aria-hidden="true" />
-          </button>
+            {nextLabel}
+          </ArrowButton>
         </div>
         <p className="mu-sr" role="status" aria-atomic="true">
           {announcement}
