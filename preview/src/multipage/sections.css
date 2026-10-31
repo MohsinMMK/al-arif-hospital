@@ -573,6 +573,54 @@
   font-size: 14px;
   letter-spacing: 0;
 }
+/* With the trustees shown as portraits, three cards fill a row and the Jamia card takes the next one. */
+.mp .sx-trust > div[data-tone="sage"] {
+  grid-column: 1 / -1;
+}
+.sx-trustees {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+.mp .sx-trustees li {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding: 12px 12px 22px;
+  border-radius: 14px;
+  background: #f2f0e4;
+}
+.sx-trustees img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #e6e3d4;
+}
+.mp .sx-trustees span {
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #59744b;
+}
+.mp .sx-trustees strong {
+  padding: 0 8px;
+  font-family: Bitter, serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+.mp .sx-trustees small {
+  padding: 0 8px;
+  font-size: 13px;
+}
 .sx-note {
   max-width: 62ch;
   margin: 32px auto 0;
@@ -944,6 +992,7 @@
   .sx-pair > article,
   .sx-panel,
   .mp .sx-trust > div,
+  .mp .sx-trustees li,
   .sx-strip,
   .sx-contact a,
   .sx-steps li,
@@ -965,8 +1014,12 @@
   .sx-tiles,
   .sx-figures,
   .sx-badges,
-  .sx-trust {
+  .sx-trust,
+  .sx-trustees {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mp .sx-trust > div[data-tone="sage"] {
+    grid-column: auto;
   }
   .sx-explore {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1049,6 +1102,18 @@
   .sx-trust,
   .sx-contact {
     grid-template-columns: 1fr;
+  }
+  .sx-trustees {
+    gap: 10px;
+  }
+  .mp .sx-trustees li {
+    padding: 8px 6px 16px;
+  }
+  .mp .sx-trustees strong {
+    font-size: 15px;
+  }
+  .mp .sx-trustees small {
+    font-size: 12px;
   }
   /* Contact tiles become compact rows: icon beside label and number. */
   .sx-contact {

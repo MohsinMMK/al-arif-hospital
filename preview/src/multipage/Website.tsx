@@ -38,7 +38,6 @@ import {
   Mail,
   Siren,
   Ambulance,
-  Award,
   Baby,
   BadgeCheck,
   BedDouble,
@@ -485,6 +484,22 @@ const aboutStats: Stat[] = [
 ];
 const generalOpds = departments.filter((item) => item.group === "general");
 const unaniOpds = departments.filter((item) => item.group === "unani");
+// Portraits in public/trustees, supplied by the Trust.
+const trustees = [
+  {
+    photo: "syed-ahmed-mohiuddin-jeelani",
+    role: "Managing Trustee",
+    name: "Alhaj Syed Ahmed Mohiuddin Jeelani Chishti wo Quadri",
+    note: "Janasheen Silsile Nooria wo Arifia and Sajjada Rouza-e-Nooria",
+  },
+  { photo: "mohammed-sami-uddin", role: "Trustee", name: "Mohammed Sami Uddin" },
+  {
+    photo: "syed-mohammed-mazhar-uddin-jeelani",
+    role: "Trustee",
+    name: "Syed Mohammed Mazhar Uddin Jeelani",
+  },
+  { photo: "cherngoden-abu-bakkar", role: "Trustee", name: "Cherngoden Abu Bakkar" },
+];
 const campusFacilities: Tile[] = [
   {
     icon: HeartPulse,
@@ -757,6 +772,23 @@ function About() {
           accent="Leadership and heritage."
           lead="Al Arif Education and Medical Trust was established in 2001 and is registered under the AP Societies Registration Act (No. 327/IV/2011)."
         />
+        <ul className="sx-trustees" aria-label="Trustees">
+          {trustees.map((trustee) => (
+            <li key={trustee.photo}>
+              <img
+                src={`/trustees/${trustee.photo}.webp`}
+                alt={trustee.name}
+                width={560}
+                height={700}
+                loading="lazy"
+                decoding="async"
+              />
+              <span>{trustee.role}</span>
+              <strong>{trustee.name}</strong>
+              {trustee.note && <small>{trustee.note}</small>}
+            </li>
+          ))}
+        </ul>
         <dl className="sx-trust">
           <div data-feature="">
             <Landmark size={30} aria-hidden="true" />
@@ -767,27 +799,9 @@ function About() {
             </dd>
           </div>
           <div>
-            <Award size={24} aria-hidden="true" />
-            <dt>Managing Trustee</dt>
-            <dd>
-              Alhaj Syed Ahmed Mohiuddin Jeelani Chishti wo Quadri
-              <small>
-                Janasheen Silsile Nooria wo Arifia and Sajjada Rouza-e-Nooria
-              </small>
-            </dd>
-          </div>
-          <div>
             <Sprout size={24} aria-hidden="true" />
             <dt>Founder Chairman</dt>
             <dd>Late Alhaj Syed Mohd. Arifuddin Jeelani Chishti wa Qadri</dd>
-          </div>
-          <div>
-            <Users size={24} aria-hidden="true" />
-            <dt>Trustees</dt>
-            <dd>
-              Mohammed Sami Uddin · Syed Mohammed Mazhar Uddin Jeelani ·
-              Cherngoden Abu Bakkar
-            </dd>
           </div>
           <div>
             <BadgeCheck size={24} aria-hidden="true" />
