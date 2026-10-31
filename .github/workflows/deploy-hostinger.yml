@@ -1,0 +1,44 @@
+# Build the site and upload it to Hostinger (alarifgeneralhospital.com) on every push to main.
+# Mirrors the checks vercel.json ran: tests and lint must pass before anything is uploaded.
+
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Never run two uploads at once; a newer push waits for the current one to finish.
+concurrency:
+  group: deploy-hostinger
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: preview/package-lock.json
+
+      - run: npm --prefix preview ci
+      - run: npm --prefix preview test
+      - run: npm --prefix preview run lint
+      - run: npm --prefix preview run build
+
+      # Uploads only files that changed since the last deploy (tracked in a state file on the server).
+      # Hostinger's FTP certificate is issued for *.hstgr.io, not this IP, so TLS is used without
+      # hostname verification ("loose") — still encrypted, unlike plain FTP.
+      - uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          security: loose
+          local-dir: ./preview/dist/
+          server-dir: public_html/
