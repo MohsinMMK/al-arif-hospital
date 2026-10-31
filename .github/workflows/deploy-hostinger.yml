@@ -41,4 +41,5 @@ jobs:
           protocol: ftps
           security: loose
           local-dir: ./preview/dist/
-          server-dir: public_html/
+          # The domain's FTP account already opens inside public_html.
+          server-dir: ./

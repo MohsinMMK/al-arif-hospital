@@ -11,6 +11,11 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.html [L]
 
+# The deploy action's file list lives in the web root; keep it private
+<Files ".ftp-deploy-sync-state.json">
+  Require all denied
+</Files>
+
 # Hashed build assets never change; index.html must always revalidate
 <IfModule mod_headers.c>
   <If "%{REQUEST_URI} =~ m#^/assets/#">
