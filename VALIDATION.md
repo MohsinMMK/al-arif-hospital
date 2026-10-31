@@ -77,4 +77,4 @@ The independent Impeccable finish review returned **ship** for the supplied scre
 
 The `Deploy to Hostinger` GitHub Actions workflow runs tests, lint and build after a push to `main`, then uploads `preview/dist` over FTPS. Verify the run for the pushed SHA succeeds and alarifgeneralhospital.com serves the new hashed assets; then check a direct route and a critical navigation flow.
 
-No new environment variables, backend, patient intake, staff system, booking confirmation, analytics or externally submitted messages were introduced. Institutional content review and the existing `noindex` remain unchanged.
+No new environment variables, backend, patient intake, staff system, booking confirmation, analytics or externally submitted messages were introduced. Institutional content review remains pending. Search indexing was enabled on 31 October 2026.

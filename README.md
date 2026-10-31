@@ -54,4 +54,4 @@ The care directory at `/site/services` has General hospital (`#general-hospital`
 
 The inquiry page prepares service/time preferences and provides reception links. It does not collect patient details, transmit requests, confirm appointments or provide a staff system. Education applications and publication records are not available. No backend, patient database, payments or analytics are implemented.
 
-The site retains `noindex` pending hospital content and domain approval. Clinical credentials, current hours, service availability and contact details need institutional review; design approval does not verify those facts. Third-party licenses ship under `preview/public/third-party/`.
+Search engines may index the site on alarifgeneralhospital.com (`preview/public/robots.txt`). Clinical credentials, current hours, service availability and contact details need institutional review; design approval does not verify those facts. Third-party licenses ship under `preview/public/third-party/`.

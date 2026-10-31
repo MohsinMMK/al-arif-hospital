@@ -31,4 +31,4 @@ The visit checklist and inquiry preferences reset when their pages unmount. Call
 Booking, patient accounts, payments, clinical records, staff administration, programme admissions, publication management, Urdu RTL and Telugu translations. Historical architecture proposals in `docs/planning/` do not imply these systems exist.
 
 ## Pending hospital input
-Approved clinical roster and credentials, current hours and service availability, emergency contact, fees, authentic brand assets, content-review ownership, a custom domain and reviewed translations. The deployed site retains `noindex` until content and indexing are approved.
+Approved clinical roster and credentials, current hours and service availability, emergency contact, fees, authentic brand assets, content-review ownership, a custom domain and reviewed translations. Search indexing was approved on 31 October 2026 for alarifgeneralhospital.com.
