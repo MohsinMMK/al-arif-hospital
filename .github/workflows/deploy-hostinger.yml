@@ -30,6 +30,20 @@ jobs:
       - run: npm --prefix preview run lint
       - run: npm --prefix preview run build
 
+      # Hostinger's FTPS server drops the connection when the deploy action asks for a sync state
+      # file that doesn't exist yet, so seed an empty one (meaning "upload everything") when missing.
+      - name: Seed the sync state file on first deploy
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          url="ftp://$FTP_SERVER/.ftp-deploy-sync-state.json"
+          if ! curl -sf --ssl-reqd -k -u "$FTP_USERNAME:$FTP_PASSWORD" "$url" -o /dev/null; then
+            echo '{"description":"ftp-deploy sync state","version":"1.0.0","generatedTime":0,"data":[]}' |
+              curl -sS --ssl-reqd -k -u "$FTP_USERNAME:$FTP_PASSWORD" -T - "$url"
+          fi
+
       # Uploads only files that changed since the last deploy (tracked in a state file on the server).
       # Hostinger's FTP certificate is issued for *.hstgr.io, not this IP, so TLS is used without
       # hostname verification ("loose") — still encrypted, unlike plain FTP.
