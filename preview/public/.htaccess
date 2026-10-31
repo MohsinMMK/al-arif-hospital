@@ -17,10 +17,9 @@ RewriteRule ^$ /site [L,R=301]
 RewriteCond %{DOCUMENT_ROOT}/prerendered/$1/index.html -f
 RewriteRule ^(site(?:/[^/]+)*)/?$ prerendered/$1/index.html [L]
 
-# Single-page app: send unknown paths to index.html so client routes survive a refresh
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.html [L]
+# Anything else is missing: answer 404 (so search engines and AI agents don't take it for a real page)
+# with the app, which shows its not-found page
+ErrorDocument 404 /index.html
 
 # The deploy action's file list lives in the web root; keep it private
 <Files ".ftp-deploy-sync-state.json">
