@@ -5,6 +5,11 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "lenis/dist/lenis.css";
 
+let activeLenis: Lenis | undefined;
+
+/** The running scroll driver, so in-page jumps glide through it instead of fighting it. */
+export const siteScroller = () => activeLenis;
+
 /** One shared scroll driver for every page; chapter settling stays on the homepage. */
 export function useSiteScroll(enabled: boolean, path: string) {
   useEffect(() => {
@@ -42,6 +47,7 @@ export function useSiteScroll(enabled: boolean, path: string) {
             return !pinchGesture;
           },
         });
+        activeLenis = lenis;
         // Let wheel momentum subside before gently correcting the final position.
         // Zero velocity at both ends avoids a sudden tug when reversing a small overshoot.
         const snap =
@@ -77,7 +83,7 @@ export function useSiteScroll(enabled: boolean, path: string) {
           if (!snap) return;
           removePoints = Array.from(
             document.querySelectorAll<HTMLElement>(
-              "#general-care, #unani-care, .story-doctors",
+              "#general-care, #unani-care, #departments, .story-doctors",
             ),
           ).map((section) =>
             snap.add(
@@ -120,6 +126,7 @@ export function useSiteScroll(enabled: boolean, path: string) {
           lenis.off("scroll", ScrollTrigger.update);
           lenis.stop();
           lenis.destroy();
+          if (activeLenis === lenis) activeLenis = undefined;
           gsap.ticker.lagSmoothing(500, 33);
         };
       },

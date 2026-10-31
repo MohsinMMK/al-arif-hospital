@@ -1,4 +1,3 @@
-import { DoctorSpotlight } from "@/components/react-bits/DoctorSpotlight";
 import { useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -13,8 +12,13 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { InteractionMotion } from "./interaction-context";
-import { doctorPages, servicePages } from "./data";
+import { landmark, servicePages } from "./data";
+import { departmentPath, departments } from "./department-data";
+import { DoctorRow } from "./DoctorRow";
 import { VisitJourney } from "./VisitJourney";
+import { RollingNumber, useMagnetic, useReveal } from "./motion-ui";
+import { StoryDeck } from "./Stories";
+import { stories } from "./story-data";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 function StoryLink({
@@ -24,27 +28,34 @@ function StoryLink({
   to: string;
   children: React.ReactNode;
 }) {
+  const magnet = useMagnetic<HTMLAnchorElement>();
   return (
-    <Link className="story-link" to={to}>
+    <Link ref={magnet} className="story-link mu-magnetic" to={to}>
       {children}
       <ArrowUpRight size={19} />
     </Link>
   );
 }
 
+const homeStories = [
+  "your-first-visit",
+  "regimental-therapies-explained",
+  "maternity-and-diagnostics",
+  "herbal-garden",
+].flatMap((slug) => stories.filter((story) => story.slug === slug));
+
 const mobileCareSummaries: Record<string, string> = {
   "general-medicine":
     "Everyday concerns, preventive care and ongoing health needs.",
   "general-surgery": "Surgical consultations, procedures and follow-up care.",
-  "womens-health":
-    "Gynecology, pregnancy consultations and reproductive health.",
-  "diagnostics-pharmacy": "Tests, prescriptions and collection arrangements.",
+  "womens-health": "Pregnancy, childbirth and gynaecological care.",
+  "child-health": "Newborn, infant and childhood care.",
+  "diagnostics-pharmacy": "Lab tests, imaging and prescriptions.",
   "unani-medicine": "Individual Unani consultations and treatment discussions.",
-  "infertility-care":
-    "Private reproductive health and fertility consultations.",
-  hijama: "Discuss therapy suitability, privacy and preparation.",
-  "joint-rehabilitation":
-    "Support for joint concerns, mobility and rehabilitation.",
+  hijama: "Twelve regimental therapies, discussed with your physician.",
+  "unani-women-children": "Unani OPDs for women and children.",
+  "unani-skin-care": "Unani care for skin concerns.",
+  "unani-pharmacy": "Unani medicines and the herbal garden.",
 };
 function CareChapter({ unani = false }: { unani?: boolean }) {
   const root = useRef<HTMLElement>(null);
@@ -144,8 +155,8 @@ function CareChapter({ unani = false }: { unani?: boolean }) {
           </h2>
           <p>
             {unani
-              ? "A consultation starts with your health history, daily life and questions. Explore Unani medicine and the therapies described in the hospital brief."
-              : "From everyday health concerns to women’s health and surgical consultations, find the service that fits the conversation you need."}
+              ? "A consultation starts with your health history, daily life and questions. Explore seven Unani OPDs, regimental therapy and the Unani pharmacy."
+              : "From everyday health concerns to maternity, child health and surgery, find the service that fits the conversation you need."}
           </p>
           <StoryLink
             to={`/site/services#${unani ? "unani-care" : "general-hospital"}`}
@@ -177,6 +188,80 @@ function CareChapter({ unani = false }: { unani?: boolean }) {
           ))}
         </div>
       </div>
+    </section>
+  );
+}
+
+const departmentFigures = [
+  { value: "100", label: "inpatient beds" },
+  { value: "200+", label: "OPD patients a day" },
+  { value: "24", label: "hour casualty" },
+  { value: "2", label: "pharmacies on campus" },
+];
+
+function DepartmentPanel({ unani = false }: { unani?: boolean }) {
+  const list = useReveal<HTMLUListElement>();
+  const group = unani ? "unani" : "general";
+  const items = departments.filter((item) => item.group === group);
+  const Icon = unani ? Leaf : Stethoscope;
+  return (
+    <div className="story-department-panel" data-group={group}>
+      <h3>
+        <Icon size={20} aria-hidden="true" />
+        {unani ? "Unani care" : "General hospital"}
+        <span>{items.length} OPDs</span>
+      </h3>
+      <ul ref={list} className="mu-reveal">
+        {items.map(({ slug, name, english }) => (
+          <li key={slug}>
+            <Link to={departmentPath(slug)}>
+              <span>
+                {name}
+                {english && <small>{english}</small>}
+              </span>
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/** Both OPD lists side by side, equal weight, each name linking to its card. */
+function DepartmentsChapter() {
+  return (
+    <section
+      className="story-departments story-section"
+      id="departments"
+      aria-labelledby="departments-title"
+    >
+      <div className="story-departments-head">
+        <h2 id="departments-title">
+          Sixteen OPDs.
+          <br />
+          <em>One campus.</em>
+        </h2>
+        <div>
+          <p>
+            Nine specialty OPDs and seven Unani OPDs, backed by a 24-hour
+            casualty, inpatient wards, diagnostics and two pharmacies.
+          </p>
+          <StoryLink to="/site/departments">Explore all departments</StoryLink>
+        </div>
+      </div>
+      <div className="story-department-panels">
+        <DepartmentPanel />
+        <DepartmentPanel unani />
+      </div>
+      <ul className="story-department-figures" aria-label="Departments in figures">
+        {departmentFigures.map(({ value, label }) => (
+          <li key={label}>
+            <RollingNumber value={value} className="story-department-figure" />
+            <span>{label}</span>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
@@ -233,12 +318,13 @@ export default function HomeStory() {
           </h2>
           <div>
             <p>
-              Here in Bandlaguda, Al-Arif brings two approaches to care into one
-              institution: general hospital services and Unani consultations.
+              For more than 25 years, Al-Arif has brought two approaches to care
+              together in Bandlaguda: modern medicine and traditional Unani
+              healthcare, under one roof.
             </p>
             <p>
-              Get to know the hospital, its community roots and the people who
-              help you take the next step.
+              A 24-hour charitable hospital run by the Al Arif Education and
+              Medical Trust, it still keeps the ₹10 outpatient fee set in 2002.
             </p>
             <StoryLink to="/site/about">The story of Al-Arif</StoryLink>
           </div>
@@ -246,23 +332,12 @@ export default function HomeStory() {
       </div>
       <CareChapter />
       <CareChapter unani />
+      <DepartmentsChapter />
       <section className="story-doctors story-section" id="care-team">
         <div className="story-section-intro">
-          <h2>
-            Meet our doctors.
-            <br />
-            <em>A person to speak with.</em>
-          </h2>
-          <p>
-            Find a clinician and explore their care. Reception confirms current
-            consultation arrangements.
-          </p>
+          <h2>Meet our doctors.</h2>
         </div>
-        <div className="story-doctor-gallery">
-          {doctorPages.map((doctor) => (
-            <DoctorSpotlight key={doctor.slug} doctor={doctor} />
-          ))}
-        </div>
+        <DoctorRow />
         <StoryLink to="/site/doctors">Explore the care team</StoryLink>
         <small className="story-doctor-note">
           Contact reception for current clinician schedules and consultation
@@ -281,8 +356,9 @@ export default function HomeStory() {
           </div>
           <div className="story-learning-copy">
             <p>
-              Explore how supervised observation, workshops and academic visits
-              could support learning at Al-Arif.
+              The Trust has run Jamia Arifia Nooria, a charitable Arabic
+              institute with free boarding and lodging, since 2002. Explore it
+              alongside planned observation, workshops and academic visits.
             </p>
             <h3>Clinical observation</h3>
             <p>
@@ -314,23 +390,45 @@ export default function HomeStory() {
             <em>to understanding.</em>
           </h2>
           <p>
-            The research section brings together the hospital’s proposed
-            academic themes and a future home for verified publications.
+            Scientific sessions with AYUSH and CCRUM experts, Unani single-drug
+            exhibitions and a herbal garden of 100 medicinal species.
           </p>
           <StoryLink to="/site/research">
             Explore research & publications
           </StoryLink>
         </div>
         <div className="story-research-themes">
-          <h3>Research interests</h3>
+          <h3>Research initiatives</h3>
           <ul>
-            <li>Unani clinical practice</li>
-            <li>Formulation standardization</li>
-            <li>Observational care studies</li>
-            <li>Academic exchange</li>
+            <li>AYUSH & CCRUM scientific sessions</li>
+            <li>Single-drug exhibitions, 2022 & 2023</li>
+            <li>COVID-19 Unani research</li>
+            <li>Herbal garden, 100 species</li>
           </ul>
           <small>Publication records will appear when available.</small>
         </div>
+      </section>
+      <section className="story-library story-section" id="stories">
+        <div className="story-library-head">
+          <h2>
+            Stories & guides.
+            <br />
+            <em>Read before you visit.</em>
+          </h2>
+          <div>
+            <p>
+              Practical guides for your first visit, plain explainers on Unani
+              therapies and a dated record of the Trust’s camps, exhibitions
+              and milestones.
+            </p>
+            <StoryLink to="/site/stories">Browse stories & guides</StoryLink>
+            <Link className="story-secondary-link" to="/site/community">
+              Follow the community timeline
+              <ArrowUpRight size={16} />
+            </Link>
+          </div>
+        </div>
+        <StoryDeck stories={homeStories} />
       </section>
       <section
         className="story-visit"
@@ -344,7 +442,7 @@ export default function HomeStory() {
             <p>
               Chandrayangutta, Hyderabad.
               <br />
-              Near Dargah Hazrat Syed Noori Shah Sahab.
+              {landmark}.
             </p>
             <StoryLink to="/site/visit">
               Directions & visit information

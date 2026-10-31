@@ -1,15 +1,18 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Dialog } from "radix-ui";
-import { ArrowRight, ArrowUpRight, Check, Search, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { pageCatalog } from "./data";
 
 import { InteractionMotion } from "./interaction-context";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+type Vars = CSSProperties & Record<`--${string}`, string | number>;
 
 export function ReadingProgress() {
   const enabled = useContext(InteractionMotion);
@@ -45,17 +48,25 @@ export function ReadingProgress() {
 
 const quickPages = pageCatalog.filter((page) =>
   [
+    "Department",
     "Service detail",
     "Doctor profile",
     "Education",
     "Patient information",
     "Research",
+    "Institution",
+    "Stories",
+    "Story",
+    "Community",
+    "Pharmacy",
   ].includes(page.kind),
 );
 export function QuickFind() {
+  const enabled = useContext(InteractionMotion);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const input = useRef<HTMLInputElement>(null);
+  const list = useRef<HTMLDivElement>(null);
   const results = quickPages.filter((page) =>
     `${page.title} ${page.description}`
       .toLowerCase()
@@ -75,6 +86,28 @@ export function QuickFind() {
     setOpen(value);
     if (!value) setQuery("");
   };
+  // Arrow keys step between the search field and the result links; Tab is untouched.
+  const moveThroughResults = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    const down = event.key === "ArrowDown";
+    if (!down && event.key !== "ArrowUp") return;
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const links = Array.from(
+      list.current?.querySelectorAll<HTMLAnchorElement>("a[href]") ?? [],
+    );
+    const fromInput = event.target === input.current;
+    const index =
+      event.target instanceof HTMLAnchorElement
+        ? links.indexOf(event.target)
+        : -1;
+    if (index < 0 && !(fromInput && down && links.length)) return;
+    event.preventDefault();
+    const next = fromInput
+      ? links[0]
+      : down
+        ? links[index + 1]
+        : (links[index - 1] ?? input.current);
+    next?.focus();
+  };
   return (
     <Dialog.Root open={open} onOpenChange={updateOpen}>
       <Dialog.Trigger asChild>
@@ -90,6 +123,8 @@ export function QuickFind() {
         <Dialog.Overlay className="mp-search-overlay" />
         <Dialog.Content
           className="mp-search-dialog"
+          data-motion={enabled ? "on" : "off"}
+          onKeyDown={moveThroughResults}
           onOpenAutoFocus={(event) => {
             event.preventDefault();
             input.current?.focus();
@@ -114,24 +149,28 @@ export function QuickFind() {
               placeholder="Try Unani, a doctor’s name, or visit…"
             />
           </div>
-          <div className="mp-quick-results">
+          <div ref={list} className="mp-quick-results">
             <p role="status">
               {results.length} {results.length === 1 ? "page" : "pages"} found
             </p>
             {results.length ? (
-              results.map((page) => (
-                <Link
-                  key={page.path}
-                  to={page.path}
-                  onClick={() => updateOpen(false)}
-                >
-                  <span>
-                    {page.title}
-                    <small>{page.kind}</small>
-                  </span>
-                  <ArrowUpRight size={18} />
-                </Link>
-              ))
+              results.map((page, index) => {
+                const style: Vars = { "--mp-i": Math.min(index, 8) };
+                return (
+                  <Link
+                    key={page.path}
+                    to={page.path}
+                    style={style}
+                    onClick={() => updateOpen(false)}
+                  >
+                    <span>
+                      {page.title}
+                      <small>{page.kind}</small>
+                    </span>
+                    <ArrowUpRight size={18} />
+                  </Link>
+                );
+              })
             ) : (
               <div className="mp-no-results">
                 <p>No match. Try a service name or browse all care.</p>
@@ -142,7 +181,7 @@ export function QuickFind() {
             )}
           </div>
           <div className="mp-search-tip">
-            Tab to move · Enter to open · Esc to close
+            Arrows or Tab to move · Enter to open · Esc to close
           </div>
         </Dialog.Content>
       </Dialog.Portal>
@@ -198,7 +237,20 @@ export function VisitChecklist() {
               }
             />
             <span className="mp-check-box" aria-hidden="true">
-              <Check size={16} />
+              <svg
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                focusable="false"
+              >
+                {/* Drawn from the short stroke so the tick writes itself in. */}
+                <path d="M4 12l5 5L20 6" pathLength={1} />
+              </svg>
             </span>
             <span>{label}</span>
           </label>

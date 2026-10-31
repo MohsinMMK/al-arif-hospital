@@ -1,0 +1,1126 @@
+/* Shared section patterns. Pages mix centred heads, full-bleed figure bands,
+   icon tiles and number-led cards, so each one keeps its own rhythm. */
+.sx-section {
+  padding: 72px 0;
+}
+.sx-section + .sx-section {
+  padding-top: 24px;
+}
+
+/* Fact chips */
+.sx-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 34px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.mp-page-title[data-align="start"] .sx-chips {
+  justify-content: flex-start;
+}
+.sx-chips li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: #eee9db;
+  font-size: 13px;
+  font-weight: 600;
+}
+.sx-chips svg {
+  flex-shrink: 0;
+  color: #59744b;
+}
+
+/* Section heads */
+.sx-head {
+  margin-bottom: 44px;
+}
+.sx-head > p {
+  margin-top: 20px;
+  max-width: 60ch;
+}
+.sx-head[data-align="center"] {
+  max-width: 780px;
+  margin-inline: auto;
+  text-align: center;
+}
+.sx-head[data-align="center"] > p {
+  margin-inline: auto;
+  text-wrap: balance;
+}
+.sx-head[data-align="split"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 70px;
+  align-items: end;
+}
+.sx-head[data-align="split"] > p {
+  margin-top: 0;
+  max-width: 52ch;
+}
+
+/* Full-bleed stat band */
+.sx-band {
+  margin: 40px calc(50% - 50vw);
+  padding: 72px max(40px, calc(50vw - 580px));
+  background: #254c3d;
+  color: #fffdf5;
+}
+.sx-band[data-tone="sage"] {
+  background: var(--sage);
+  color: #254c3d;
+}
+.sx-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sx-stats li {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 12px;
+  text-align: center;
+}
+.sx-stat-icon {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 4px;
+  border-radius: 50%;
+  background: #37604c;
+  color: #e2ebd9;
+}
+.sx-band[data-tone="sage"] .sx-stat-icon {
+  background: #254c3d;
+  color: #fffdf5;
+}
+.sx-stat-value {
+  font-family: Bitter, serif;
+  font-size: clamp(42px, 4.6vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+.sx-stat-label {
+  max-width: 24ch;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #c9d6c0;
+}
+.sx-band[data-tone="sage"] .sx-stat-label {
+  color: #4c6151;
+}
+
+/* Icon tiles */
+.sx-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sx-tiles li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: start;
+  gap: 10px 12px;
+  padding: 28px;
+  border-radius: 14px;
+  background: #f2f0e4;
+}
+.sx-tiles li > :not(.sx-tile-icon, .sx-tile-figure) {
+  grid-column: 1 / -1;
+}
+.sx-tile-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  background: var(--sage);
+}
+.sx-tile-figure {
+  justify-self: end;
+  align-self: start;
+  font-family: Bitter, serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1;
+  color: #59744b;
+}
+.sx-tiles h3 {
+  font-size: 17px;
+  line-height: 1.4;
+}
+.sx-tiles p {
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* Number-led record cards */
+.sx-figures {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sx-figures li {
+  display: flex;
+  flex-direction: column;
+  min-height: 236px;
+  padding: 30px;
+  border-radius: 14px;
+  background: #eee9db;
+}
+.sx-figures li:nth-child(even) {
+  background: #dce7cf;
+}
+.sx-figures li[data-feature] {
+  grid-column: span 2;
+  background: #254c3d;
+  color: #fffdf5;
+}
+.sx-figures strong {
+  font-family: Bitter, serif;
+  font-size: clamp(52px, 5vw, 72px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.sx-figures li[data-feature] strong {
+  font-size: clamp(80px, 9vw, 128px);
+}
+.sx-figures h3 {
+  margin-top: 12px;
+  font-size: 17px;
+  line-height: 1.4;
+}
+.sx-figures p {
+  margin-top: auto;
+  padding-top: 20px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.sx-figures li[data-feature] p {
+  max-width: 52ch;
+  color: #c9d6c0;
+}
+.sx-figures li.sx-figures-more {
+  padding: 0;
+  background: var(--sage);
+}
+.sx-figures-more a {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 30px;
+  border-radius: 14px;
+  font-family: Bitter, serif;
+  font-size: 24px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  transition:
+    background 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sx-figures-more svg {
+  flex-shrink: 0;
+}
+
+/* Certificate badges, scoped past the site's generic definition-list rules */
+.sx-badges {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+}
+.mp .sx-badges > div {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-content: start;
+  gap: 6px 14px;
+  padding: 22px;
+  border-radius: 14px;
+  background: #f2f0e4;
+}
+.sx-badges svg {
+  grid-row: span 2;
+  color: #59744b;
+}
+.mp .sx-badges dt {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #4c6151;
+}
+.mp .sx-badges dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+/* Explore tiles */
+.sx-explore {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 72px;
+}
+.sx-explore a {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 196px;
+  padding: 26px 22px;
+  border-radius: 14px;
+  background: var(--sage);
+  transition:
+    background 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sx-explore a > svg:first-child {
+  margin-bottom: 28px;
+  color: #59744b;
+  transition: color 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sx-explore strong {
+  font-family: Bitter, serif;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+.sx-explore span {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #4c6151;
+  transition: color 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sx-explore-arrow {
+  position: absolute;
+  top: 26px;
+  right: 22px;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+:is(.sx-explore a, .sx-figures-more a, .sx-contact a):focus-visible {
+  outline: 3px solid #527649;
+  outline-offset: 3px;
+}
+
+/* OPD week strip */
+.sx-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sx-week li {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: 16px 4px;
+  border-radius: 14px;
+  background: #eee9db;
+  color: #4c6151;
+}
+.sx-week li[data-open] {
+  background: #254c3d;
+  color: #fffdf5;
+}
+.sx-week span {
+  font-family: Bitter, serif;
+  font-size: 20px;
+}
+.sx-week small {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Twin cards: two equal halves meeting at a shared mark */
+.sx-twin {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+.sx-twin > article {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 14px;
+  padding: 48px 40px 40px;
+  border-radius: 14px;
+  background: #eee9db;
+  text-align: center;
+}
+.sx-twin > article:nth-of-type(2) {
+  background: #dce7cf;
+}
+.sx-twin-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #254c3d;
+  color: #fffdf5;
+}
+.sx-twin strong {
+  font-family: Bitter, serif;
+  font-size: clamp(44px, 4.4vw, 60px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.sx-twin h3 {
+  font-size: 15px;
+  color: #4c6151;
+}
+.sx-twin .sx-chips {
+  margin-top: 8px;
+}
+.sx-twin .sx-chips li {
+  min-height: 32px;
+  padding: 0 12px;
+  background: #f7f4eb;
+  font-size: 12px;
+}
+/* A linked chip hands its padding to the link so the whole pill is the target. */
+.sx-twin .sx-chips li:has(> a) {
+  padding: 0;
+}
+.sx-twin .sx-chips a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: inherit;
+}
+.sx-twin .sx-chips a:hover {
+  background: var(--sage);
+}
+.sx-twin .mp-text-link {
+  margin-top: 10px;
+}
+.sx-twin-mark {
+  position: absolute;
+  top: 48px;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-left: -28px;
+  border-radius: 50%;
+  background: #f7f4eb;
+  color: #59744b;
+  font-family: Bitter, serif;
+  font-size: 26px;
+  box-shadow: 0 0 0 8px #f7f4eb;
+}
+
+/* Large centred quote */
+.sx-quote {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 0 48px;
+  text-align: center;
+}
+.sx-quote > svg {
+  color: #59744b;
+}
+.sx-quote blockquote {
+  margin: 22px 0 0;
+  font-family: Bitter, serif;
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+.sx-quote figcaption {
+  margin-top: 22px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #59744b;
+}
+
+/* Paired statement cards */
+.sx-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+.sx-pair > article {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: start;
+  gap: 14px 18px;
+  padding: 34px;
+  border-radius: 14px;
+  background: #f2f0e4;
+}
+.sx-pair > article > :not(.sx-tile-icon) {
+  grid-column: 2;
+}
+.sx-pair .sx-tile-icon {
+  grid-row: span 2;
+  margin: 0;
+}
+.sx-pair h3 {
+  align-self: center;
+  font-family: Bitter, serif;
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.sx-pair p {
+  font-size: 14px;
+}
+
+/* A wide panel above a grid, such as the bed split */
+.sx-panel {
+  margin-bottom: 16px;
+  padding: 34px 34px 6px;
+  border-radius: 14px;
+  background: #f2f0e4;
+}
+
+/* The Trust: a featured patron with role cards beneath */
+.sx-trust {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+}
+.mp .sx-trust > div {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 28px;
+  border-radius: 14px;
+  background: #f2f0e4;
+}
+.mp .sx-trust > div[data-feature] {
+  grid-column: 1 / -1;
+  justify-items: center;
+  padding: 44px 34px;
+  background: #254c3d;
+  color: #fffdf5;
+  text-align: center;
+}
+.sx-trust svg {
+  color: #59744b;
+  margin-bottom: 6px;
+}
+.sx-trust div[data-feature] svg {
+  color: #c9d6c0;
+}
+.mp .sx-trust dt {
+  font-size: 12px;
+  font-weight: 600;
+  color: #59744b;
+}
+.mp .sx-trust div[data-feature] dt {
+  color: #c9d6c0;
+}
+.mp .sx-trust dd {
+  margin: 0;
+  font-family: Bitter, serif;
+  font-size: 20px;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+.mp .sx-trust div[data-feature] dd {
+  max-width: 30ch;
+  font-size: clamp(24px, 2.6vw, 34px);
+}
+.mp .sx-trust dd small {
+  font-family: Manrope, sans-serif;
+  letter-spacing: 0;
+}
+.mp .sx-trust div[data-feature] dd small {
+  color: #c9d6c0;
+}
+.sx-trust a {
+  font-weight: 600;
+}
+.mp .sx-trust > div[data-tone="sage"] {
+  background: var(--sage);
+}
+.sx-trust .mp-text-link {
+  margin-top: 14px;
+  font-family: Manrope, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+.sx-note {
+  max-width: 62ch;
+  margin: 32px auto 0;
+  font-size: 14px;
+  text-align: center;
+}
+.sx-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  margin-top: 16px;
+  padding: 24px 28px;
+  border-radius: 14px;
+  background: var(--sage);
+}
+.sx-strip > svg {
+  flex-shrink: 0;
+  color: #59744b;
+}
+.sx-strip > p {
+  flex: 1 1 320px;
+  font-size: 14px;
+}
+
+/* Contact tiles */
+.sx-contact {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.sx-contact a {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 188px;
+  padding: 26px;
+  border-radius: 14px;
+  background: #f2f0e4;
+  transition:
+    background 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sx-contact a[data-tone="urgent"] {
+  background: #254c3d;
+  color: #fffdf5;
+}
+.sx-contact a > svg {
+  margin-bottom: 26px;
+  color: #59744b;
+}
+.sx-contact a[data-tone="urgent"] > svg {
+  color: #c9d6c0;
+}
+.sx-contact span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #59744b;
+}
+.sx-contact a[data-tone="urgent"] span {
+  color: #c9d6c0;
+}
+.sx-contact strong {
+  font-size: 17px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* Numbered steps in a row */
+.sx-steps {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 34px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: sx-step;
+}
+.sx-steps li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 0 18px 0 6px;
+  border-radius: 999px;
+  background: #eee9db;
+  font-size: 13px;
+  font-weight: 600;
+  counter-increment: sx-step;
+}
+.sx-steps li::before {
+  content: counter(sx-step);
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #254c3d;
+  color: #fffdf5;
+  font-size: 12px;
+}
+
+/* Clinician finder: a centred search above wing filters */
+.sx-finder {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  margin-top: 34px;
+}
+.sx-finder .mp-search {
+  width: min(480px, 100%);
+  min-width: 0;
+}
+.sx-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.sx-filter button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 8px 0 16px;
+  border-radius: 999px;
+  background: #eee9db;
+  color: #254c3d;
+  font-size: 13px;
+  font-weight: 600;
+  transition:
+    background 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sx-filter button > span {
+  display: grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #f7f4eb;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.sx-filter button[aria-pressed="true"] {
+  background: #254c3d;
+  color: #fffdf5;
+}
+.sx-filter button[aria-pressed="true"] > span {
+  background: #37604c;
+}
+.sx-filter button:focus-visible {
+  outline: 3px solid #527649;
+  outline-offset: 3px;
+}
+
+/* Clinician rosters, one centred group per wing */
+.sx-roster-group {
+  padding: 40px 0 24px;
+}
+.mp .sx-roster-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 28px;
+  font-size: clamp(26px, 2.6vw, 34px);
+}
+.sx-roster-head > span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #254c3d;
+  color: #fffdf5;
+}
+.sx-roster-head small {
+  display: grid;
+  place-items: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #eee9db;
+  font: 600 12px/1 Manrope, sans-serif;
+  letter-spacing: 0;
+}
+.sx-roster {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+.sx-roster .doctor-spotlight {
+  width: calc((100% - 48px) / 4);
+  min-height: 250px;
+  background: #eee9db;
+}
+.sx-roster-group[data-wing="unani"] .doctor-spotlight {
+  background: #dce7cf;
+}
+.sx-roster .doctor-monogram {
+  background: #f7f4eb;
+}
+.sx-roster .doctor-spotlight h3 {
+  font:
+    400 23px/1.25 Bitter,
+    serif;
+  letter-spacing: -0.025em;
+}
+.sx-roster .doctor-spotlight p {
+  flex: 1;
+  max-width: 24ch;
+  margin: 12px 0 22px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.sx-empty {
+  padding: 56px 0;
+  text-align: center;
+}
+
+/* Small layout helpers */
+.sx-center {
+  display: flex;
+  justify-content: center;
+}
+.sx-narrow {
+  max-width: 780px;
+  margin-inline: auto;
+}
+
+/* Education programmes as icon-led cards */
+.sx-programme-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 22px;
+  border-radius: 14px;
+  background: var(--sage);
+  color: #254c3d;
+}
+.sx-programme-status {
+  font-size: 12px;
+  font-weight: 600;
+  color: #59744b;
+}
+
+/* Address panel beside wayfinding notes */
+.sx-place {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.sx-place-notes {
+  display: grid;
+  align-content: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sx-place-notes li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 24px;
+  border-radius: 14px;
+  background: #f2f0e4;
+  font-size: 14px;
+  font-weight: 600;
+}
+.sx-place-notes svg {
+  flex-shrink: 0;
+  color: #59744b;
+}
+
+/* Emergency call-out: a centred, full-bleed band with one large number */
+.sx-alert {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  text-align: center;
+}
+.sx-alert > svg {
+  box-sizing: content-box;
+  padding: 18px;
+  border-radius: 50%;
+  background: #37604c;
+  color: #fffdf5;
+}
+.sx-alert a {
+  font:
+    400 clamp(40px, 6vw, 80px)/1.05 Bitter,
+    serif;
+  letter-spacing: -0.04em;
+  color: #fffdf5;
+  overflow-wrap: anywhere;
+  transition: color 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sx-alert a:focus-visible {
+  outline: 3px solid #c9d6c0;
+  outline-offset: 4px;
+}
+.mp .sx-alert p {
+  max-width: 52ch;
+  text-wrap: balance;
+  font-size: 14px;
+  color: #c9d6c0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sx-explore a:hover,
+  .sx-figures-more a:hover,
+  .sx-contact a:hover {
+    background: #254c3d;
+    color: #fffdf5;
+  }
+  .sx-contact a[data-tone="urgent"]:hover {
+    background: #37604c;
+  }
+  .sx-filter button[aria-pressed="false"]:hover {
+    background: var(--sage);
+  }
+  .sx-alert a:hover {
+    color: #e2ebd9;
+  }
+  :is(.sx-explore, .sx-contact) a:hover > svg:first-child,
+  :is(.sx-explore, .sx-contact) a:hover span {
+    color: #c9d6c0;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] :is(.sx-explore, .sx-contact) a:hover {
+    transform: translateY(-4px);
+  }
+  .mp[data-motion="on"] .sx-explore a:hover .sx-explore-arrow,
+  .mp[data-motion="on"] .sx-figures-more a:hover svg {
+    transform: translate(3px, -3px);
+  }
+}
+@keyframes sx-pulse {
+  from {
+    box-shadow: 0 0 0 0 #527649;
+  }
+  to {
+    box-shadow: 0 0 0 20px #52764900;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] .sx-alert > svg {
+    animation: sx-pulse 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  }
+}
+@media (forced-colors: active) {
+  .sx-chips li,
+  .sx-tiles li,
+  .sx-figures li,
+  .mp .sx-badges > div,
+  .sx-explore a,
+  .sx-week li,
+  .sx-twin > article,
+  .sx-pair > article,
+  .sx-panel,
+  .mp .sx-trust > div,
+  .sx-strip,
+  .sx-contact a,
+  .sx-steps li,
+  .sx-filter button,
+  .sx-place-notes li {
+    outline: 1px solid CanvasText;
+  }
+}
+
+@media (max-width: 1050px) {
+  .sx-head[data-align="split"] {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .sx-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 48px;
+  }
+  .sx-tiles,
+  .sx-figures,
+  .sx-badges,
+  .sx-trust {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sx-explore {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .sx-contact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sx-roster .doctor-spotlight {
+    width: calc((100% - 32px) / 3);
+  }
+}
+@media (max-width: 800px) {
+  .sx-section {
+    padding: 48px 0;
+  }
+  .sx-head {
+    margin-bottom: 32px;
+  }
+  .sx-band {
+    margin-block: 24px;
+    padding: 56px 24px;
+  }
+  .sx-tiles li,
+  .sx-figures li,
+  .sx-pair > article,
+  .mp .sx-trust > div {
+    padding: 24px;
+  }
+  .sx-figures li {
+    min-height: 0;
+  }
+  .sx-figures li[data-feature] {
+    grid-column: 1 / -1;
+  }
+  .sx-twin {
+    grid-template-columns: 1fr;
+  }
+  .sx-twin > article {
+    padding: 40px 24px 32px;
+  }
+  /* Stacked, the mark sits in the flow and bridges the two cards. */
+  .sx-twin-mark {
+    position: relative;
+    top: auto;
+    left: auto;
+    z-index: 1;
+    margin: -36px auto;
+  }
+  .sx-pair,
+  .sx-place {
+    grid-template-columns: 1fr;
+  }
+  .sx-roster .doctor-spotlight {
+    width: calc((100% - 16px) / 2);
+  }
+  .sx-panel {
+    padding: 26px 24px 2px;
+  }
+  .sx-explore {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 48px;
+  }
+  .sx-explore a {
+    min-height: 168px;
+  }
+  .sx-week {
+    gap: 6px;
+  }
+  .sx-week span {
+    font-size: 16px;
+  }
+  .sx-week small {
+    font-size: 10px;
+  }
+}
+@media (max-width: 560px) {
+  .sx-tiles,
+  .sx-figures,
+  .sx-badges,
+  .sx-trust,
+  .sx-contact {
+    grid-template-columns: 1fr;
+  }
+  /* Contact tiles become compact rows: icon beside label and number. */
+  .sx-contact {
+    gap: 10px;
+  }
+  .sx-contact a {
+    grid-template-columns: 24px minmax(0, 1fr);
+    align-items: center;
+    gap: 2px 18px;
+    min-height: 0;
+    padding: 20px 22px;
+  }
+  .sx-contact a > svg {
+    grid-row: 1 / 3;
+    margin-bottom: 0;
+  }
+  /* One column of compact rows: monogram beside name and role. */
+  .sx-roster .doctor-spotlight {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 4px 16px;
+    width: 100%;
+    min-height: 0;
+    padding: 20px;
+    text-align: left;
+  }
+  .sx-roster .doctor-monogram {
+    grid-row: 1 / 4;
+    width: 48px;
+    height: 48px;
+    margin: 0;
+    font-size: 20px;
+  }
+  .sx-roster .doctor-spotlight :is(h3, p, .doctor-profile-link) {
+    grid-column: 2;
+  }
+  .sx-roster .doctor-spotlight h3 {
+    font-size: 22px;
+  }
+  .sx-roster .doctor-spotlight p {
+    max-width: none;
+    margin: 0 0 8px;
+  }
+}
+@media (max-width: 430px) {
+  .sx-stats {
+    gap: 40px 16px;
+  }
+  .sx-stat-label {
+    font-size: 12px;
+  }
+  .sx-explore {
+    grid-template-columns: 1fr;
+  }
+  .sx-explore a {
+    min-height: 0;
+  }
+  .sx-explore a > svg:first-child {
+    margin-bottom: 12px;
+  }
+  /* All seven days stay on one row. */
+  .sx-week {
+    gap: 4px;
+  }
+  .sx-week li {
+    padding: 12px 0;
+    border-radius: 7px;
+  }
+  .sx-week span {
+    font-size: 15px;
+  }
+  .sx-week small {
+    font-size: 9px;
+  }
+}

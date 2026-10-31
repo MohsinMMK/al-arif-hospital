@@ -1,0 +1,984 @@
+.mu-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Rolling number */
+.mu-rolling {
+  display: inline-block;
+  position: relative;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.mu-rolling-digit {
+  position: relative;
+  display: inline-block;
+  clip-path: inset(0 -0.2em);
+}
+
+.mu-rolling-ghost {
+  visibility: hidden;
+}
+
+.mu-rolling-column {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  user-select: none;
+  transform: translateY(calc(var(--mu-d, 0) * -10%));
+}
+
+.mu-rolling-column > span {
+  display: block;
+}
+
+/* Screen only, so a page printed before the numbers scroll into view shows real values. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] .mu-rolling:not([data-rolled]) .mu-rolling-column {
+    transform: none;
+  }
+
+  .mp[data-motion="on"] .mu-rolling[data-rolled] .mu-rolling-column {
+    transition: transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1)
+      calc(var(--mu-i, 0) * 70ms);
+  }
+}
+
+/* Tilt */
+:where(.mu-tilt) {
+  position: relative;
+}
+
+:where(.mu-tilt:has(> .mu-tilt-light)) {
+  isolation: isolate;
+}
+
+.mu-tilt-light {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mu-tilt-light::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 70%;
+  aspect-ratio: 1;
+  margin: -35% 0 0 -35%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgb(255 253 245 / 0.7),
+    rgb(255 253 245 / 0)
+  );
+  transform: translate(var(--mu-lx, 50%), var(--mu-ly, 50%));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] .mu-tilt[data-tilt] {
+    transform: perspective(900px) rotateX(var(--mu-rx, 0deg))
+      rotateY(var(--mu-ry, 0deg));
+  }
+
+  .mp[data-motion="on"] .mu-tilt[data-tilt="active"] {
+    will-change: transform;
+  }
+
+  .mp[data-motion="on"] .mu-tilt-light {
+    transition: opacity 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .mp[data-motion="on"] .mu-tilt[data-tilt="active"] > .mu-tilt-light {
+    opacity: 1;
+  }
+}
+
+/* Magnetic */
+@media (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] .mu-magnetic[data-magnetic] {
+    translate: var(--mu-mx, 0px) var(--mu-my, 0px);
+  }
+}
+
+/* Toasts */
+.mu-toast-deck {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 60;
+  width: min(360px, calc(100vw - 48px));
+  height: 0;
+  pointer-events: none;
+}
+
+.mu-toast-deck[data-expanded] {
+  height: var(--mu-deck-h, 0px);
+  pointer-events: auto;
+}
+
+.mu-toast-list {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mu-toast {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateY(var(--mu-y, 0px)) scale(var(--mu-s, 1));
+  transform-origin: 50% 100%;
+}
+
+.mu-toast[data-leaving] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mu-toast-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 10px 12px 18px;
+  border-radius: 14px;
+  background: #254c3d;
+  color: #fffdf5;
+  box-shadow: 0 14px 32px -18px rgb(23 45 36 / 0.55);
+  pointer-events: auto;
+}
+
+.mu-toast[data-behind] .mu-toast-card > * {
+  opacity: 0;
+}
+
+.mu-toast-message {
+  flex: 1;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.mu-toast-dismiss {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mu-toast-dismiss:hover {
+    background: rgb(255 253 245 / 0.12);
+  }
+}
+
+.mu-toast-dismiss:focus-visible {
+  outline: 3px solid #e2ebd9;
+  outline-offset: 2px;
+}
+
+@media (max-width: 800px) {
+  .mu-toast-deck {
+    right: 16px;
+    bottom: calc(86px + env(safe-area-inset-bottom));
+    left: 16px;
+    width: auto;
+    max-width: 520px;
+    margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mu-toast-deck[data-motion="on"] .mu-toast {
+    transition:
+      transform 380ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .mu-toast-deck[data-motion="on"] .mu-toast-card {
+    animation: mu-toast-in 380ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  }
+
+  .mu-toast-deck[data-motion="on"] .mu-toast-card > * {
+    transition: opacity 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+}
+
+@keyframes mu-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* Step player progress */
+.mu-step-progress {
+  display: block;
+  height: 3px;
+  border-radius: 3px;
+  background: #59744b;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+.mu-step-progress[data-playing] {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] .mu-step-progress[data-playing] {
+    animation: mu-step-fill var(--mu-duration, 6000ms) linear both;
+  }
+
+  .mp[data-motion="on"] .mu-step-progress[data-paused] {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes mu-step-fill {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Scrubber */
+.mu-scrubber {
+  min-width: 0;
+  color: #254c3d;
+}
+
+.mu-scrubber-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mu-scrubber-ruler {
+  position: relative;
+  height: 48px;
+  margin-top: 38px;
+  border-radius: 7px;
+  background: #e2ebd9;
+}
+
+.mu-scrubber-rail {
+  position: absolute;
+  inset: 0 14px;
+  pointer-events: none;
+}
+
+.mu-scrubber-tick {
+  position: absolute;
+  bottom: 10px;
+  left: calc(var(--mu-t, 0) * 100%);
+  width: 2px;
+  height: 12px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: #bdc9b5;
+}
+
+.mu-scrubber-tick[data-passed] {
+  background: #789767;
+}
+
+.mu-scrubber-thumb {
+  position: absolute;
+  inset: 0;
+  transform: translateX(calc(var(--mu-p, 0) * 100%));
+}
+
+.mu-scrubber-thumb::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  left: -1.5px;
+  width: 3px;
+  border-radius: 3px;
+  background: #59744b;
+}
+
+.mu-scrubber-value {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  max-width: calc(100vw - 64px);
+  overflow: hidden;
+  color: #254c3d;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transform: translateX(calc(var(--mu-p, 0) * -100%));
+}
+
+.mu-scrubber-ruler input[type="range"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 7px;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+  touch-action: pan-y;
+}
+
+.mu-scrubber-ruler input[type="range"]::-webkit-slider-runnable-track {
+  height: 100%;
+  background: transparent;
+}
+
+.mu-scrubber-ruler input[type="range"]::-webkit-slider-thumb {
+  width: 28px;
+  height: 44px;
+  margin-top: 2px;
+  border: 0;
+  background: transparent;
+  appearance: none;
+}
+
+.mu-scrubber-ruler input[type="range"]::-moz-range-track {
+  height: 100%;
+  background: transparent;
+}
+
+.mu-scrubber-ruler input[type="range"]::-moz-range-thumb {
+  width: 28px;
+  height: 44px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.mu-scrubber-ends {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 8px;
+  color: #4c6151;
+  font-size: 13px;
+}
+
+.mu-scrubber-ends > :last-child:not(:first-child) {
+  text-align: right;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] .mu-scrubber-thumb,
+  .mp[data-motion="on"] .mu-scrubber-value {
+    transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+}
+
+/* Reveal: hidden only after JS marks it pending, never by the class alone */
+@media (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] .mu-reveal[data-reveal="pending"] > * {
+    opacity: 0;
+  }
+
+  .mp[data-motion="on"] .mu-reveal[data-reveal="run"] > * {
+    animation: mu-rise 560ms cubic-bezier(0.2, 0.8, 0.2, 1)
+      calc(var(--mu-i, 0) * 60ms) backwards;
+  }
+}
+
+.mu-reveal > :nth-child(2) {
+  --mu-i: 1;
+}
+
+.mu-reveal > :nth-child(3) {
+  --mu-i: 2;
+}
+
+.mu-reveal > :nth-child(4) {
+  --mu-i: 3;
+}
+
+.mu-reveal > :nth-child(5) {
+  --mu-i: 4;
+}
+
+.mu-reveal > :nth-child(6) {
+  --mu-i: 5;
+}
+
+.mu-reveal > :nth-child(n + 7) {
+  --mu-i: 6;
+}
+
+@keyframes mu-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+/* Split bar: the legend repeats every figure as text, so the bar itself stays decorative */
+.mu-split {
+  margin: 0 0 36px;
+  color: #254c3d;
+}
+
+.mu-split figcaption {
+  margin-bottom: 14px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mu-split [data-part="0"] {
+  --mu-swatch: #254c3d;
+  --mu-ink: #fffdf5;
+}
+
+.mu-split [data-part="1"] {
+  --mu-swatch: #59744b;
+  --mu-ink: #fffdf5;
+}
+
+.mu-split [data-part="2"] {
+  --mu-swatch: #bdc9b5;
+  --mu-ink: #254c3d;
+}
+
+.mu-split-bar {
+  display: flex;
+  gap: 3px;
+  height: 56px;
+  overflow: hidden;
+  border-radius: 7px;
+}
+
+/* Padding sits on the number, so it never skews the share each part receives. */
+.mu-split-part {
+  display: flex;
+  flex: var(--mu-share) 1 0%;
+  align-items: center;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--mu-swatch);
+  color: var(--mu-ink);
+  font-family: Bitter, serif;
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
+
+.mu-split-part b {
+  padding-inline: 16px;
+  font-weight: 400;
+}
+
+/* Scoped under .mu-split so the site's generic definition-list rules leave the legend alone. */
+.mu-split .mu-split-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr));
+  gap: 16px 20px;
+  margin: 18px 0 0;
+}
+
+.mu-split .mu-split-legend > div {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr);
+  column-gap: 10px;
+  align-content: start;
+  padding: 0;
+}
+
+.mu-split .mu-split-legend > div::before {
+  content: "";
+  grid-row: span 2;
+  width: 10px;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: 3px;
+  background: var(--mu-swatch);
+}
+
+.mu-split .mu-split-legend dt {
+  grid-column: 2;
+  color: #254c3d;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.mu-split .mu-split-legend dt small {
+  display: block;
+  margin-top: 2px;
+  color: #4c6151;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.mu-split .mu-split-legend dd {
+  grid-column: 2;
+  margin: 6px 0 0;
+  color: #4c6151;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] .mu-split[data-reveal="pending"] .mu-split-bar {
+    clip-path: inset(0 100% 0 0 round 7px);
+  }
+
+  .mp[data-motion="on"] .mu-split[data-reveal="pending"] .mu-split-part b,
+  .mp[data-motion="on"] .mu-split[data-reveal="pending"] .mu-split-legend > div {
+    opacity: 0;
+  }
+
+  .mp[data-motion="on"] .mu-split[data-reveal="run"] .mu-split-bar {
+    animation: mu-wipe 640ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  }
+
+  .mp[data-motion="on"] .mu-split[data-reveal="run"] .mu-split-part b {
+    animation: mu-fade 320ms cubic-bezier(0.2, 0.8, 0.2, 1)
+      calc(260ms + var(--mu-i, 0) * 90ms) backwards;
+  }
+
+  .mp[data-motion="on"] .mu-split[data-reveal="run"] .mu-split-legend > div {
+    animation: mu-rise 560ms cubic-bezier(0.2, 0.8, 0.2, 1)
+      calc(220ms + var(--mu-i, 0) * 70ms) backwards;
+  }
+}
+
+@keyframes mu-wipe {
+  from {
+    clip-path: inset(0 100% 0 0 round 7px);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0 round 7px);
+  }
+}
+
+@keyframes mu-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Floating label */
+.mu-float {
+  position: relative;
+}
+
+.mu-float > :is(select, input) {
+  display: block;
+  width: 100%;
+  min-height: 60px;
+  padding: 24px 14px 8px;
+  line-height: 20px;
+}
+
+/* Native Safari selects ignore vertical padding, so draw the chevron ourselves. */
+.mu-float > select {
+  padding-right: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23254c3d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+  background-position: right 14px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  appearance: none;
+}
+
+.mu-float > select option {
+  color: #254c3d;
+}
+
+.mu-float:not([data-filled], :focus-within) > select {
+  color: transparent;
+}
+
+.mu-float-label {
+  position: absolute;
+  top: 20px;
+  right: 42px;
+  left: 15px;
+  z-index: 1;
+  overflow: hidden;
+  color: #4c6151;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.mu-float:is([data-filled], :focus-within) .mu-float-label {
+  color: #254c3d;
+  transform: translateY(-11px) scale(0.8);
+}
+
+.mu-float [aria-invalid="true"] {
+  border-color: #9b352c;
+}
+
+.mu-float[data-invalid] .mu-float-label {
+  color: #9b352c;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] .mu-float-label {
+    transition:
+      transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      color 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+}
+
+/* Card swap */
+.mu-swap {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 48px;
+  align-items: start;
+}
+
+.mu-swap-tabs {
+  display: grid;
+  gap: 4px;
+}
+
+.mu-swap-tabs [role="tab"] {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 8px;
+  align-items: baseline;
+  width: 100%;
+  padding: 16px 18px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #254c3d;
+  text-align: left;
+}
+
+.mu-swap-tabs [aria-selected="true"] {
+  background: #e2ebd9;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mu-swap-tabs [aria-selected="false"]:hover {
+    background: #f2f0e4;
+  }
+}
+
+.mu-swap-index {
+  color: #4c6151;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.mu-swap-title {
+  font-family: Bitter, serif;
+  font-size: 19px;
+  line-height: 1.3;
+}
+
+.mu-swap-title small {
+  display: block;
+  margin-top: 6px;
+  color: #4c6151;
+  font-family: Manrope, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.mu-swap-stage {
+  min-width: 0;
+  padding: 68px 48px 0 0;
+}
+
+.mu-swap-deck {
+  display: grid;
+}
+
+.mu-swap-card {
+  display: flex;
+  grid-area: 1 / 1;
+  min-width: 0;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px -28px rgb(23 45 36 / 0.45);
+  transform: translate(
+      calc(var(--mu-pos, 0) * var(--mu-dx, 22px) * var(--mu-fan, 1)),
+      calc(var(--mu-pos, 0) * var(--mu-dy, -18px) * var(--mu-fan, 1))
+    )
+    scale(calc(1 - var(--mu-pos, 0) * 0.05));
+  transform-origin: 50% 0;
+}
+
+.mu-swap-card > * {
+  flex: 1;
+  min-width: 0;
+}
+
+.mu-swap-card[aria-hidden] > * > * {
+  opacity: 0;
+}
+
+.mu-swap-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+  color: #4c6151;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.mu-swap-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 7px;
+  background: #e2ebd9;
+  color: #254c3d;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (max-width: 800px) {
+  .mu-swap {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .mu-swap-tabs [role="tab"] {
+    padding: 12px 14px;
+  }
+
+  .mu-swap-title {
+    font-size: 17px;
+  }
+
+  .mu-swap-stage {
+    padding: 40px 30px 0 0;
+  }
+
+  .mu-swap-card {
+    --mu-dx: 10px;
+    --mu-dy: -12px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] .mu-swap-card {
+    transition: transform 560ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* Keep the card's own arrow nudge; the tilt light keeps its own fade. */
+  .mp[data-motion="on"] .mu-swap-card > * > :not(.mu-tilt-light) {
+    transition:
+      opacity 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* Transitions outrank animations in the cascade, so the tuck needs them off. */
+  .mp[data-motion="on"] .mu-swap-card[data-leaving] {
+    transition: none;
+    animation: mu-swap-tuck 640ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .mp[data-motion="on"] .mu-swap-card[data-leaving] > * > :not(.mu-tilt-light) {
+    transition-delay: 200ms;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] .mu-swap-deck:hover {
+    --mu-fan: 1.2;
+  }
+}
+
+@keyframes mu-swap-tuck {
+  0% {
+    z-index: 9;
+    transform: none;
+  }
+
+  40% {
+    z-index: 9;
+    transform: translate(-3%, 16%) rotate(-2deg) scale(0.98);
+  }
+
+  41% {
+    z-index: 0;
+  }
+}
+
+/* Liquid segments: the trailing edge lags, so the pill stretches toward its target */
+.mu-segments {
+  position: relative;
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  padding: 4px;
+  border-radius: 11px;
+  background: rgb(247 244 235 / 0.82);
+  box-shadow: 0 14px 32px -20px rgb(23 45 36 / 0.5);
+  isolation: isolate;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.mu-segments-pill {
+  position: absolute;
+  top: 4px;
+  right: calc(
+    4px + (var(--mu-count) - 1 - var(--mu-index)) * (100% - 8px) /
+      var(--mu-count)
+  );
+  bottom: 4px;
+  left: calc(4px + var(--mu-index) * (100% - 8px) / var(--mu-count));
+  z-index: -1;
+  border-radius: 7px;
+  background: #254c3d;
+}
+
+.mu-segments a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 48px;
+  padding: 6px 12px;
+  border-radius: 7px;
+  color: #254c3d;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mu-segments a[aria-current] {
+  color: #fffdf5;
+}
+
+.mu-segments a > svg {
+  flex: none;
+}
+
+.mu-segments a small {
+  color: #4c6151;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.mu-segments a[aria-current] small {
+  color: #e2ebd9;
+}
+
+.mu-segments a:focus-visible {
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .mu-segments a {
+    min-height: 44px;
+    padding-inline: 8px;
+  }
+
+  .mu-segments a small {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mp[data-motion="on"] .mu-segments-pill {
+    transition:
+      left 460ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      right 460ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .mp[data-motion="on"] .mu-segments[data-dir="forward"] .mu-segments-pill {
+    transition-delay: 90ms, 0ms;
+  }
+
+  .mp[data-motion="on"] .mu-segments[data-dir="back"] .mu-segments-pill {
+    transition-delay: 0ms, 90ms;
+  }
+
+  .mp[data-motion="on"] :is(.mu-segments a, .mu-segments a small) {
+    transition: color 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+}
+
+/* High Contrast replaces tonal fills, so mark state with system colours instead. */
+@media (forced-colors: active) {
+  .mu-float > select {
+    color: FieldText;
+  }
+
+  .mu-float-label {
+    transform: translateY(-11px) scale(0.8);
+  }
+
+  /* Focus follows selection here, so leave the focused tab its own ring. */
+  .mu-swap-tabs [aria-selected="true"]:not(:focus-visible) {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+
+  .mu-segments-pill {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+
+  .mu-segments a[aria-current],
+  .mu-segments a[aria-current] small {
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+}
+
+@media print {
+  .mu-reveal > * {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}
