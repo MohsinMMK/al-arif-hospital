@@ -75,6 +75,6 @@ The independent Impeccable finish review returned **ship** for the supplied scre
 
 ## Deployment and scope
 
-Vercel automatically runs tests, lint and build after a push to `main`. Verify its deployment commit matches the pushed SHA, reaches Ready, and the production alias serves the new hashed assets; then check a direct route and a critical navigation flow.
+The `Deploy to Hostinger` GitHub Actions workflow runs tests, lint and build after a push to `main`, then uploads `preview/dist` over FTPS. Verify the run for the pushed SHA succeeds and alarifgeneralhospital.com serves the new hashed assets; then check a direct route and a critical navigation flow.
 
 No new environment variables, backend, patient intake, staff system, booking confirmation, analytics or externally submitted messages were introduced. Institutional content review and the existing `noindex` remain unchanged.

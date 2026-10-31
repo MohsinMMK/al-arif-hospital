@@ -1,5 +1,5 @@
 # Build the site and upload it to Hostinger (alarifgeneralhospital.com) on every push to main.
-# Mirrors the checks vercel.json ran: tests and lint must pass before anything is uploaded.
+# Tests and lint must pass before anything is uploaded.
 
 name: Deploy to Hostinger
 

@@ -6,7 +6,7 @@
 web
 
 ## Current scope
-The accepted Community welcome design is a public, English-language informational website deployed to Vercel from the private GitHub repository. It has a long editorial homepage and separate service, doctor, about, education, research, visit and inquiry pages. The user authorized automatic deployment from `main`.
+The accepted Community welcome design is a public, English-language informational website deployed to Hostinger (alarifgeneralhospital.com) from the public GitHub repository. It has a long editorial homepage and separate service, doctor, about, education, research, visit and inquiry pages. The user authorized automatic deployment from `main`.
 
 ## Visitors and tasks
 Patients and families need to understand the two care wings, find a clinician, prepare for a visit and contact reception. Education and research visitors need clear information about proposed programmes and available records. General hospital and Unani care receive equal prominence.

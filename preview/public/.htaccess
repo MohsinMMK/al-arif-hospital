@@ -1,4 +1,4 @@
-# Hostinger (Apache/LiteSpeed) equivalent of vercel.json
+# Hostinger (Apache/LiteSpeed) server rules for the built site
 
 # Force HTTPS
 RewriteEngine On

@@ -2,7 +2,7 @@
 
 A public informational website for Al-Arif General Hospital & Unani Research Institute: React, TypeScript, Vite and shadcn/ui. General hospital and Unani care have equal prominence across 22 public pages.
 
-[Live website](https://al-arif-general-hospital.vercel.app/site) · [Private GitHub repository](https://github.com/MohsinMMK/al-arif-hospital)
+[Live website](https://alarifgeneralhospital.com/site) · [GitHub repository](https://github.com/MohsinMMK/al-arif-hospital)
 
 ## Local development
 
@@ -28,11 +28,11 @@ The production output is `preview/dist`. The last command serves that output loc
 
 ## Deployment
 
-Push an approved change to `main` in `MohsinMMK/al-arif-hospital`. The connected Vercel project, `al-arif-general-hospital`, installs from the lockfile, runs tests and lint, and builds automatically using `vercel.json`. Failed builds leave the previous production deployment active.
+Push an approved change to `main` in `MohsinMMK/al-arif-hospital`. The `Deploy to Hostinger` GitHub Actions workflow (`.github/workflows/deploy-hostinger.yml`) installs from the lockfile, runs tests and lint, builds, and uploads `preview/dist` to `public_html` on Hostinger over FTPS. It needs the `FTP_SERVER`, `FTP_USERNAME` and `FTP_PASSWORD` repository secrets. Failed checks upload nothing, leaving the live site unchanged.
 
-Only `preview/dist` is published. SPA rewrites support direct visits and refreshes on all page routes. Source workbooks, research, planning documents and local test artifacts are excluded from the public build.
+Only `preview/dist` is published. SPA rewrites in `preview/public/.htaccess` support direct visits and refreshes on all page routes. Source workbooks, research, planning documents and local test artifacts are excluded from the public build.
 
-Hashed files under `/assets/` use a one-year immutable browser cache. HTML keeps Vercel's revalidation policy so later deployments can reference fresh asset hashes. Keep unhashed public files outside `/assets/`.
+Hashed files under `/assets/` use a one-year immutable browser cache. HTML is served with `no-cache` so later deployments can reference fresh asset hashes. Keep unhashed public files outside `/assets/`.
 
 ## Structure
 
