@@ -6,6 +6,15 @@
   position: relative;
   isolation: isolate;
 }
+/* Light bands name their colour and, once the page tone runs (usePageTone),
+   leave the page itself to paint it, so neighbouring bands blend with no edge.
+   Before then each band paints its own. */
+[data-band] {
+  background-color: var(--band-tone);
+}
+.mp[data-blend] [data-band] {
+  background-color: transparent;
+}
 /* misty sage wash behind the header and the top of every page */
 .mp::before {
   content: "";
@@ -83,8 +92,7 @@
 }
 .mp-brand small {
   display: block;
-  font:
-    500 8.5px/1.8 var(--font-label);
+  font: 500 8.5px/1.8 var(--font-label);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #50604b;
@@ -107,8 +115,7 @@
   top: 20px;
 }
 .mp-page,
-.mp-section,
-.mp-contact-band {
+.mp-section {
   max-width: 1240px;
   margin-inline: auto;
 }
@@ -272,24 +279,6 @@
   display: block;
   font-size: 12px;
   margin-top: 8px;
-}
-.mp-contact-band {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #dce7cf;
-  padding: 55px 65px;
-  border-radius: 0 80px 0 0;
-  gap: 40px;
-  margin-bottom: 60px;
-}
-.mp-contact-band p {
-  max-width: 490px;
-  margin-top: 20px;
-}
-.mp-page > .mp-contact-band {
-  margin-top: 70px;
-  margin-bottom: 0;
 }
 .mp-search {
   position: relative;
@@ -535,8 +524,7 @@
 }
 .mp .mp-programme-list h3 {
   margin: 10px 0 14px;
-  font:
-    360 30px/1.2 var(--font-display);
+  font: 360 30px/1.2 var(--font-display);
   letter-spacing: -0.03em;
 }
 .mp-programme-list p {
@@ -682,11 +670,15 @@
 .mp-empty p {
   margin: 25px 0;
 }
+/* The footer rises out of the page colour above it instead of starting on a line. */
 .mp-footer {
+  --footer-fade: 96px;
   background: var(--forest);
   color: var(--paper);
-  border-radius: 32px 32px 0 0;
-  padding: 65px max(40px, calc((100vw - 1160px) / 2));
+  -webkit-mask-image: linear-gradient(transparent, #000 var(--footer-fade));
+  mask-image: linear-gradient(transparent, #000 var(--footer-fade));
+  padding: calc(65px + var(--footer-fade) - 32px)
+    max(40px, calc((100vw - 1160px) / 2)) 65px;
   display: grid;
   grid-template-columns: 1.3fr 1fr 1fr 1.1fr;
   gap: 40px;
@@ -718,7 +710,7 @@
   margin: 12px 0 20px;
   color: var(--lime);
 }
-.mp-footer > div > a:not(.mp-footer-brand) {
+.mp-footer > div > a:not(.mp-footer-brand, .mp-credit) {
   display: block;
   font-size: 12px;
   margin: 15px 0;
@@ -732,17 +724,39 @@
   grid-column: 1/-1;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding-top: 25px;
-  font-size: 10px;
+  font-size: 12px;
   gap: 20px;
 }
-.mp-footer-bottom button {
-  display: flex;
-  gap: 7px;
+/* The maker's credit: its K mark opens out beside the name on hover or focus,
+   and simply shows on touch screens, which have no hover. */
+.mp-footer-bottom .mp-credit {
+  display: inline-flex;
   align-items: center;
+  min-height: 32px;
 }
-.mp-footer-bottom {
-  align-items: center;
+.mp-footer-bottom .mp-credit:focus-visible {
+  outline-color: #c7d7b3;
+}
+.mp-credit-mark {
+  flex: none;
+  width: 0;
+  margin-right: 0;
+  opacity: 0;
+}
+.mp-credit:hover .mp-credit-mark,
+.mp-credit:focus-visible .mp-credit-mark {
+  width: 18px;
+  margin-right: 8px;
+  opacity: 1;
+}
+@media (hover: none) {
+  .mp-credit-mark {
+    width: 18px;
+    margin-right: 8px;
+    opacity: 1;
+  }
 }
 @media (max-width: 1100px) {
   .mp-header {
@@ -818,19 +832,6 @@
   .mp-journey-steps p {
     font-size: 12px;
   }
-  .mp-contact-band {
-    margin-inline: 24px;
-    padding: 38px 28px;
-    display: block;
-    border-radius: 0 55px 0 0;
-    margin-bottom: 40px;
-  }
-  .mp-contact-band [data-slot="button"] {
-    margin-top: 28px;
-  }
-  .mp-page > .mp-contact-band {
-    margin-inline: 0;
-  }
   .mp-search {
     min-width: 0;
   }
@@ -883,19 +884,21 @@
     padding: 35px 25px;
   }
   .mp-footer {
+    --footer-fade: 72px;
     grid-template-columns: 1fr 1fr;
-    padding: 45px 24px 105px;
+    padding: calc(45px + var(--footer-fade) - 24px) 24px 105px;
     gap: 30px;
   }
   .mp-footer > div:first-child {
     grid-column: 1/-1;
   }
+}
+/* Phones stack the copyright and the credit, centred; tablets keep them apart. */
+@media (max-width: 600px) {
   .mp-footer-bottom {
-    display: block;
-    line-height: 1.8;
-  }
-  .mp-footer-bottom button {
-    margin-top: 20px;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
   }
 }
 @media (max-width: 430px) {
@@ -1296,56 +1299,10 @@ html.lenis {
   visibility: hidden;
 }
 
-/* Premium motion layer: every movement below is gated on the motion switch and the OS setting. */
+/* Premium motion layer: every movement below is gated on the OS reduced-motion setting. */
 .mp-title-line,
 .mp-title-line > span {
   display: block;
-}
-.mp-footer-bottom .mp-motion-switch {
-  gap: 6px;
-  min-height: 32px;
-  cursor: pointer;
-}
-.mp-footer-bottom .mp-motion-switch:disabled {
-  cursor: default;
-  opacity: 0.6;
-}
-.mp-footer-bottom .mp-motion-switch:focus-visible {
-  outline-color: #c7d7b3;
-}
-.mp-motion-switch-track {
-  position: relative;
-  flex: none;
-  width: 30px;
-  height: 18px;
-  border-radius: 9px;
-  background: rgb(252 252 247 / 0.2);
-  box-shadow: inset 0 0 0 1px rgb(252 252 247 / 0.5);
-  margin-right: 4px;
-}
-.mp-motion-switch-track::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: #c7d7b3;
-  opacity: 0;
-}
-.mp-motion-switch[aria-pressed="true"] .mp-motion-switch-track::before {
-  opacity: 1;
-}
-.mp-motion-switch-knob {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--paper);
-}
-.mp-motion-switch[aria-pressed="true"] .mp-motion-switch-knob {
-  transform: translateX(12px);
-  background: var(--forest);
 }
 @media (prefers-reduced-motion: no-preference) {
   .mp[data-motion="on"] h1[data-rise] > .mp-title-line {
@@ -1361,11 +1318,11 @@ html.lenis {
   .mp[data-motion="on"] .mp-inquiry-layout .mp-error {
     animation: mp-nudge 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
-  .mp[data-motion="on"] .mp-motion-switch-knob {
-    transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-  .mp[data-motion="on"] .mp-motion-switch-track::before {
-    transition: opacity 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  .mp[data-motion="on"] .mp-credit-mark {
+    transition:
+      width 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      margin-right 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 }
 @keyframes mp-title-rise {

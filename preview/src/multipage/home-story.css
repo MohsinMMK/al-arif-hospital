@@ -1,10 +1,44 @@
+/* Every homepage section fills the whole screen, running under the see-through
+   header so no neighbouring section shows above it. The hero starts below the
+   header. A section that cannot fit a very short screen grows instead of clipping. */
 .home-story {
   --story-sage: #e3ecd6;
   --story-ink: var(--forest);
   --story-line: #aabc9a;
+  --story-screen: calc(100svh - var(--site-header-height));
+  --story-pad-top: clamp(28px, 6svh, 72px);
+  --story-pad-bottom: clamp(28px, 6svh, 72px);
+}
+.story-screen {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: calc(var(--site-header-height) + var(--story-pad-top));
+  padding-bottom: var(--story-pad-bottom);
+  scroll-margin-top: 0;
+}
+/* Without the wheel smoother (touch screens, or motion off) the browser itself
+   settles scrolling near a section edge, keeping native momentum: a flick runs
+   as far as it wants and only a stop close to an edge lands on it. Sections
+   run under the see-through header, so the landing is not padded. */
+html:not(.lenis):has(.home-story) {
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 0;
+}
+.home-story > .story-screen {
+  scroll-snap-align: start;
+}
+html:has(.home-story) .mp-footer {
+  scroll-snap-align: end;
+}
+.story-screen.story-hero {
+  min-height: var(--story-screen);
+  padding-top: var(--story-pad-top);
+  scroll-margin-top: var(--site-header-height);
 }
 .home-story h2 {
-  font-size: clamp(34px, 3.9vw, 57px);
+  font-size: clamp(34px, min(3.9vw, 6.6svh), 57px);
   letter-spacing: -0.035em;
   line-height: 1.15;
   text-wrap: balance;
@@ -23,31 +57,60 @@
   width: fit-content;
   margin-top: 24px;
 }
-.story-care-feature svg {
+.story-secondary-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  margin-top: 22px;
+  width: fit-content;
+}
+.story-secondary-link svg {
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.story-care-feature a:hover svg {
+.story-secondary-link:hover svg {
   transform: translate(3px, -3px);
 }
-.story-section {
-  max-width: 1240px;
-  padding: 110px 40px;
-  margin: auto;
-}
+
+/* Hero: the promise, two ways in, and the four figures that back it. */
 .story-hero {
-  padding: 85px 40px 0;
-  max-width: 1320px;
-  margin: auto;
+  padding-inline: 40px;
   text-align: center;
 }
+.story-hero-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.story-hero-eyebrow {
+  margin-bottom: clamp(16px, 3svh, 28px);
+  font-family: var(--font-label);
+  font-size: 12px !important;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.6 !important;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: #50604b;
+  max-width: none !important;
+}
 .story-hero h1 {
-  font-size: clamp(52px, 6.9vw, 96px);
+  font-size: clamp(48px, min(6.9vw, 10svh), 96px);
   line-height: 1.1;
 }
-.story-hero > div > p {
-  margin: 30px auto;
+.story-hero-main > p:not(.story-hero-eyebrow) {
+  margin: clamp(18px, 3.4svh, 30px) auto;
   font-size: 18px;
   max-width: 700px;
+}
+.story-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px 28px;
 }
 .story-scroll-link {
   display: inline-flex;
@@ -62,94 +125,93 @@
 .story-scroll-link svg {
   transition: transform 0.25s;
 }
-.story-hero-ground {
-  margin-top: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 65px;
+.story-hero-figures {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
   width: fit-content;
-  margin-inline: auto;
-  padding: 22px 44px;
+  margin: clamp(28px, 5svh, 56px) auto 0;
+  padding: 18px 12px;
+  list-style: none;
   background: var(--glass);
   border: 1px solid var(--glass-edge);
   border-radius: 999px;
   box-shadow: 0 18px 40px -24px #1c3a1359;
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
-  font-size: 17px;
 }
-.story-hero-ground > span,
-.story-hero-ground > a {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-}
-.story-hero-ground > a {
-  font-size: 13px;
-  padding-left: 35px;
+.story-hero-figures li {
+  display: grid;
+  gap: 2px;
+  padding: 2px 36px;
   border-left: 1px solid #1c3a1326;
 }
-.story-about {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 85px;
-  align-items: start;
+.story-hero-figures li:first-child {
+  border-left: 0;
 }
-.story-about h2 {
-  font-size: 40px;
+.story-hero-figure {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.4vw, 34px);
+  font-weight: 360;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
-.story-about p + p {
-  margin-top: 18px;
+.story-hero-figures li > span:last-child {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #50604b;
 }
+
+/* Care chapters: intro on one side, four services on the other, one shared axis. */
 .story-care {
-  padding: 100px 0;
-  scroll-margin-top: 95px;
+  padding-inline: 0;
 }
 .story-general {
-  background: #e9e9e2;
+  --band-tone: #e9e9e2;
 }
 .story-unani {
-  background: #dce7cf;
+  --band-tone: #dce7cf;
 }
 .story-care-inner {
+  --care-gap: 100px;
+  position: relative;
+  width: 100%;
   max-width: 1240px;
   margin: auto;
   padding: 0 40px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 100px;
-  align-items: start;
-}
-.story-care-intro {
-  position: sticky;
-  top: 135px;
-  padding: 15px 0 30px;
+  column-gap: var(--care-gap);
+  align-items: center;
 }
 .story-care-mark {
-  margin-bottom: 30px;
+  margin-bottom: clamp(16px, 3svh, 30px);
   color: #517745;
 }
 .story-care-intro p {
-  margin-top: 28px;
+  margin-top: clamp(16px, 3svh, 28px);
   max-width: 42ch;
 }
-.story-care-footnote {
-  font-size: 12px;
-  line-height: 1.8;
-  margin-top: 38px;
-  max-width: 38ch;
+.story-care-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+  margin-top: clamp(18px, 3svh, 28px);
+}
+.story-care-links .story-link,
+.story-care-links .story-secondary-link {
+  margin-top: 0;
 }
 .story-care-features {
-  position: relative;
   padding-left: 36px;
 }
 .story-care-line {
   position: absolute;
-  left: 0;
+  left: 50%;
   top: 25px;
   bottom: 25px;
   width: 2px;
+  transform: translateX(-50%);
   background: #becbb1;
   overflow: hidden;
 }
@@ -162,26 +224,41 @@
 }
 .story-care-feature {
   position: relative;
-  padding: 38px 23px 42px;
-  min-height: 200px;
+  padding: clamp(12px, 2.1svh, 24px) 24px;
   isolation: isolate;
+}
+.story-care-feature + .story-care-feature {
+  margin-top: clamp(6px, 1svh, 12px);
 }
 .story-care-feature:before {
   content: "";
   position: absolute;
-  left: -41px;
-  top: 55px;
+  left: calc(-36px - var(--care-gap) / 2 - 6px);
+  top: 50%;
   width: 12px;
   height: 12px;
+  margin-top: -6px;
   background: #aabc9a;
   border-radius: 50%;
   transition: background 0.2s;
 }
+.story-care-feature:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: calc(-36px - var(--care-gap) / 2);
+  width: calc(36px + var(--care-gap) / 2);
+  height: 1px;
+  background: #aabc9a;
+}
+.story-care.is-complete .story-care-feature:before {
+  background: #517745;
+}
 .story-feature-wash {
   position: absolute;
-  inset: 14px 0;
+  inset: 0;
   background: #fcfcf770;
-  border-radius: 24px;
+  border-radius: 22px;
   z-index: -1;
 }
 .story-unani .story-feature-wash {
@@ -195,338 +272,47 @@
 }
 .story-care-feature h3 {
   font:
-    360 29px/1.25 var(--font-display);
+    360 clamp(21px, 2.8svh, 27px) / 1.25 var(--font-display);
   letter-spacing: -0.025em;
 }
 .story-care-feature svg {
-  margin-top: 5px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.story-care-feature a:hover svg {
+  transform: translate(3px, -3px);
 }
 .story-care-feature p {
   font-size: 14px;
-  margin-top: 21px;
-  max-width: 43ch;
+  line-height: 1.55;
+  margin-top: 4px;
+  max-width: 46ch;
 }
-.story-section-intro p {
-  margin-top: 28px;
-}
-.story-learning {
-  background: #e3e3dd;
-  padding: 95px 40px;
-}
-.story-learning-inner {
-  max-width: 1160px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
-}
-.story-learning-title > svg {
-  margin-bottom: 35px;
-}
-.story-learning-copy > p {
-  font-size: 17px;
-}
-.story-learning-copy h3 {
-  font:
-    360 29px/1.3 var(--font-display);
-  margin-top: 35px;
-  margin-bottom: 15px;
-  letter-spacing: -0.025em;
-}
-.story-learning-copy h3 + p {
-  font-size: 14px;
-}
-.story-learning-copy small {
-  margin-top: 20px;
-  max-width: 47ch;
-}
-.story-secondary-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 12px;
-  margin-top: 22px;
-  width: fit-content;
-}
-.story-research {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
-}
-.story-research p {
-  margin-top: 28px;
-}
-.story-research-themes h3 {
-  font-size: 15px;
-  margin: 10px 0 22px;
-}
-.story-research-themes ul {
-  padding: 0;
-  list-style: none;
-}
-.story-research-themes li {
-  padding: 15px 0;
-  font:
-    360 23px/1.4 var(--font-display);
-  letter-spacing: -0.025em;
-}
-.story-research-themes small {
-  margin-top: 24px;
-  max-width: 45ch;
-}
-.story-section.story-library {
-  padding-top: 0;
-}
-.story-library-head,
-.story-departments-head {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
-  margin-bottom: 45px;
-}
-.story-library-head p {
-  margin-bottom: 26px;
-}
-/* Departments: both OPD lists at equal weight, then the figures behind them. */
-.story-department-panels {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-.story-department-panel {
-  padding: 28px 30px 14px;
-  border-radius: 24px;
-  background: #e9e9e2;
-}
-.story-department-panel[data-group="unani"] {
-  background: #dce7cf;
-}
-.story-department-panel h3 {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-bottom: 14px;
-  font-size: 15px;
-  font-weight: 700;
-}
-.story-department-panel h3 svg {
-  flex: none;
-  color: var(--leaf);
-}
-.story-department-panel h3 span {
-  margin-left: auto;
-  padding: 3px 11px;
-  border-radius: 999px;
-  background: var(--paper);
-  font-size: 12px;
-  font-weight: 600;
-}
-.story-department-panel ul {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 26px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.story-department-panel li {
-  border-top: 1px solid rgb(28 58 19 / 0.14);
-}
-.story-department-panel a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 58px;
-  padding: 10px 0;
-  font:
-    360 17px/1.3 var(--font-display);
-  letter-spacing: -0.025em;
-}
-.story-department-panel a small {
-  margin-top: 2px;
-  font-family: var(--font-body);
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--leaf);
-}
-.story-department-panel a svg {
-  flex: none;
-  color: var(--leaf);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.story-department-panel a:hover svg {
-  transform: translate(3px, -3px);
-}
-.story-department-figures {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 40px 0 0;
-  padding: 0;
-  list-style: none;
-}
-.story-department-figures li {
-  display: grid;
-  align-content: start;
-  gap: 6px;
-  padding: 4px 24px;
-  border-left: 1px solid var(--story-line);
-}
-.story-department-figures li:first-child {
-  padding-left: 0;
-  border-left: 0;
-}
-.story-department-figure {
-  font-family: var(--font-display);
-  font-size: clamp(36px, 3.4vw, 48px);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  font-weight: 360;
-}
-.story-department-figures li > span:last-child {
-  font-size: 13px;
-  line-height: 1.5;
-  color: #50604b;
-}
-.story-visit {
-  padding-bottom: 90px;
-}
-.story-visit .mp-journey {
-  margin-block: 0;
-  border-radius: 32px;
-}
-.story-visit-details {
-  max-width: 1240px;
-  margin: auto;
-  padding: 55px 40px 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
-}
-.story-visit-details h3 {
-  font:
-    360 30px/1.3 var(--font-display);
-  letter-spacing: -0.025em;
-}
-.story-visit-details p {
-  font-size: 14px;
-  margin-top: 18px;
-}
-.story-visit-details small {
-  margin-top: 16px;
-}
-.home-story section[id] {
-  scroll-margin-top: 115px;
-}
-@media (max-width: 1100px) {
-  .story-care-inner,
-  .story-learning-inner,
-  .story-research,
-  .story-library-head,
-  .story-departments-head {
-    gap: 55px;
+/* Unani mirrors General, so the two chapters read as equals, not a sequel. */
+@media (min-width: 801px) {
+  .story-unani .story-care-intro {
+    grid-column: 2;
+    grid-row: 1;
   }
-  .story-about {
-    gap: 50px;
+  .story-unani .story-care-features {
+    grid-column: 1;
+    grid-row: 1;
+    padding-left: 0;
+    padding-right: 36px;
   }
-  .story-hero-ground {
-    gap: 35px;
+  .story-unani .story-care-feature:before {
+    left: auto;
+    right: calc(-36px - var(--care-gap) / 2 - 6px);
+  }
+  .story-unani .story-care-feature:after {
+    left: auto;
+    right: calc(-36px - var(--care-gap) / 2);
   }
 }
-@media (max-width: 800px) {
-  .story-section {
-    padding: 65px 24px;
-  }
-  .story-hero {
-    padding: 50px 24px 0;
-  }
-  .story-hero h1 {
-    font-size: clamp(48px, 9vw, 70px);
-  }
-  .story-hero > div > p {
-    font-size: 15px;
-    line-height: 1.8;
-    margin: 25px auto;
-  }
-  .story-desktop-break {
-    display: none;
-  }
-  .story-hero-ground {
-    margin-top: 42px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 22px 12px;
-    width: auto;
-    padding: 30px 22px 23px;
-    font-size: 13px;
-    border-radius: 32px;
-  }
-  .story-hero-ground > span {
-    gap: 8px;
-    justify-content: center;
-  }
-  .story-hero-ground > span > svg {
-    width: 18px;
-  }
-  .story-hero-ground > a {
-    grid-column: 1/-1;
-    justify-self: center;
-    border-left: 0;
-    padding: 16px 0 0;
-    font-size: 12px;
-  }
-  .story-about,
-  .story-learning-inner,
-  .story-research,
-  .story-library-head,
-  .story-visit-details {
-    grid-template-columns: 1fr;
-    gap: 35px;
-  }
-  .story-about h2 {
-    font-size: 34px;
-  }
-  .home-story p {
-    font-size: 15px;
-  }
-  .story-link {
-    margin-top: 18px;
-  }
-  .story-learning {
-    padding: 65px 24px;
-  }
-  .story-learning-title > svg {
-    width: 35px;
-    height: 35px;
-    margin-bottom: 24px;
-  }
-  .story-learning-copy > p {
-    font-size: 15px;
-  }
-  .story-learning-copy h3 {
-    font-size: 27px;
-  }
-  .story-research-themes li {
-    font-size: 22px;
-  }
-  .story-visit {
-    padding-bottom: 55px;
-  }
-  .story-visit-details {
-    padding: 40px 24px 0;
-    gap: 40px;
-  }
-  .story-visit .mp-journey {
-    border-radius: 24px;
-  }
-  .story-visit-details h3 {
-    font-size: 28px;
-  }
-  .home-story .mp-journey-steps li > span {
-    border: 0;
-  }
-  .story-visit-details .story-link {
-    margin-top: 15px;
+@media (min-width: 801px) and (max-width: 1100px) {
+  .story-care-inner {
+    --care-gap: 55px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -543,29 +329,12 @@
 .mp[data-motion="off"] .story-care-line span {
   transform: none !important;
 }
-/* Mirrored Unani chapter; centered React Bits-inspired clinician gallery. */
-@media (min-width: 801px) {
-  .story-unani .story-care-intro {
-    grid-column: 2;
-    grid-row: 1;
-  }
-  .story-unani .story-care-features {
-    grid-column: 1;
-    grid-row: 1;
-    padding-left: 0;
-    padding-right: 36px;
-  }
-}
+
+/* Doctors: one sliding row of clinicians under a single heading. */
 .story-doctors {
-  display: flex;
-  flex-direction: column;
   align-items: center;
+  padding-inline: 40px;
   text-align: center;
-  gap: 0;
-}
-.story-doctors .story-section-intro {
-  max-width: 820px;
-  margin: auto;
 }
 .story-doctors .story-link {
   margin-top: 12px;
@@ -577,10 +346,14 @@
   max-width: 1180px;
   margin: 28px auto 4px;
 }
-/* Sized to the screen as well, so the heading, row and link fit one snapped view. */
+/* Sized to the screen, so the heading, row, link and note fit one view. */
 .doctor-row-stage {
   position: relative;
-  height: clamp(440px, min(48vw, 100svh - 340px), 600px);
+  height: clamp(
+    300px,
+    var(--story-screen) - var(--story-pad-top) - var(--story-pad-bottom) - 200px,
+    600px
+  );
 }
 /* The caption fades back in when the card closes; its reveal animation would otherwise hold it visible. */
 .doctor-row[data-open] .flex-carousel__caption {
@@ -979,15 +752,10 @@
   .doctor-row-fallback {
     margin-top: 18px;
   }
-  /* Phones snap this section under the header; the rest of the section needs about 223px,
-     and the contact dock sits in the bottom 70px. */
-  .story-doctors {
-    padding-top: 36px;
-  }
   .doctor-row-stage {
     height: clamp(
-      360px,
-      100svh - var(--site-header-height) - 293px - env(safe-area-inset-bottom),
+      300px,
+      var(--story-screen) - var(--story-pad-top) - var(--story-pad-bottom) - 180px,
       470px
     );
   }
@@ -1034,125 +802,164 @@
     transform: none !important;
   }
 }
-/* Shared desktop axis belongs to the whole care section, not either column. */
-@media (min-width: 801px) {
-  .story-care-inner {
-    --care-gap: 100px;
-    position: relative;
-    column-gap: var(--care-gap);
-  }
-  .story-care-features {
-    position: static;
-  }
-  .story-care-line {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-  }
-  .story-care-feature:before {
-    left: calc(-36px - var(--care-gap) / 2 - 6px);
-  }
-  .story-unani .story-care-feature:before {
-    left: auto;
-    right: calc(-36px - var(--care-gap) / 2 - 6px);
-  }
-  .story-care-feature:after {
-    content: "";
-    position: absolute;
-    top: 60px;
-    left: calc(-36px - var(--care-gap) / 2);
-    width: calc(36px + var(--care-gap) / 2);
-    height: 1px;
-    background: #aabc9a;
-  }
-  .story-unani .story-care-feature:after {
-    left: auto;
-    right: calc(-36px - var(--care-gap) / 2);
-  }
-}
-@media (min-width: 801px) and (max-width: 1100px) {
-  .story-care-inner {
-    --care-gap: 55px;
-  }
-}
 
-/* Keep the next care chapter below the opening screen without clipping copy. */
-.story-opening {
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100svh - var(--site-header-height));
+/* More: the Trust's story, learning, research and guides as one card deck. */
+.story-more {
+  padding-inline: 40px;
+  --band-tone: var(--stone);
 }
-.story-opening > .story-hero {
+.story-more-inner {
   width: 100%;
-  flex-shrink: 0;
+  max-width: 1240px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-rows: auto 1fr;
+  column-gap: 48px;
 }
-.story-opening > .story-about {
-  width: 100%;
-  margin: 0 auto;
-  flex: 1;
-  align-content: center;
+.story-more-head p {
+  margin-top: clamp(14px, 2.4svh, 24px);
+  max-width: 40ch;
+}
+.story-more .mu-swap {
+  display: contents;
+}
+.story-more .mu-swap-tabs {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+  margin-top: clamp(20px, 4svh, 40px);
+  gap: 2px;
+}
+.story-more .mu-swap-tabs [role="tab"] {
+  padding: clamp(9px, 1.5svh, 14px) 18px;
+}
+.story-more .mu-swap-stage {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  padding: 56px 48px 0 0;
+}
+.story-more-card {
+  min-height: clamp(300px, 44svh, 400px);
+  padding: 32px 32px 30px;
+}
+.story-more-card[data-tone="both"] {
+  background: var(--paper);
+}
+.mp .story-more-card h3 {
+  font-size: clamp(26px, 2.4vw, 34px);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.mp .story-more-card > p:not(.st-meta) {
+  font-size: 15px;
+  max-width: 46ch;
+}
+.story-more-card small {
+  max-width: 46ch;
+  color: #50604b;
+}
+.story-more-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.story-more-cta svg {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.story-more-card:hover .story-more-cta svg {
+  transform: translate(3px, -3px);
 }
 
-/* Desktop care chapters settle as complete screens; smaller screens flow naturally. */
-@media (min-width: 1101px) and (min-height: 800px) {
-  html.care-chapter-scroll {
-    scroll-snap-type: y proximity;
-    scroll-padding-top: var(--site-header-height);
-  }
-  .story-care {
-    min-height: calc(100svh - var(--site-header-height));
-    padding: clamp(32px, 5svh, 64px) 0;
-    display: flex;
-    align-items: center;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-  .story-care-inner {
-    width: 100%;
-  }
-  .story-care-intro {
-    position: static;
-  }
-  .story-care-feature {
-    min-height: clamp(140px, 17svh, 200px);
-    padding-top: 28px;
-    padding-bottom: 28px;
-  }
-  .story-care-feature:before {
-    top: 45px;
-  }
-  .story-care-feature:after {
-    top: 50px;
-  }
-  .story-care-feature p {
-    margin-top: 15px;
-  }
-  .home-story .story-care[id] {
-    scroll-margin-top: 0;
-  }
-  .story-doctors {
-    scroll-snap-align: start;
-    scroll-margin-top: 0;
+/* Laptop screens drop the tab subtitles; each card shows the same line. */
+@media (min-width: 801px) and (max-height: 860px) {
+  .story-more .mu-swap-title small {
+    display: none;
   }
 }
 
-/* Phones show each care chapter as four clear service rows. */
+@media (max-width: 1100px) {
+  .story-hero-figures li {
+    padding-inline: 24px;
+  }
+  .story-more-inner {
+    column-gap: 32px;
+  }
+  .story-more .mu-swap-stage {
+    padding-right: 32px;
+  }
+}
+
+/* Tablets and phones stack every chapter; the floating contact dock takes the
+   bottom-right 105px, so each screen leaves room for it. */
 @media (max-width: 800px) {
-  .story-care {
-    padding: 26px 0 calc(94px + env(safe-area-inset-bottom));
+  .home-story {
+    --story-pad-top: clamp(20px, 3.5svh, 40px);
+    --story-pad-bottom: calc(104px + env(safe-area-inset-bottom));
   }
+  .home-story p {
+    font-size: 15px;
+  }
+  .story-link {
+    margin-top: 18px;
+  }
+  .story-hero,
+  .story-doctors,
+  .story-more {
+    padding-inline: 24px;
+  }
+  .story-hero h1 {
+    font-size: clamp(40px, min(11vw, 7.4svh), 70px);
+  }
+  .story-hero-main > p:not(.story-hero-eyebrow) {
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 16px auto 22px;
+  }
+  .story-hero-eyebrow {
+    font-size: 11px !important;
+  }
+  .story-desktop-break {
+    display: none;
+  }
+  .story-hero-figures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    max-width: 460px;
+    margin-top: clamp(20px, 3.5svh, 40px);
+    padding: 16px 8px;
+    row-gap: 14px;
+    border-radius: 28px;
+  }
+  .story-hero-figures li {
+    padding: 0 12px;
+  }
+  .story-hero-figures li:nth-child(odd) {
+    border-left: 0;
+  }
+  .story-hero-figure {
+    font-size: 26px;
+  }
+  .story-hero-figures li > span:last-child {
+    font-size: 12px;
+  }
+
+  /* Care chapters become a heading, two links and four clear service rows. */
   .story-care-inner {
     grid-template-columns: 1fr;
     padding: 0 20px;
     gap: 18px;
   }
   .story-care-intro {
-    position: static;
     padding: 0;
   }
   .story-care-mark,
-  .story-care-intro > p,
-  .story-care-footnote {
+  .story-care-intro > p {
     display: none;
   }
   .story-care-intro h2 {
@@ -1161,8 +968,9 @@
   .story-care-intro h2 em {
     font-size: 24px;
   }
-  .story-care-intro .story-link {
-    margin-top: 6px;
+  .story-care-links {
+    gap: 10px 22px;
+    margin-top: 14px;
   }
   .story-care-features {
     padding: 0;
@@ -1170,14 +978,21 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 8px;
   }
+  .story-care-feature + .story-care-feature {
+    margin-top: 0;
+  }
   .story-care-line,
-  .story-care-feature:before {
+  .story-care-feature:before,
+  .story-care-feature:after {
     display: none;
   }
   .story-care-feature {
-    min-height: 0;
     padding: 10px 14px;
     background: #fcfcf770;
+    border-radius: 18px;
+  }
+  .story-feature-wash {
+    border-radius: 18px;
   }
   .story-care-feature a {
     align-items: center;
@@ -1185,8 +1000,6 @@
     min-height: 32px;
   }
   .story-care-feature a > svg {
-    display: block;
-    flex-shrink: 0;
     width: 18px;
     height: 18px;
     margin: 0;
@@ -1197,39 +1010,127 @@
     overflow-wrap: break-word;
   }
   .story-care-feature p {
-    margin-top: 4px;
     font-size: 13px;
     line-height: 1.5;
   }
-  .story-feature-wash {
-    inset: 0;
-  }
-}
 
-.story-care-mobile-copy {
-  display: none;
-}
-@media (max-width: 800px) {
-  .story-care-full-copy {
+  /* The deck: heading, a row of chips to pick a card, then the card. */
+  .story-more-inner {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+  .story-more .mu-swap-tabs {
+    grid-column: 1;
+    grid-row: auto;
+    display: flex;
+    gap: 6px;
+    margin: 20px -24px 0;
+    padding: 2px 24px 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-padding-inline: 24px;
+  }
+  .story-more .mu-swap-tabs::-webkit-scrollbar {
     display: none;
   }
-  .story-care-mobile-copy {
+  .story-more .mu-swap-tabs [role="tab"] {
     display: block;
+    flex: none;
+    width: auto;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: rgb(252 252 247 / 0.6);
+    white-space: nowrap;
+  }
+  .story-more .mu-swap-tabs [aria-selected="true"] {
+    background: #e3ecd6;
+  }
+  .story-more .mu-swap-index,
+  .story-more .mu-swap-title small {
+    display: none;
+  }
+  .story-more .mu-swap-title {
+    font-size: 16px;
+  }
+  .story-more .mu-swap-stage {
+    grid-column: 1;
+    grid-row: auto;
+    padding: 26px 20px 0 0;
+  }
+  .story-more-card {
+    min-height: 0;
+    padding: 22px 22px 22px;
+  }
+  .mp .story-more-card h3 {
+    font-size: 23px;
+  }
+  .mp .story-more-card > p:not(.st-meta) {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .story-more .mu-swap-controls {
+    margin-top: 16px;
   }
 }
+/* Tablets in portrait have room for the full care introduction. */
+@media (min-width: 601px) and (max-width: 800px) and (min-height: 900px) {
+  .story-care-inner {
+    padding: 0 40px;
+    gap: 28px;
+  }
+  .story-care-intro > p {
+    display: block;
+    margin-top: 16px;
+  }
+  .story-care-intro h2 {
+    font-size: 42px;
+  }
+  .story-care-intro h2 em {
+    font-size: inherit;
+  }
+  .story-care-features {
+    gap: 12px;
+  }
+  .story-care-feature {
+    padding: 18px 22px;
+  }
+  .story-care-feature h3 {
+    font-size: 23px;
+  }
+  .story-care-feature p {
+    font-size: 14px;
+  }
+}
+/* Narrow phones of middling height, such as 375 × 812, wrap more lines than wider
+   ones: the top gap shrinks, the deck drops its lead line and the care rows sit closer. */
+@media (max-width: 380px) and (min-height: 701px) and (max-height: 860px) {
+  .home-story {
+    --story-pad-top: 14px;
+  }
+  .story-more-head p {
+    display: none;
+  }
+  .story-care-features {
+    gap: 5px;
+  }
+  .story-care-feature {
+    padding-block: 8px;
+  }
+}
+/* Short phones drop the second line of each heading and tighten the rows. */
 @media (max-width: 800px) and (max-height: 700px) {
+  .home-story {
+    --story-pad-top: 12px;
+  }
   .story-care-intro h2 em,
   .story-care-intro h2 br {
     display: none;
   }
-  .story-care {
-    padding-top: 16px;
-  }
   .story-care-inner {
-    gap: 8px;
+    gap: 10px;
   }
   .story-care-feature {
-    padding: 8px 12px;
+    padding: 6px 12px;
   }
   .story-care-feature h3 {
     font-size: 18px;
@@ -1238,87 +1139,49 @@
     font-size: 12px;
     line-height: 1.4;
   }
-}
-/* Mobile snaps the whole four-card chapter, never individual cards. */
-@media (max-width: 800px) {
-  html.care-chapter-scroll {
-    scroll-snap-type: y proximity;
-    scroll-padding-top: var(--site-header-height);
+  .story-hero-main > p:not(.story-hero-eyebrow) {
+    margin: 12px auto 16px;
   }
-  .story-care {
-    min-height: calc(100svh - var(--site-header-height));
-    display: flex;
-    align-items: center;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+  .story-hero-actions {
+    gap: 8px 18px;
   }
-  .story-care-inner {
-    width: 100%;
+  .story-hero-figures {
+    padding-block: 12px;
+    row-gap: 10px;
   }
-  .home-story .story-care[id] {
-    scroll-margin-top: 0;
-  }
-  .story-doctors {
-    scroll-snap-align: start;
-    scroll-margin-top: 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  html.care-chapter-scroll {
-    scroll-snap-type: none;
-  }
-}
-
-html.lenis.care-chapter-scroll {
-  scroll-snap-type: none !important;
-  scroll-behavior: auto !important;
-}
-.story-care.is-complete .story-care-feature:before {
-  background: #517745;
-}
-
-@media (max-width: 1100px) {
-  .story-department-panel {
-    padding-inline: 24px;
-  }
-}
-@media (max-width: 800px) {
-  .story-departments-head {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    margin-bottom: 32px;
-  }
-  .story-department-panels {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-  .story-department-figures {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 22px;
-    margin-top: 32px;
-  }
-  .story-department-figures li:nth-child(odd) {
-    padding-left: 0;
-    border-left: 0;
-  }
-}
-/* Phones keep two columns so both lists stay within about a screen. */
-@media (max-width: 560px) {
-  .story-department-panel {
-    padding: 20px 18px 6px;
-  }
-  .story-department-panel ul {
-    column-gap: 16px;
-  }
-  .story-department-panel a {
-    min-height: 50px;
-    padding: 9px 0;
-    font-size: 15px;
-  }
-  .story-department-panel a small {
-    font-size: 11.5px;
-  }
-  .story-department-panel a svg {
+  .story-care-links .story-secondary-link {
     display: none;
+  }
+  .story-care-features {
+    gap: 6px;
+  }
+  .story-more-head p {
+    display: none;
+  }
+  .story-more .mu-swap-tabs {
+    margin-top: 14px;
+  }
+  .story-more .mu-swap-stage {
+    padding-top: 24px;
+  }
+  .story-more-card {
+    gap: 10px;
+    padding: 18px 20px;
+  }
+  .story-more-card .st-meta {
+    display: none;
+  }
+  .mp .story-more-card h3 {
+    font-size: 21px;
+  }
+  .mp .story-more-card > p:not(.st-meta) {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+  }
+  .story-more .mu-swap-controls {
+    margin-top: 10px;
   }
 }

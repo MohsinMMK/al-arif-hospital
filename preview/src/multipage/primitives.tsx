@@ -210,26 +210,6 @@ export function PageTitle({
     </div>
   );
 }
-export function ContactBand({ service }: { service?: string }) {
-  return (
-    <section className="mp-contact-band">
-      <div>
-        <h2>
-          Let’s find your
-          <br />
-          <em>next step.</em>
-        </h2>
-        <p>
-          Ask reception about the right consultation and a day that works for
-          you.
-        </p>
-      </div>
-      <Action to={`/site/visit${service ? `?service=${service}` : ""}#request`}>
-        Plan an inquiry
-      </Action>
-    </section>
-  );
-}
 export function ServiceLink({ service }: { service: Service }) {
   return (
     <Link to={`/site/services/${service.slug}`} className="mp-service-row">

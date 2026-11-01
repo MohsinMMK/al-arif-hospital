@@ -296,7 +296,7 @@ export function CareDirectory() {
             </div>
           ))}
       </div>
-      <div className="care-wings">
+      <div className="care-wings" data-band>
         <div className="care-wing-switch">
           <LiquidSegments
             label="Care sections"
@@ -317,6 +317,7 @@ export function CareDirectory() {
               key={wing.id}
               id={wing.id}
               className={`care-wing care-wing-${wing.id}`}
+              data-band
               aria-labelledby={`${wing.id}-title`}
             >
               <div className="care-wing-inner">

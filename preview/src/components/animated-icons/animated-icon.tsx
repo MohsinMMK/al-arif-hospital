@@ -2,7 +2,7 @@
 // License retained in ./LICENSE.md. Adaptations: each icon draws through lucide-react's own Icon,
 // so it renders the same single <svg> as its static twin and takes the same props; it plays when
 // the link or button around it is hovered or keyboard-focused rather than only the glyph itself;
-// and it stays still when the site's motion switch or the reduced-motion setting is on.
+// and it stays still when the reduced-motion setting is on.
 import { Icon, type LucideIcon, type LucideProps } from "lucide-react";
 import { m, useAnimation, type LegacyAnimationControls } from "motion/react";
 import {

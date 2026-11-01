@@ -93,7 +93,12 @@ export function StatBand({
 }) {
   const list = useReveal<HTMLUListElement>();
   return (
-    <section className="sx-band" data-tone={tone} aria-label={label}>
+    <section
+      className="sx-band"
+      data-tone={tone}
+      data-band={tone === "sage" ? "" : undefined}
+      aria-label={label}
+    >
       <ul ref={list} className="sx-stats mu-reveal">
         {items.map(({ icon: Icon, value, label: text }) => (
           <li key={text}>

@@ -97,16 +97,16 @@
   scroll-margin-top: var(--site-header-height);
 }
 .care-wing-general-hospital {
-  background: #e9e9e2;
+  --band-tone: #e9e9e2;
 }
 .care-wing-unani-care {
-  background: #dce7cf;
+  --band-tone: #dce7cf;
 }
 /* The switch rides above both wings. The first wing slides up beneath it, so the
    switch keeps its own height and lets go exactly where the wings end. */
 .care-wings {
   padding-top: 24px;
-  background: #e9e9e2;
+  --band-tone: #e9e9e2;
 }
 .care-wing-switch {
   position: sticky;
@@ -276,9 +276,6 @@
 .care-directory-close .mp-source-note {
   text-align: center;
   margin-inline: auto;
-}
-.care-directory-close > .mp-contact-band {
-  margin-top: 40px;
 }
 .mp[data-motion="off"] .care-service-route:hover > svg {
   transform: none;

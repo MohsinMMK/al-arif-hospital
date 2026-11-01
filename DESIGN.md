@@ -58,7 +58,7 @@ A welcoming reception: warm paper, pastel sage, editorial Bitter headings and cl
 
 ## Layout
 
-The homepage flows through welcome, hospital introduction, general care, mirrored Unani care, centered doctors, education, research and visiting. The opening fills at least the viewport below the header. Content containers are generally 1,240px wide with 40px desktop gutters; mobile gutters are 20–24px.
+The homepage is six screens: the hero (promise, two ways in and four figures), General care, mirrored Unani care, centered doctors, one card deck (story, first visit, education, research, stories and guides) and the shared Reach us section as its last screen. Each section is exactly one screen tall: it runs under the see-through header, pads past it, and centres its content; the hero sits below the header. Short screens tighten type and hide secondary lines rather than clip, and phones keep the bottom 104px clear of the contact dock. Content containers are generally 1,240px wide with 40px desktop gutters; mobile gutters are 20–24px.
 
 At widths above 1,100px and heights of at least 800px, each care section fills the available screen below the header. General care puts its introduction left and four services right; Unani reverses them. The progress line stays on the shared center axis. At widths up to 800px, each section presents its heading, one directory link and four compact rows with arrows. Copy remains scrollable if the viewport is too short; never clip content to force a fit.
 
@@ -68,7 +68,7 @@ The clinician gallery is centered: three plus two cards on desktop, two columns 
 
 Bitter 400 supplies headings, with italic olive phrases for emphasis. Manrope supplies body text and controls. Fonts are self-hosted with swap behavior; the three critical body/hero faces are preloaded. Main headings scale responsively up to 96px in the hero, while mobile care headings use 30px titles and 24px italic lines.
 
-Use tonal backgrounds and spacing for hierarchy. Decorative horizontal separators, link underlines and card borders are removed. Keep form outlines, clear focus indicators and the care connector diagram. Focus uses a visible 3px olive outline and 4px offset.
+Use tonal backgrounds and spacing for hierarchy. Sections never meet on a hard edge. Each light band (`data-band`) names its colour in `--band-tone`. Once the page script runs, the page paints one colour that averages the tones across the middle 60% of the screen. As you scroll, the colour shifts from one section to the next with no line between them. A section at rest shows its own tone exactly. The footer keeps the tone of whatever sits above it. Dark bands and the footer keep their forest colour but fade in from the page colour through a 40–96px gradient edge. Without script, each band paints its own colour. Decorative horizontal separators, link underlines and card borders are removed. Keep form outlines, clear focus indicators and the care connector diagram. Focus uses a visible 3px olive outline and 4px offset.
 
 ## Shared navigation
 
@@ -78,9 +78,9 @@ QuickFind uses Radix Dialog for focus containment, Escape dismissal and restorat
 
 ## Motion
 
-One shared Lenis instance feeds GSAP's ticker on every route. Wheel scrolling takes 750ms with quartic easing. Touch follows the finger directly; release inertia uses `syncTouchLerp: 0.1` and `touchInertiaExponent: 1.5`. Pinch gestures and their releases, search results and native controls bypass smoothing.
+With a mouse or trackpad (`hover: hover` and `pointer: fine`), one shared Lenis instance feeds GSAP's ticker on every route. It eases towards the target each frame (`lerp: 0.16`) rather than running a fixed-length glide: a fast flick stays fast, a slow scroll stays slow, the page coasts to a soft stop once the hand lets go, and a fresh wheel step simply retargets. Touch screens are left fully native, keeping the browser's own momentum. Navigation menus, select lists and text areas scroll natively.
 
-Homepage sections alone use proximity settling: 35% threshold, 420ms pause and 900ms sine ease-in/out. Settling applies to fitting desktop chapters and compact layouts up to 800px. A new touch interrupts it, and held touches or taps never start it. Detail pages remain freely scrollable. Native CSS snap is disabled while Lenis is active.
+Homepage sections settle lightly, never forcing a stop. With Lenis, once the page has come to rest (160ms with no movement), a stop within 16% of the screen short of the next section edge, in the direction of travel, eases on to it; a stop within 5% past an edge eases back. Anywhere else it stays put, so a slow reader is never pulled back. The settle is a 700ms sine ease, and any wheel or trackpad input takes over at once; pinch-zoom and nested controls never start it. On touch screens, and with motion off, CSS proximity snap does the same with native momentum, so a flick runs as far as it wants. Each section settles at its top (the hero below the header) and the footer at its end. Detail pages remain freely scrollable.
 
 Both care timelines run from section `top 85%` to the header offset and complete their line/washes at the stop. Mobile service rows move up 18px with a short stagger. Page transitions use a 10px shift, opacity 0.72–1 and 480ms sine easing. The reading-progress line uses GSAP with a 180ms scrub, reusing the existing animation engine.
 
@@ -88,14 +88,18 @@ Fine-pointer doctor hover follows a sage spotlight, lifts the monogram 4px and m
 
 The visit journey has three static steps and a reserved 120px SVG area. Its Lottie light player downloads only within 400px of the viewport; ScrollTrigger controls frames 0–90 without autoplay or looping. A static completed SVG remains available while loading, on failure and with motion disabled.
 
-The footer motion switch and OS reduced-motion preference disable smoothing and spatial animations. Reading progress becomes immediate; care content and the static journey remain visible. Observers, players, snap instances and triggers are disposed when their owning components or preferences change.
+There is no motion switch on the page; the OS reduced-motion preference alone disables smoothing, turn in-page jumps instant and disable spatial animations. Reading progress becomes immediate; care content and the static journey remain visible. Observers, players, settle timers and triggers are disposed when their owning components or preferences change.
 
 ## Components and content
 
-Use the existing shadcn buttons, inputs, labels and Radix accordions. Phone and WhatsApp links use matched icon/number/arrow rows. Preserve click targets, keyboard focus and descriptive names. The inquiry planner never presents a saved request or confirmed appointment. Source uncertainty and programme availability remain explicit.
+Use the existing shadcn buttons, inputs, labels and Radix accordions. Phone and WhatsApp links use matched icon/number/arrow rows.
+
+Reach us sits above the footer on every page except Visit, which keeps its own request beside its three steps. It holds the visit request (care, day and time dropdowns that compose a WhatsApp message to reception), the 24-hour emergency number, and four direct lines: call, WhatsApp call, WhatsApp message and directions. A link cannot start a WhatsApp call, so that tile opens the chat and says to tap call. On a service page the request preselects that service. Up to 800px everything stacks, day and time share a row and the four lines become icon tiles. Preserve click targets, keyboard focus and descriptive names. The inquiry planner never presents a saved request or confirmed appointment. Source uncertainty and programme availability remain explicit.
+
+The footer's last row carries the copyright and the credit "Made by Khanect AI", linking to khanect.com in a new tab. Khanect's K mark opens out beside the words on hover or keyboard focus and always shows on touch screens. The row is split left and right on tablet and desktop and stacks, centred, below 600px.
 
 Keep authentic hospital assets separate from design approval. Do not invent photographs, credentials, reviews, clinical claims or live systems. Keep the workbook, research and planning documents outside the public build.
 
 ## Attribution
 
-DoctorSpotlight adapts React Bits SpotlightCard; its MIT + Commons Clause license is retained in source and the public third-party directory. The WhatsApp mark uses Bootstrap Icons with its shipped license. Motion implementation references: [GSAP](https://gsap.com/docs/v3/Plugins/ScrollTrigger/), [Lenis](https://github.com/darkroomengineering/lenis), and [Lottie](https://github.com/airbnb/lottie-web).
+DoctorSpotlight adapts React Bits SpotlightCard; its MIT + Commons Clause license is retained in source and the public third-party directory. The WhatsApp mark uses Bootstrap Icons with its shipped license. The K mark in the footer credit is Khanect AI's own logo, used for their credit. Motion implementation references: [GSAP](https://gsap.com/docs/v3/Plugins/ScrollTrigger/), [Lenis](https://github.com/darkroomengineering/lenis), and [Lottie](https://github.com/airbnb/lottie-web).

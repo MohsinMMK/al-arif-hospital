@@ -10,16 +10,12 @@ import {
   Stethoscope,
 } from "@/components/animated-icons";
 import { doctorPages, servicePages } from "./data";
-import {
-  departmentGroups,
-  departments,
-  wardBeds,
-} from "./department-data";
+import { departmentGroups, departments, wardBeds } from "./department-data";
 import type { Department, DepartmentGroup } from "./department-data";
 import { InteractionMotion } from "./interaction-context";
 import { LiquidSegments, SplitBar, useReveal } from "./motion-ui";
 import type { Segment } from "./motion-ui";
-import { ContactBand, PageTitle } from "./primitives";
+import { PageTitle } from "./primitives";
 import { FactChips, SectionHead, WeekStrip } from "./sections";
 import type { IconFact } from "./sections";
 import {
@@ -297,7 +293,6 @@ export function Departments() {
           unit="beds"
         />
       </section>
-      <ContactBand />
     </div>
   );
 }

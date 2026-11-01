@@ -11,9 +11,11 @@ import {
   wardBeds,
   wings,
 } from "./department-data";
+import { KhanectMark } from "@/components/KhanectMark";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { InteractionMotion } from "./interaction-context";
 import { ContactDock } from "./ContactDock";
+import { ReachUs, VisitComposer } from "./ReachUs";
 import { CareLinks } from "./CareMenu";
 import { GooeyNav } from "@/components/ui/gooey-nav";
 import { useEffect, useRef, useState } from "react";
@@ -26,6 +28,7 @@ import {
   Route,
   Routes,
   useLocation,
+  matchPath,
   Navigate,
   useParams,
   useSearchParams,
@@ -80,13 +83,6 @@ import {
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Input } from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -96,7 +92,7 @@ import { servicePages, doctorPages, wingOf } from "./data";
 import type { Service } from "./data";
 import { fullAddress, hospital, landmark } from "@/hospital";
 import { DoctorSpotlight } from "@/components/react-bits/DoctorSpotlight";
-import { FloatField, SplitBar, ToastProvider } from "./motion-ui";
+import { SplitBar, ToastProvider } from "./motion-ui";
 import {
   BadgeGrid,
   ExploreTiles,
@@ -111,7 +107,6 @@ import type { Destination, FigureCard, IconFact, Stat, Tile } from "./sections";
 import {
   Action,
   BackLink,
-  ContactBand,
   ConversationLinks,
   NotFound,
   PageTitle,
@@ -122,6 +117,7 @@ import { Chapter } from "./Chapter";
 import { useReducedMotion } from "./useReducedMotion";
 import { applyHead } from "@/seo";
 import { scrollOnArrival, sectionTop, useSiteScroll } from "./useSiteScroll";
+import { usePageTone } from "./usePageTone";
 import { drawerQuery } from "./useMedia";
 import { cn } from "@/lib/utils";
 import "./website.css";
@@ -137,7 +133,6 @@ function Services() {
           Please confirm service availability, fees and consultation
           arrangements with reception.
         </p>
-        <ContactBand />
       </div>
     </div>
   );
@@ -531,13 +526,21 @@ const trustees = [
     role: "Managing Trustee",
     name: "Alhaj Syed Ahmed Mohiuddin Jeelani Chishti wo Quadri",
   },
-  { photo: "mohammed-sami-uddin", role: "Trustee", name: "Mohammed Sami Uddin" },
+  {
+    photo: "mohammed-sami-uddin",
+    role: "Trustee",
+    name: "Mohammed Sami Uddin",
+  },
   {
     photo: "syed-mohammed-mazhar-uddin-jeelani",
     role: "Trustee",
     name: "Syed Mohammed Mazhar Uddin Jeelani",
   },
-  { photo: "cherngoden-abu-bakkar", role: "Trustee", name: "Cherngoden Abu Bakkar" },
+  {
+    photo: "cherngoden-abu-bakkar",
+    role: "Trustee",
+    name: "Cherngoden Abu Bakkar",
+  },
 ];
 const campusFacilities: Tile[] = [
   {
@@ -627,8 +630,7 @@ const communityRecord: FigureCard[] = [
   {
     figure: "6",
     unit: "day Unani medical camp",
-    detail:
-      "All India Horticulture & Agriculture Show, August–September 2023.",
+    detail: "All India Horticulture & Agriculture Show, August–September 2023.",
   },
 ];
 const registrations = [
@@ -781,8 +783,8 @@ function About() {
             <p>
               To serve society by establishing hospitals, research institutes,
               pharmacies, isolation centres and other facilities, and to make
-              quality healthcare accessible to all. The Trust also provides
-              free Islamic and moral education with free boarding and lodging.
+              quality healthcare accessible to all. The Trust also provides free
+              Islamic and moral education with free boarding and lodging.
             </p>
           </article>
         </div>
@@ -832,8 +834,8 @@ function About() {
             <Landmark size={30} aria-hidden="true" />
             <dt>Founding patron</dt>
             <dd>
-              Hazrat Sheikh Syed Mohammed Arifuddin Jeelani Noorullah Shah
-              Noori RA
+              Hazrat Sheikh Syed Mohammed Arifuddin Jeelani Noorullah Shah Noori
+              RA
             </dd>
           </div>
           <div>
@@ -901,7 +903,6 @@ function About() {
         <BadgeGrid items={registrations} />
       </section>
       <ExploreTiles items={aboutRoutes} />
-      <ContactBand />
     </div>
   );
 }
@@ -911,7 +912,12 @@ const jamiaTiles: Tile[] = [
     title: "1st Standard to Kamil",
     detail: "Classes from the first standard to the Kamil Course.",
   },
-  { icon: Users, figure: "250", title: "Pupils", detail: "About 250 enrolled." },
+  {
+    icon: Users,
+    figure: "250",
+    title: "Pupils",
+    detail: "About 250 enrolled.",
+  },
   {
     icon: BedDouble,
     title: "Free boarding & lodging",
@@ -1002,7 +1008,9 @@ function Education() {
               Dates, topics and participation details will be shared when
               confirmed.
             </p>
-            <TextLink to="/site/research">View research & publications</TextLink>
+            <TextLink to="/site/research">
+              View research & publications
+            </TextLink>
           </article>
         </div>
       </section>
@@ -1088,7 +1096,8 @@ const researchInitiatives: Tile[] = [
   {
     icon: Users,
     title: "Scientific sessions",
-    detail: "Held regularly with the Dept. of AYUSH (Telangana) and CCRUM experts.",
+    detail:
+      "Held regularly with the Dept. of AYUSH (Telangana) and CCRUM experts.",
   },
   {
     icon: FlaskConical,
@@ -1338,37 +1347,9 @@ function Visit() {
     </div>
   );
 }
-const visitDays = ["Any day", "Today", "Tomorrow", "This week", "Next week"];
-const visitTimes = ["Any time", "Morning", "Afternoon", "Evening"];
-
-// Writes the chosen visit into a WhatsApp message to reception; the patient sends it from their own WhatsApp.
+// Three steps beside the shared request, which writes the WhatsApp message to reception.
 function VisitRequest() {
   const [params] = useSearchParams();
-  const initial = params.get("service") || "";
-  const [service, setService] = useState(
-    servicePages.some((item) => item.slug === initial) ? initial : "",
-  );
-  const [day, setDay] = useState(visitDays[0]);
-  const [time, setTime] = useState(visitTimes[0]);
-  const [sent, setSent] = useState(false);
-  const [error, setError] = useState("");
-  // Remounts the alert on every blocked submit so the nudge and announcement repeat.
-  const [attempt, setAttempt] = useState(0);
-  const care = servicePages.find((item) => item.slug === service)?.name;
-  const message = [
-    `Hello ${hospital.shortName}, I would like to request a visit.`,
-    "",
-    `Care: ${care}`,
-    `Day: ${day}`,
-    `Time: ${time}`,
-    "",
-    "Please let me know the doctor and timing available.",
-  ].join("\n");
-  const whatsapp = `${hospital.whatsappHref}?text=${encodeURIComponent(message)}`;
-  const choose = (set: (value: string) => void) => (value: string) => {
-    set(value);
-    setSent(false);
-  };
   return (
     <section
       id="request"
@@ -1381,109 +1362,11 @@ function VisitRequest() {
         <li>Send on WhatsApp</li>
       </ol>
       <div className="mp-inquiry-layout">
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (!service) {
-              setError("Choose the service you would like to ask about.");
-              setAttempt((value) => value + 1);
-              return;
-            }
-            setError("");
-            window.open(whatsapp, "_blank", "noopener");
-            setSent(true);
-          }}
-        >
-          <h2 id="visit-request">Request a visit.</h2>
-          <FloatField
-            id="inquiry-service"
-            label="Care or service"
-            filled={Boolean(service)}
-            invalid={Boolean(error)}
-          >
-            <Select
-              value={service}
-              onValueChange={choose((value) => {
-                setService(value);
-                setError("");
-              })}
-            >
-              <SelectTrigger
-                id="inquiry-service"
-                aria-invalid={error ? true : undefined}
-                aria-describedby={error ? "inquiry-service-error" : undefined}
-              >
-                <SelectValue placeholder="Choose a service" />
-              </SelectTrigger>
-              <SelectContent>
-                {servicePages.map((item) => (
-                  <SelectItem value={item.slug} key={item.slug}>
-                    {item.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </FloatField>
-          <FloatField id="inquiry-day" label="Preferred day" filled>
-            <Select value={day} onValueChange={choose(setDay)}>
-              <SelectTrigger id="inquiry-day">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {visitDays.map((option) => (
-                  <SelectItem value={option} key={option}>
-                    {option}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </FloatField>
-          <FloatField id="inquiry-time" label="Time preference" filled>
-            <Select value={time} onValueChange={choose(setTime)}>
-              <SelectTrigger id="inquiry-time">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {visitTimes.map((option) => (
-                  <SelectItem value={option} key={option}>
-                    {option}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </FloatField>
-          {error && (
-            <p
-              key={attempt}
-              id="inquiry-service-error"
-              className="mp-error"
-              role="alert"
-            >
-              {error}
-            </p>
-          )}
-          <ArrowButton type="submit" direction="right">
-            Send on WhatsApp
-          </ArrowButton>
-          {sent && (
-            <div className="mp-inquiry-result" role="status">
-              <Check size={21} />
-              <div>
-                <h3>Your message is ready in WhatsApp</h3>
-                <p>
-                  {care} · {day} · {time}
-                </p>
-                <p>
-                  Press send there and reception will reply to confirm the
-                  doctor and timing.{" "}
-                  <a href={whatsapp} target="_blank" rel="noopener">
-                    Open WhatsApp again
-                  </a>
-                </p>
-              </div>
-            </div>
-          )}
-        </form>
+        <VisitComposer
+          id="inquiry"
+          initialService={params.get("service") || ""}
+          heading={<h2 id="visit-request">Request a visit.</h2>}
+        />
         <aside>
           <h2>Prefer a conversation?</h2>
           <ConversationLinks />
@@ -1569,10 +1452,13 @@ export function Shell() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [careOpen, setCareOpen] = useState(false);
   const [drawerCareOpen, setDrawerCareOpen] = useState(false);
-  const [motionPreference, setMotionPreference] = useState(true);
-  const reduced = useReducedMotion();
-  const enabled = motionPreference && !reduced;
+  // Motion follows the system's reduced-motion setting.
+  const enabled = !useReducedMotion();
   const main = useRef<HTMLElement>(null);
+  const page = useRef<HTMLDivElement>(null);
+  // A service page starts the visit request on that service.
+  const serviceSlug = matchPath("/site/services/:slug", location.pathname)
+    ?.params.slug;
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
     const heading = main.current?.querySelector("h1");
@@ -1584,6 +1470,7 @@ export function Shell() {
     );
   }, [location.pathname]);
   useSiteScroll(enabled, location.pathname);
+  usePageTone(page, location.pathname);
   // Any navigation, including a jump to a department on the same page, folds the Care map away.
   const routeKey = `${location.pathname}${location.search}${location.hash}`;
   const [seenRoute, setSeenRoute] = useState(routeKey);
@@ -1637,7 +1524,7 @@ export function Shell() {
       : pageIndex + 1;
   return (
     <InteractionMotion.Provider value={enabled}>
-      <div className="mp" data-motion={enabled ? "on" : "off"}>
+      <div ref={page} className="mp" data-motion={enabled ? "on" : "off"}>
         <ToastProvider>
           <a className="mp-skip" href="#page-content">
             Skip to content
@@ -1660,9 +1547,15 @@ export function Shell() {
           )}
           <SiteHeader ref={header} menuOpen={menuOpen}>
             <Link className="mp-brand" to="/site">
-              <img src="/al-arif-logo-gradient.svg" alt="" width={39} height={52} />
+              <img
+                src="/al-arif-logo-gradient.svg"
+                alt=""
+                width={39}
+                height={52}
+              />
               <span>
-                Al-Arif<small>General Hospital & Unani Research Institute</small>
+                Al-Arif
+                <small>General Hospital & Unani Research Institute</small>
               </span>
             </Link>
             <GooeyNav
@@ -1672,7 +1565,10 @@ export function Shell() {
                 {
                   label: "Care",
                   trailing: (
-                    <ChevronDown className="mp-care-chevron" aria-hidden="true" />
+                    <ChevronDown
+                      className="mp-care-chevron"
+                      aria-hidden="true"
+                    />
                   ),
                   expanded: careOpen,
                   controls: "care-panel",
@@ -1719,13 +1615,21 @@ export function Shell() {
                   aria-hidden="true"
                 />
               </button>
-              <div id="drawer-care" className="cm-drawer" hidden={!drawerCareOpen}>
+              <div
+                id="drawer-care"
+                className="cm-drawer"
+                hidden={!drawerCareOpen}
+              >
                 <CareLinks onNavigate={() => setMenuOpen(false)} />
               </div>
               {nav.map(([label, path], index) => {
                 const [Icon, note] = navTiles[index];
                 return (
-                  <NavLink onClick={() => setMenuOpen(false)} key={path} to={path}>
+                  <NavLink
+                    onClick={() => setMenuOpen(false)}
+                    key={path}
+                    to={path}
+                  >
                     <span className="mp-drawer-tile">
                       <Icon size={26} aria-hidden="true" />
                     </span>
@@ -1766,7 +1670,10 @@ export function Shell() {
                 <Route path="/site" element={<HomeStory />} />
                 <Route path="/site/departments" element={<Departments />} />
                 <Route path="/site/services" element={<Services />} />
-                <Route path="/site/services/:slug" element={<ServiceDetail />} />
+                <Route
+                  path="/site/services/:slug"
+                  element={<ServiceDetail />}
+                />
                 <Route path="/site/doctors" element={<Doctors />} />
                 <Route path="/site/doctors/:slug" element={<DoctorDetail />} />
                 <Route path="/site/about" element={<About />} />
@@ -1800,6 +1707,11 @@ export function Shell() {
               </Routes>
             </Chapter>
           </main>
+          {/* The Visit page holds its own request; the homepage ends on this as its last screen. */}
+          {location.pathname !== "/site" &&
+            location.pathname !== "/site/visit" && (
+              <ReachUs key={location.pathname} initialService={serviceSlug} />
+            )}
           <footer className="mp-footer">
             <div>
               <Link to="/site" className="mp-footer-brand">
@@ -1849,24 +1761,16 @@ export function Shell() {
             </p>
             <div className="mp-footer-bottom">
               © 2026 Al-Arif Hospital
-              <button
-                type="button"
-                className="mp-motion-switch"
-                aria-pressed={enabled}
-                onClick={() => setMotionPreference(!motionPreference)}
-                disabled={reduced}
+              <a
+                className="mp-credit"
+                href="https://khanect.com"
+                target="_blank"
+                rel="noreferrer"
               >
-                <span className="mp-motion-switch-track" aria-hidden="true">
-                  <span className="mp-motion-switch-knob" />
-                </span>
-                Motion
-                {/* The name stays "Motion"; aria-pressed carries on and off. */}
-                {reduced ? (
-                  <span>reduced by your system</span>
-                ) : (
-                  <span aria-hidden="true">{enabled ? "on" : "off"}</span>
-                )}
-              </button>
+                <KhanectMark className="mp-credit-mark" />
+                Made by Khanect AI
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
             </div>
           </footer>
           <ContactDock />

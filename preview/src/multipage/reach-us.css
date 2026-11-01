@@ -1,0 +1,260 @@
+/* Reach us, above every footer: the introduction and the visit request side by
+   side, the four direct lines in one row beneath. On the homepage it is the last
+   screen, so it fits one screen there. */
+.reach {
+  padding-inline: 40px;
+  --band-tone: var(--sage);
+}
+.reach:not(.story-screen) {
+  padding-block: clamp(56px, 9svh, 96px);
+}
+.reach-inner {
+  width: 100%;
+  max-width: 1240px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  grid-template-areas:
+    "intro form"
+    "actions actions";
+  gap: clamp(20px, 3.4svh, 32px) 90px;
+  align-items: center;
+}
+.reach-intro {
+  grid-area: intro;
+}
+.reach h2 {
+  font-size: clamp(34px, min(3.9vw, 6.6svh), 57px);
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.reach-intro > p:not(.reach-urgent) {
+  margin-top: clamp(14px, 2.6svh, 24px);
+  max-width: 46ch;
+  font-size: 16px;
+  line-height: 1.75;
+}
+.reach-urgent {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  margin-top: clamp(14px, 2.6svh, 24px);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.reach-urgent svg {
+  color: #9b352c;
+}
+.reach-urgent a {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.reach-form {
+  grid-area: form;
+  padding: clamp(22px, 3.4svh, 32px);
+  border-radius: 28px;
+  background: var(--paper);
+  box-shadow: 0 18px 40px -30px rgb(31 44 27 / 0.45);
+}
+.reach-form > h3 {
+  font: 360 clamp(21px, 2.8svh, 26px) / 1.25 var(--font-display);
+  letter-spacing: -0.025em;
+}
+.reach-form .mu-float {
+  margin-top: clamp(10px, 1.6svh, 14px);
+}
+.reach-form > button {
+  margin-top: clamp(14px, 2.4svh, 22px);
+}
+.reach-form .mp-error {
+  margin-top: 10px;
+  font-size: 13px;
+}
+.reach-form .mp-inquiry-result {
+  margin-top: 16px;
+  padding-top: 0;
+}
+.reach-form .mp-inquiry-result h3 {
+  font-size: 15px;
+}
+.reach-form .mp-inquiry-result p {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.reach-actions {
+  grid-area: actions;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.reach-actions a {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  column-gap: 14px;
+  align-items: center;
+  height: 100%;
+  padding: 14px 40px 14px 14px;
+  border-radius: 20px;
+  background: var(--paper);
+  color: var(--forest);
+  box-shadow: 0 18px 40px -30px rgb(31 44 27 / 0.45);
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reach-actions a:focus-visible {
+  outline: 3px solid #517745;
+  outline-offset: 3px;
+}
+.reach-action-icon {
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+.reach-action-icon svg {
+  width: 20px;
+  height: 20px;
+}
+.reach-actions strong {
+  align-self: end;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+.reach-action-detail {
+  align-self: start;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #50604b;
+  font-variant-numeric: tabular-nums;
+}
+.reach-action-arrow {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .reach-actions a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 24px 44px -28px rgb(31 44 27 / 0.5);
+  }
+  .reach-actions a:hover .reach-action-arrow {
+    transform: translate(3px, -3px);
+  }
+}
+.mp[data-motion="off"] .reach-actions a,
+.mp[data-motion="off"] .reach-action-arrow {
+  transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reach-actions a,
+  .reach-action-arrow {
+    transform: none !important;
+  }
+}
+
+@media (min-width: 801px) and (max-width: 1100px) {
+  .reach-inner {
+    column-gap: 48px;
+  }
+  .reach-actions a {
+    grid-template-columns: 1fr;
+    row-gap: 4px;
+  }
+  .reach-action-icon {
+    grid-row: auto;
+    margin-bottom: 6px;
+  }
+}
+
+/* Tablets and phones stack it all: introduction, request, then the four lines
+   as a row of icons, with day and time sharing a row. */
+@media (max-width: 800px) {
+  .reach {
+    padding-inline: 24px;
+  }
+  .reach-inner {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "intro" "form" "actions";
+    gap: clamp(10px, 1.8svh, 16px);
+  }
+  .reach-intro > p:not(.reach-urgent) {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .reach-urgent {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+  .reach-form {
+    padding: clamp(14px, 2.2svh, 18px) 18px;
+    border-radius: 22px;
+  }
+  .reach-form > h3 {
+    font-size: 19px;
+  }
+  .reach-form .visit-when {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .reach-form > button {
+    width: 100%;
+    margin-top: 14px;
+  }
+  .reach-actions {
+    gap: 8px;
+  }
+  .reach-actions a {
+    grid-template-columns: 1fr;
+    align-content: start;
+    justify-items: center;
+    row-gap: 6px;
+    padding: 10px 6px;
+    border-radius: 18px;
+    text-align: center;
+  }
+  .reach-action-icon {
+    grid-row: auto;
+    width: 40px;
+    height: 40px;
+  }
+  .reach-actions strong {
+    align-self: start;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .reach-action-detail,
+  .reach-action-arrow {
+    display: none;
+  }
+}
+/* Short phones keep the heading and the request; the paragraph goes. */
+@media (max-width: 800px) and (max-height: 800px) {
+  .reach-intro > p:not(.reach-urgent),
+  .reach h2 br,
+  .reach h2 em {
+    display: none;
+  }
+}

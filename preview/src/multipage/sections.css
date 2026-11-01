@@ -78,8 +78,24 @@
   color: var(--paper);
 }
 .sx-band[data-tone="sage"] {
-  background: var(--sage);
+  --band-tone: var(--sage);
   color: var(--forest);
+}
+/* Dark bands fade in from the page colour and back out, never on a hard edge. */
+.sx-band:not([data-tone="sage"]) {
+  --band-fade: 56px;
+  -webkit-mask-image: linear-gradient(
+    transparent,
+    #000 var(--band-fade),
+    #000 calc(100% - var(--band-fade)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    transparent,
+    #000 var(--band-fade),
+    #000 calc(100% - var(--band-fade)),
+    transparent
+  );
 }
 .sx-stats {
   display: grid;
@@ -1098,6 +1114,7 @@
     margin-bottom: 32px;
   }
   .sx-band {
+    --band-fade: 40px;
     margin-block: 24px;
     padding: 56px 24px;
   }

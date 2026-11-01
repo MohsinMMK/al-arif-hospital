@@ -1,7 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { MouseEvent, RefObject } from "react";
 import Lenis, { type VirtualScrollData } from "lenis";
-import Snap from "lenis/snap";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "lenis/dist/lenis.css";
@@ -131,30 +130,45 @@ export function jumpToSection(
 const nativeScrollSelector =
   ".mp-header nav, .cm-panel, .mp-menu-backdrop, [data-slot=select-content], textarea";
 
-/** One shared scroll driver for every page; chapter settling stays on the homepage. */
+/** A mouse or trackpad drives the page; touch screens keep the browser's own scrolling. */
+const finePointer = "(hover: hover) and (pointer: fine)";
+
+function useFinePointer() {
+  const [fine, setFine] = useState(
+    () =>
+      typeof window !== "undefined" && window.matchMedia(finePointer).matches,
+  );
+  useEffect(() => {
+    const query = window.matchMedia(finePointer);
+    const update = () => setFine(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+  return fine;
+}
+
+/**
+ * Smooths wheel and trackpad scrolling on every page, and eases the homepage
+ * onto a section edge when it comes to rest close to one. Touch screens are
+ * left native: their own momentum is already smooth, and the homepage settles
+ * there through CSS proximity snap.
+ */
 export function useSiteScroll(enabled: boolean, path: string) {
+  const fine = useFinePointer();
+  const smooth = enabled && fine;
   // The driver lives as long as motion is on, across every page.
   useEffect(() => {
-    if (!enabled) return;
-    let pinchGesture = false;
+    if (!smooth) return;
+    // Easing towards the target each frame follows the hand closely: no fixed
+    // glide to wait out, and a fresh wheel step simply retargets. A light lerp
+    // keeps a fast flick fast and lets the page coast to a soft stop.
     const lenis = new Lenis({
       autoRaf: false,
-      duration: 0.75,
+      lerp: 0.16,
       smoothWheel: true,
-      syncTouch: true,
-      syncTouchLerp: 0.1,
-      touchInertiaExponent: 1.5,
-      easing: (progress) => 1 - Math.pow(1 - progress, 4),
       anchors: { duration: 0.8 },
       prevent: (element) => Boolean(element.closest(nativeScrollSelector)),
-      virtualScroll: ({ event }) => {
-        if (!("touches" in event)) return true;
-        if (event.type === "touchstart" && event.touches.length === 1)
-          pinchGesture = false;
-        if (event.touches.length > 1) pinchGesture = true;
-        // Keep the release of a pinch native too; resume on the next single-finger gesture.
-        return !pinchGesture;
-      },
     });
     activeLenis = lenis;
     const tick = (seconds: number) => lenis.raf(seconds * 1000);
@@ -169,91 +183,96 @@ export function useSiteScroll(enabled: boolean, path: string) {
       if (activeLenis === lenis) activeLenis = undefined;
       gsap.ticker.lagSmoothing(500, 33);
     };
-  }, [enabled]);
+  }, [smooth]);
   // Each page, and each change of layout, measures afresh.
   useEffect(() => {
     const lenis = activeLenis;
-    if (!enabled || !lenis) return;
-    const media = gsap.matchMedia();
-    media.add(
-      {
-        all: "all",
-        compact: "(max-width:800px)",
-        chapters: "(min-width:1101px) and (min-height:800px)",
-      },
-      (context) => {
-        // Stopping and starting drops any glide still running from the last
-        // page, and resizing measures the new one, as a fresh driver would.
-        lenis.stop();
-        lenis.start();
-        lenis.resize();
-        // Let wheel momentum subside before gently correcting the final position.
-        // Zero velocity at both ends avoids a sudden tug when reversing a small overshoot.
-        const snap =
-          path === "/site" &&
-          (context.conditions?.chapters || context.conditions?.compact)
-            ? new Snap(lenis, {
-                type: "proximity",
-                distanceThreshold: "35%",
-                debounce: 420,
-                duration: 0.9,
-                easing: (progress) => (1 - Math.cos(Math.PI * progress)) / 2,
-              })
+    if (!smooth || !lenis) return;
+    // Stopping and starting drops any glide still running from the last
+    // page, and resizing measures the new one, as a fresh driver would.
+    lenis.stop();
+    lenis.start();
+    lenis.resize();
+    if (path !== "/site") return;
+    // Once the page has come to rest on its own, a stop just short of the next
+    // section edge eases on to it, and a stop just past one eases back. A
+    // flick glides as far as it wants, a slow reader is never pulled back, and
+    // any fresh input takes over at once.
+    let points: number[] = [];
+    let settleTimer = 0;
+    let settleAllowed = true;
+    let heading = 0;
+    const settle = () => {
+      if (!settleAllowed || !heading || lenis.isScrolling || lenis.isStopped)
+        return;
+      const scroll = lenis.scroll;
+      const ahead =
+        heading > 0
+          ? points.find((point) => point > scroll + 1)
+          : points.findLast((point) => point < scroll - 1);
+      const behind =
+        heading > 0
+          ? points.findLast((point) => point <= scroll)
+          : points.find((point) => point >= scroll);
+      const reach = window.innerHeight;
+      const target =
+        ahead !== undefined && Math.abs(ahead - scroll) <= reach * 0.16
+          ? ahead
+          : behind !== undefined && Math.abs(behind - scroll) <= reach * 0.05
+            ? behind
             : undefined;
-        // A held finger, tap, pinch or nested control must never start a section snap.
-        const guardSnap = ({ event, deltaY }: VirtualScrollData) => {
-          const nestedControl =
-            event.target instanceof Element &&
-            event.target.closest(nativeScrollSelector);
-          if (
-            event.type === "touchstart" ||
-            event.type === "touchmove" ||
-            !deltaY ||
-            event.ctrlKey ||
-            nestedControl
-          )
-            snap?.stop();
-          else snap?.start();
-        };
-        lenis.on("virtual-scroll", guardSnap);
-        let removePoints: (() => void)[] = [];
-        const updatePoints = () => {
-          removePoints.forEach((remove) => remove());
-          if (!snap) return;
-          removePoints = Array.from(
-            document.querySelectorAll<HTMLElement>(
-              "#general-care, #unani-care, #departments, .story-doctors",
-            ),
-          ).map((section) => snap.add(sectionTop(section)));
-        };
-        const observer = new ResizeObserver(updatePoints);
-        for (const selector of [
-          ".story-opening",
-          ".mp-header",
-          "#general-care",
-          "#unani-care",
-        ]) {
-          const element = document.querySelector(selector);
-          if (element) observer.observe(element);
-        }
-        ScrollTrigger.addEventListener("refresh", updatePoints);
-        const refreshTimer = window.setTimeout(() => {
-          lenis.resize();
-          ScrollTrigger.refresh();
-          updatePoints();
-        }, 500);
-        updatePoints();
-        return () => {
-          window.clearTimeout(refreshTimer);
-          observer.disconnect();
-          ScrollTrigger.removeEventListener("refresh", updatePoints);
-          removePoints.forEach((remove) => remove());
-          snap?.stop();
-          snap?.destroy();
-          lenis.off("virtual-scroll", guardSnap);
-        };
-      },
-    );
-    return () => media.revert();
-  }, [enabled, path]);
+      if (target === undefined || Math.abs(target - scroll) < 2) return;
+      lenis.scrollTo(target, {
+        duration: 0.7,
+        easing: (progress) => -(Math.cos(Math.PI * progress) - 1) / 2,
+      });
+    };
+    const scheduleSettle = () => {
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(settle, 160);
+    };
+    // Zooming or scrolling a nested control must never start a settle.
+    const guardSettle = ({ event, deltaY }: VirtualScrollData) => {
+      const nestedControl =
+        event.target instanceof Element &&
+        event.target.closest(nativeScrollSelector);
+      settleAllowed = Boolean(deltaY) && !event.ctrlKey && !nestedControl;
+      if (deltaY) heading = Math.sign(deltaY);
+    };
+    lenis.on("virtual-scroll", guardSettle);
+    lenis.on("scroll", scheduleSettle);
+    const updatePoints = () => {
+      // Each screen settles at its top, less its scroll margin; one that grew
+      // past a short screen settles at its end too, so no line is cut off.
+      points = Array.from(
+        document.querySelectorAll<HTMLElement>(".home-story > .story-screen"),
+      ).flatMap((section) => {
+        const margin = parseFloat(getComputedStyle(section).scrollMarginTop);
+        const top =
+          section.getBoundingClientRect().top + window.scrollY - margin;
+        const extra = section.offsetHeight - (window.innerHeight - margin);
+        return extra > 24 ? [top, top + extra] : [top];
+      });
+    };
+    const observer = new ResizeObserver(updatePoints);
+    for (const selector of [".home-story", ".mp-header"]) {
+      const element = document.querySelector(selector);
+      if (element) observer.observe(element);
+    }
+    ScrollTrigger.addEventListener("refresh", updatePoints);
+    const refreshTimer = window.setTimeout(() => {
+      lenis.resize();
+      ScrollTrigger.refresh();
+      updatePoints();
+    }, 500);
+    updatePoints();
+    return () => {
+      window.clearTimeout(refreshTimer);
+      window.clearTimeout(settleTimer);
+      observer.disconnect();
+      ScrollTrigger.removeEventListener("refresh", updatePoints);
+      lenis.off("virtual-scroll", guardSettle);
+      lenis.off("scroll", scheduleSettle);
+    };
+  }, [smooth, path]);
 }
