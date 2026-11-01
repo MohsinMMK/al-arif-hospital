@@ -11,7 +11,12 @@ import { m, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { cn } from "cn";
 
 // the duration picker's spring, damped so nothing overshoots
-const SPRING = { type: "spring", stiffness: 200, damping: 28, mass: 1 } as const;
+const SPRING = {
+  type: "spring",
+  stiffness: 200,
+  damping: 28,
+  mass: 1,
+} as const;
 
 // the neck has thinned to nothing by the time the gap is this far open
 const NECK_BREAK = 0.22;
@@ -59,9 +64,18 @@ type NavItem = {
   icon?: ReactNode;
   /** Shown after the label, such as a chevron on an item that opens a panel. */
   trailing?: ReactNode;
-  /** For a button item that opens a panel: whether it is open, and its id. */
+  /** For an item that opens a panel: whether it is open, and its id. */
   expanded?: boolean;
   controls?: string;
+  /** Extra handlers, such as opening a panel on hover; a click it cancels doesn't select the item. */
+  events?: Pick<
+    ComponentProps<"a">,
+    | "onClick"
+    | "onKeyDown"
+    | "onPointerDown"
+    | "onPointerEnter"
+    | "onPointerLeave"
+  >;
 };
 
 export type GooeyNavItem = string | NavItem;
@@ -90,7 +104,12 @@ export type GooeyNavProps = Omit<ComponentProps<"nav">, "onChange"> & {
 // two concave curves pinching toward the middle, drawn in the gap the tiles leave
 function neckPath(gap: number, span: number) {
   // a NaN or negative span would otherwise emit a path full of NaN coordinates
-  if (!Number.isFinite(gap) || !Number.isFinite(span) || gap <= 0 || span <= 0) {
+  if (
+    !Number.isFinite(gap) ||
+    !Number.isFinite(span) ||
+    gap <= 0 ||
+    span <= 0
+  ) {
     return "";
   }
   const waist = NECK_H * (1 - gap / (span * NECK_BREAK));
@@ -183,11 +202,13 @@ function NavLabel({
   trailing,
   expanded,
   controls,
+  events,
   isActive,
   size,
   activeLabelColor,
   onSelect,
 }: NavLabelProps) {
+  const current = matchesRoute(useLocation().pathname, href);
   const props = {
     "data-slot": "gooey-nav-item",
     "data-active": isActive,
@@ -198,11 +219,22 @@ function NavLabel({
       !isActive && IDLE_LABEL,
     ),
     style: isActive ? { color: activeLabelColor } : undefined,
-    onClick: onSelect,
   } as const;
 
   return href ? (
-    <Link to={href} aria-current={isActive ? "page" : undefined} {...props}>
+    <Link
+      to={href}
+      // the page it leads to, not the pill, which also follows an open panel
+      aria-current={current ? "page" : undefined}
+      aria-expanded={expanded}
+      aria-controls={controls}
+      {...props}
+      {...events}
+      onClick={(event) => {
+        events?.onClick?.(event);
+        if (!event.defaultPrevented) onSelect();
+      }}
+    >
       {icon}
       {label}
       {trailing}
@@ -214,6 +246,7 @@ function NavLabel({
       aria-controls={controls}
       aria-current={isActive && expanded === undefined ? true : undefined}
       {...props}
+      onClick={onSelect}
     >
       {icon}
       {label}

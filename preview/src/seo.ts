@@ -1,6 +1,6 @@
 // Search and AI-assistant metadata: one title and description per public page, shared by the
 // browser (updates the head on navigation) and the build-time prerender (writes it into HTML).
-import { fullAddress, hospital, landmark } from "./hospital";
+import { fullAddress, hospital } from "./hospital";
 import { doctorPages, pageCatalog, servicePages } from "./multipage/data";
 import { stories } from "./multipage/story-data";
 
@@ -9,25 +9,28 @@ export { fullAddress, hospital };
 export const siteUrl = "https://alarifgeneralhospital.com";
 
 const brand = "Al-Arif Hospital";
+// Long names and roles take the short brand rather than get cut off in search results.
+const branded = (title: string) =>
+  `${title} | ${title.length > 50 ? "Al-Arif" : brand}`;
 
 const fixed: Record<string, { title: string; description: string }> = {
   "/site": {
     title: `${hospital.name}, Hyderabad`,
     description:
-      "General hospital and Unani care on one campus in Bandlaguda, Chandrayangutta, Hyderabad. 24-hour casualty, specialty and Unani OPDs, ₹10 OPD fee. Run by the Al Arif Education and Medical Trust since 2002.",
+      "General and Unani care on one campus in Bandlaguda, Hyderabad: 24-hour casualty, specialty and Unani OPDs, ₹10 OPD fee. Run by the Al Arif Trust since 2002.",
   },
   "/site/general": {
-    title: `General Hospital – Nine Specialty OPDs | ${brand}, Hyderabad`,
+    title: `General Hospital in Hyderabad – Departments & OPDs | ${brand}`,
     description:
-      "General medicine, surgery, obstetrics and gynaecology, paediatrics, eye, dental, physiotherapy, radiology and pathology OPDs at Al-Arif General Hospital, Bandlaguda, Hyderabad.",
+      "Nine general hospital departments in Bandlaguda, Hyderabad: medicine, surgery, gynaecology, paediatrics, eye, dental, physiotherapy, radiology and pathology.",
   },
   "/site/unani": {
-    title: `Unani Care – Seven Unani OPDs | ${brand}, Hyderabad`,
+    title: `Unani Hospital in Hyderabad – Departments & OPDs | ${brand}`,
     description:
-      "Unani internal medicine (Moalijat), obstetrics and gynaecology, paediatrics, regimental therapy, preventive and social medicine, skin and cosmetology, and surgery OPDs at Al-Arif Hospital, Bandlaguda, Hyderabad.",
+      "Seven Unani departments in Bandlaguda, Hyderabad: Moalijat (medicine), gynaecology, paediatrics, regimental therapy, skin, preventive care and surgery.",
   },
   "/site/services": {
-    title: `Services – 24-Hour Casualty, Diagnostics & Pharmacy | ${brand}`,
+    title: `Hospital Services – 24-Hour Casualty, ICU, Pharmacy | ${brand}`,
     description:
       "24-hour casualty, ICU, operation theatre, maternity ward, ambulance, pathology, radiology, two pharmacies and the herbal garden at Al-Arif Hospital, Hyderabad.",
   },
@@ -72,7 +75,7 @@ const fixed: Record<string, { title: string; description: string }> = {
   },
   "/site/visit": {
     title: `Plan Your Visit – Address, OPD & Directions | ${brand}`,
-    description: `Al-Arif Hospital is open 24 hours at ${fullAddress}. ${landmark}. Reception ${hospital.reception}.`,
+    description: `Open 24 hours in Tulsi Nagar, Bandlaguda, Hyderabad ${hospital.postalCode}, beside Dargah Hazrat Syed Noori Shah Jeelani. OPD timings, directions and reception ${hospital.reception}.`,
   },
 };
 
@@ -90,7 +93,7 @@ export function pageHead(pathname: string) {
     const service = servicePages.find((item) => item.slug === slug);
     if (service)
       return {
-        title: `${service.name} in Bandlaguda, Hyderabad | ${brand}`,
+        title: `${service.name} in Hyderabad | ${brand}`,
         description: trim(`${service.intro} ${service.overview}`),
       };
   }
@@ -98,7 +101,7 @@ export function pageHead(pathname: string) {
     const doctor = doctorPages.find((item) => item.slug === slug);
     if (doctor)
       return {
-        title: `${doctor.name} – ${doctor.designation} | ${brand}, Hyderabad`,
+        title: branded(`${doctor.name} – ${doctor.designation}`),
         description: trim(
           `${doctor.name} (${doctor.degrees}), ${doctor.department} at Al-Arif Hospital, Hyderabad. OPD ${doctor.opdDays}, ${doctor.opdHours}. ${doctor.introduction}`,
         ),

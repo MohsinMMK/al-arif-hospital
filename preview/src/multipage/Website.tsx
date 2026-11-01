@@ -17,7 +17,7 @@ import { InteractionMotion } from "./interaction-context";
 import { ContactDock } from "./ContactDock";
 import { ReachUs, VisitComposer } from "./ReachUs";
 import { SharedServiceLinks, WingLinks } from "./CareMenu";
-import { GooeyNav } from "@/components/ui/gooey-nav";
+import { GooeyNav, type GooeyNavItem } from "@/components/ui/gooey-nav";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { LazyMotion, domAnimation } from "motion/react";
 import type { ReactNode, Ref } from "react";
@@ -1450,6 +1450,7 @@ const menus = [
     id: "general",
     label: "General",
     name: "General hospital",
+    path: "/site/general",
     icon: Stethoscope,
     note: "Nine specialty OPDs",
   },
@@ -1457,6 +1458,7 @@ const menus = [
     id: "unani",
     label: "Unani",
     name: "Unani care",
+    path: "/site/unani",
     icon: Leaf,
     note: "Seven Unani OPDs",
   },
@@ -1464,6 +1466,7 @@ const menus = [
     id: "services",
     label: "Services",
     name: "Services",
+    path: "/site/services",
     icon: HeartPulse,
     note: "24 hours, diagnostics, pharmacy",
   },
@@ -1488,6 +1491,18 @@ export function Shell() {
   const dismissMenu = useCallback((open: boolean) => {
     if (!open) setOpenMenu(null);
   }, []);
+  // A mouse opens a menu by resting on it, and closes it by leaving both the menu and its panel.
+  const hoverTimer = useRef<number | undefined>(undefined);
+  const lastPointer = useRef("mouse");
+  const hoverMenu = (id: MenuId | null, delay: number) => {
+    window.clearTimeout(hoverTimer.current);
+    hoverTimer.current = window.setTimeout(() => setOpenMenu(id), delay);
+  };
+  const showMenu = (id: MenuId | null) => {
+    window.clearTimeout(hoverTimer.current);
+    setOpenMenu(id);
+  };
+  useEffect(() => () => window.clearTimeout(hoverTimer.current), []);
   // Motion follows the system's reduced-motion setting.
   const enabled = !useReducedMotion();
   const main = useRef<HTMLElement>(null);
@@ -1602,8 +1617,9 @@ export function Shell() {
               aria-label="Main navigation"
               items={[
                 { label: "Doctors", href: "/site/doctors" },
-                ...menus.map((menu) => ({
+                ...menus.map((menu): GooeyNavItem => ({
                   label: menu.label,
+                  href: menu.path,
                   trailing: (
                     <ChevronDown
                       className="mp-care-chevron"
@@ -1612,14 +1628,42 @@ export function Shell() {
                   ),
                   expanded: openMenu === menu.id,
                   controls: `menu-${menu.id}`,
+                  events: {
+                    onPointerDown: (event) => {
+                      lastPointer.current = event.pointerType;
+                    },
+                    onPointerEnter: (event) => {
+                      if (event.pointerType === "mouse")
+                        hoverMenu(menu.id, openMenu ? 0 : 90);
+                    },
+                    onPointerLeave: (event) => {
+                      if (event.pointerType === "mouse") hoverMenu(null, 240);
+                    },
+                    // A tap has no hover, so the first opens the panel and a second follows the link.
+                    onClick: (event) => {
+                      const tapped =
+                        event.detail > 0 && lastPointer.current === "touch";
+                      if (!tapped || openMenu === menu.id) return;
+                      event.preventDefault();
+                      showMenu(menu.id);
+                    },
+                    // Enter follows the link; the down arrow opens the panel and steps into it.
+                    onKeyDown: (event) => {
+                      if (event.key !== "ArrowDown") return;
+                      event.preventDefault();
+                      showMenu(menu.id);
+                      requestAnimationFrame(() =>
+                        document
+                          .querySelector<HTMLElement>(`#menu-${menu.id} a`)
+                          ?.focus(),
+                      );
+                    },
+                  },
                 })),
                 { label: "About", href: "/site/about" },
               ]}
               value={openMenu ? menuIndex(openMenu) : routeIndex}
-              onChange={(index) => {
-                const menu = menus[index - 1];
-                setOpenMenu(menu && openMenu !== menu.id ? menu.id : null);
-              }}
+              onChange={() => showMenu(null)}
               activeColor="#1c3a13"
               activeLabelColor="#fcfcf7"
               reducedMotion={!enabled}
@@ -1634,6 +1678,18 @@ export function Shell() {
                 aria-label={menu.name}
                 data-open={openMenu === menu.id ? "" : undefined}
                 inert={openMenu !== menu.id}
+                onPointerEnter={(event) => {
+                  if (event.pointerType === "mouse") showMenu(menu.id);
+                }}
+                onPointerLeave={(event) => {
+                  if (event.pointerType === "mouse") hoverMenu(null, 240);
+                }}
+                // Tabbing on past the last link folds the panel away.
+                onBlur={(event) => {
+                  const next = event.relatedTarget;
+                  if (next && !event.currentTarget.contains(next))
+                    showMenu(null);
+                }}
               >
                 <MenuLinks id={menu.id} onNavigate={() => setOpenMenu(null)} />
               </div>
@@ -1654,29 +1710,38 @@ export function Shell() {
                   </small>
                 </span>
               </NavLink>
-              {menus.map(({ id, name, icon: Icon, note }) => {
+              {menus.map(({ id, name, path, icon: Icon, note }) => {
                 const open = drawerMenu === id;
                 return (
                   <Fragment key={id}>
-                    <button
-                      type="button"
+                    {/* The row opens the page; its arrow unfolds the links beneath. */}
+                    <div
                       className="mp-drawer-care"
-                      aria-expanded={open}
-                      aria-controls={`drawer-${id}`}
-                      onClick={() => setDrawerMenu(open ? null : id)}
+                      data-open={open ? "" : undefined}
                     >
-                      <span className="mp-drawer-tile">
-                        <Icon size={26} aria-hidden="true" />
-                      </span>
-                      <span className="mp-drawer-text">
-                        {name} <small>{note}</small>
-                      </span>
-                      <ChevronDown
-                        className="mp-care-chevron"
-                        size={18}
-                        aria-hidden="true"
-                      />
-                    </button>
+                      <NavLink end onClick={() => setMenuOpen(false)} to={path}>
+                        <span className="mp-drawer-tile">
+                          <Icon size={26} aria-hidden="true" />
+                        </span>
+                        <span className="mp-drawer-text">
+                          {name} <small>{note}</small>
+                        </span>
+                      </NavLink>
+                      <button
+                        type="button"
+                        className="mp-drawer-expand"
+                        aria-expanded={open}
+                        aria-controls={`drawer-${id}`}
+                        aria-label={`${name} links`}
+                        onClick={() => setDrawerMenu(open ? null : id)}
+                      >
+                        <ChevronDown
+                          className="mp-care-chevron"
+                          size={20}
+                          aria-hidden="true"
+                        />
+                      </button>
+                    </div>
                     <div
                       id={`drawer-${id}`}
                       className="cm-drawer"

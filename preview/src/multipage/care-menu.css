@@ -312,18 +312,36 @@
   border-radius: 8px;
 }
 
-/* In the phone and tablet menu the Care map opens as an accordion. */
-.mp-header .mp-drawer-care {
+/* In the phone and tablet menu each row opens its page, and its arrow unfolds the map beneath. */
+.mp-header .mp-drawer-care > a {
   display: flex;
+  flex: 1;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 12px 0;
+  gap: 16px;
+  min-width: 0;
+  color: inherit;
+  border-radius: 16px;
+}
+.mp-drawer-expand {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
   border: 0;
+  border-radius: 16px;
   background: none;
   color: inherit;
-  font: inherit;
-  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+.mp-drawer-expand:hover,
+.mp-drawer-expand[aria-expanded="true"] {
+  background: #1c3a1310;
+}
+:is(.mp-drawer-care > a, .mp-drawer-expand):focus-visible {
+  outline: 2px solid #759866;
+  outline-offset: 2px;
 }
 .cm-drawer {
   padding: 4px 0 16px;
