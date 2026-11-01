@@ -148,11 +148,82 @@ function useFinePointer() {
   return fine;
 }
 
+/** How long the homepage takes to ease onto a section edge, in seconds. */
+const settleDuration = 1.1;
+
+/** A sine in-out: it leaves rest and arrives at rest without a jolt. */
+const settleEase = (progress: number) =>
+  -(Math.cos(Math.PI * progress) - 1) / 2;
+
+/**
+ * Where the homepage may settle: each screen at its top, less its scroll
+ * margin, and one that grew past a short screen at its end too, so no line
+ * is cut off.
+ */
+function settlePoints() {
+  return Array.from(
+    document.querySelectorAll<HTMLElement>(".home-story > .story-screen"),
+  ).flatMap((section) => {
+    const margin = parseFloat(getComputedStyle(section).scrollMarginTop);
+    const top = section.getBoundingClientRect().top + window.scrollY - margin;
+    const extra = section.offsetHeight - (window.innerHeight - margin);
+    return extra > 24 ? [top, top + extra] : [top];
+  });
+}
+
+/**
+ * A stop just short of the next edge in the direction of travel eases on to
+ * it, and a stop just past one eases back. Anywhere else the page stays put,
+ * so a slow reader is never pulled back.
+ */
+function settleTarget(points: number[], scroll: number, heading: number) {
+  if (!heading) return undefined;
+  const ahead =
+    heading > 0
+      ? points.find((point) => point > scroll + 1)
+      : points.findLast((point) => point < scroll - 1);
+  const behind =
+    heading > 0
+      ? points.findLast((point) => point <= scroll)
+      : points.find((point) => point >= scroll);
+  const reach = window.innerHeight;
+  const target =
+    ahead !== undefined && Math.abs(ahead - scroll) <= reach * 0.16
+      ? ahead
+      : behind !== undefined && Math.abs(behind - scroll) <= reach * 0.05
+        ? behind
+        : undefined;
+  return target === undefined || Math.abs(target - scroll) < 2
+    ? undefined
+    : target;
+}
+
+/** Keeps settle points current as the homepage and header change size. Returns the cleanup. */
+function watchSettlePoints(update: () => void) {
+  const observer = new ResizeObserver(update);
+  for (const selector of [".home-story", ".mp-header"]) {
+    const element = document.querySelector(selector);
+    if (element) observer.observe(element);
+  }
+  ScrollTrigger.addEventListener("refresh", update);
+  update();
+  return () => {
+    observer.disconnect();
+    ScrollTrigger.removeEventListener("refresh", update);
+  };
+}
+
+/** Text entry scrolls the page itself when the keyboard opens; a settle must not chase it. */
+const typing = () =>
+  document.activeElement?.matches(
+    "input, textarea, select, [contenteditable], [role=combobox]",
+  ) ?? false;
+
 /**
  * Smooths wheel and trackpad scrolling on every page, and eases the homepage
- * onto a section edge when it comes to rest close to one. Touch screens are
- * left native: their own momentum is already smooth, and the homepage settles
- * there through CSS proximity snap.
+ * onto a section edge when it comes to rest close to one. Touch screens keep
+ * the browser's own momentum; once it has run out, the homepage eases onto a
+ * nearby edge in the same way.
  */
 export function useSiteScroll(enabled: boolean, path: string) {
   const fine = useFinePointer();
@@ -194,38 +265,19 @@ export function useSiteScroll(enabled: boolean, path: string) {
     lenis.start();
     lenis.resize();
     if (path !== "/site") return;
-    // Once the page has come to rest on its own, a stop just short of the next
-    // section edge eases on to it, and a stop just past one eases back. A
-    // flick glides as far as it wants, a slow reader is never pulled back, and
-    // any fresh input takes over at once.
+    // Once the page has come to rest on its own it may ease onto a nearby
+    // section edge. A flick glides as far as it wants, and any fresh input
+    // takes over at once.
     let points: number[] = [];
     let settleTimer = 0;
     let settleAllowed = true;
     let heading = 0;
     const settle = () => {
-      if (!settleAllowed || !heading || lenis.isScrolling || lenis.isStopped)
+      if (!settleAllowed || lenis.isScrolling || lenis.isStopped || typing())
         return;
-      const scroll = lenis.scroll;
-      const ahead =
-        heading > 0
-          ? points.find((point) => point > scroll + 1)
-          : points.findLast((point) => point < scroll - 1);
-      const behind =
-        heading > 0
-          ? points.findLast((point) => point <= scroll)
-          : points.find((point) => point >= scroll);
-      const reach = window.innerHeight;
-      const target =
-        ahead !== undefined && Math.abs(ahead - scroll) <= reach * 0.16
-          ? ahead
-          : behind !== undefined && Math.abs(behind - scroll) <= reach * 0.05
-            ? behind
-            : undefined;
-      if (target === undefined || Math.abs(target - scroll) < 2) return;
-      lenis.scrollTo(target, {
-        duration: 0.7,
-        easing: (progress) => -(Math.cos(Math.PI * progress) - 1) / 2,
-      });
+      const target = settleTarget(points, lenis.scroll, heading);
+      if (target === undefined) return;
+      lenis.scrollTo(target, { duration: settleDuration, easing: settleEase });
     };
     const scheduleSettle = () => {
       window.clearTimeout(settleTimer);
@@ -242,37 +294,109 @@ export function useSiteScroll(enabled: boolean, path: string) {
     lenis.on("virtual-scroll", guardSettle);
     lenis.on("scroll", scheduleSettle);
     const updatePoints = () => {
-      // Each screen settles at its top, less its scroll margin; one that grew
-      // past a short screen settles at its end too, so no line is cut off.
-      points = Array.from(
-        document.querySelectorAll<HTMLElement>(".home-story > .story-screen"),
-      ).flatMap((section) => {
-        const margin = parseFloat(getComputedStyle(section).scrollMarginTop);
-        const top =
-          section.getBoundingClientRect().top + window.scrollY - margin;
-        const extra = section.offsetHeight - (window.innerHeight - margin);
-        return extra > 24 ? [top, top + extra] : [top];
-      });
+      points = settlePoints();
     };
-    const observer = new ResizeObserver(updatePoints);
-    for (const selector of [".home-story", ".mp-header"]) {
-      const element = document.querySelector(selector);
-      if (element) observer.observe(element);
-    }
-    ScrollTrigger.addEventListener("refresh", updatePoints);
+    const unwatch = watchSettlePoints(updatePoints);
     const refreshTimer = window.setTimeout(() => {
       lenis.resize();
       ScrollTrigger.refresh();
       updatePoints();
     }, 500);
-    updatePoints();
     return () => {
       window.clearTimeout(refreshTimer);
       window.clearTimeout(settleTimer);
-      observer.disconnect();
-      ScrollTrigger.removeEventListener("refresh", updatePoints);
+      unwatch();
       lenis.off("virtual-scroll", guardSettle);
       lenis.off("scroll", scheduleSettle);
     };
   }, [smooth, path]);
+  // Touch screens: the finger and the browser's momentum carry the page, and
+  // once both have stopped the homepage eases onto a nearby edge. This replaces
+  // CSS snap, whose landing is abrupt; a fresh touch takes over at once.
+  useEffect(() => {
+    if (!enabled || fine || path !== "/site") return;
+    const root = document.documentElement;
+    root.setAttribute("data-settle", "");
+    let points: number[] = [];
+    let touching = false;
+    let pinched = false;
+    let moved = false;
+    let heading = 0;
+    let last = window.scrollY;
+    let glide = 0;
+    let settleTimer = 0;
+    const stopGlide = () => {
+      cancelAnimationFrame(glide);
+      glide = 0;
+      last = window.scrollY;
+    };
+    const settle = () => {
+      if (touching || pinched || glide || !moved || typing()) return;
+      moved = false;
+      if ((window.visualViewport?.scale ?? 1) > 1.01) return;
+      const from = window.scrollY;
+      const target = settleTarget(points, from, heading);
+      if (target === undefined) return;
+      const start = performance.now();
+      const step = (now: number) => {
+        const progress = Math.min((now - start) / (settleDuration * 1000), 1);
+        const top = from + (target - from) * settleEase(progress);
+        window.scrollTo({ top, behavior: "instant" });
+        if (progress < 1) glide = requestAnimationFrame(step);
+        else stopGlide();
+      };
+      glide = requestAnimationFrame(step);
+    };
+    const scheduleSettle = () => {
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(settle, 150);
+    };
+    const onScroll = () => {
+      if (glide) return;
+      const scroll = window.scrollY;
+      if (scroll !== last) {
+        heading = Math.sign(scroll - last);
+        moved = true;
+      }
+      last = scroll;
+      scheduleSettle();
+    };
+    const onTouchStart = (event: TouchEvent) => {
+      touching = true;
+      // A pinch never settles; a fresh single touch starts clean.
+      pinched = event.touches.length > 1;
+      window.clearTimeout(settleTimer);
+      if (glide) stopGlide();
+    };
+    const onTouchEnd = (event: TouchEvent) => {
+      touching = event.touches.length > 0;
+      if (!touching) scheduleSettle();
+    };
+    const interrupt = () => {
+      window.clearTimeout(settleTimer);
+      if (glide) stopGlide();
+    };
+    const unwatch = watchSettlePoints(() => {
+      points = settlePoints();
+    });
+    const passive = { passive: true };
+    window.addEventListener("scroll", onScroll, passive);
+    window.addEventListener("touchstart", onTouchStart, passive);
+    window.addEventListener("touchend", onTouchEnd, passive);
+    window.addEventListener("touchcancel", onTouchEnd, passive);
+    window.addEventListener("wheel", interrupt, passive);
+    window.addEventListener("keydown", interrupt);
+    return () => {
+      window.clearTimeout(settleTimer);
+      cancelAnimationFrame(glide);
+      unwatch();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
+      window.removeEventListener("wheel", interrupt);
+      window.removeEventListener("keydown", interrupt);
+      root.removeAttribute("data-settle");
+    };
+  }, [enabled, fine, path]);
 }

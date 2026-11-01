@@ -18,11 +18,12 @@
   padding-bottom: var(--story-pad-bottom);
   scroll-margin-top: 0;
 }
-/* Without the wheel smoother (touch screens, or motion off) the browser itself
-   settles scrolling near a section edge, keeping native momentum: a flick runs
-   as far as it wants and only a stop close to an edge lands on it. Sections
-   run under the see-through header, so the landing is not padded. */
-html:not(.lenis):has(.home-story) {
+/* With motion off the browser itself settles scrolling near a section edge,
+   keeping native momentum: a flick runs as far as it wants and only a stop
+   close to an edge lands on it. With motion on, the wheel smoother or the
+   touch settle (`data-settle`) eases there instead. Sections run under the
+   see-through header, so the landing is not padded. */
+html:not(.lenis, [data-settle]):has(.home-story) {
   scroll-snap-type: y proximity;
   scroll-padding-top: 0;
 }
@@ -1056,6 +1057,12 @@ html:has(.home-story) .mp-footer {
     grid-column: 1;
     grid-row: auto;
     padding: 26px 20px 0 0;
+  }
+  /* Four cards wait behind the front one; their fan stays inside the stage's
+     top and right padding, clear of the chips above. */
+  .story-more .mu-swap-card {
+    --mu-dx: 4px;
+    --mu-dy: -4px;
   }
   .story-more-card {
     min-height: 0;

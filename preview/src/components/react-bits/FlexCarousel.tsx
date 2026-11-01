@@ -1,7 +1,8 @@
 // Adapted from David Haz's React Bits FlexCarousel (MIT + Commons Clause).
 // https://reactbits.dev
 // License retained in ./LICENSE.md. Adaptations: TypeScript types, no sample photos,
-// a `still` mode for the site's motion setting, idle autoplay without a constant redraw,
+// a `still` mode for the site's motion setting, idle autoplay without a constant redraw that
+// a resting pointer does not pause,
 // a single frame loop, a WebGL2 fallback hook, a select cursor, a quiet live region while
 // rotating, an offset for the opened card, open/close callbacks and controls, and site styling.
 import { useEffect, useImperativeHandle, useRef, useState } from "react";
@@ -154,8 +155,8 @@ const TAPS = 12;
 const PIXEL_BUDGET = 4.5e6;
 /** How far an open card must shrink before the row moves on to the next one. */
 const TRAVEL_AFTER = 0.12;
-/** How long a pointer resting on the row holds autoplay, in ms. */
-const HOVER_HOLD = 3000;
+/** How soon autoplay takes its first step once the row comes into view, in ms. */
+const FIRST_STEP = 900;
 const INTRO_DURATION: Partial<Record<IntroKind, number>> = { rise: 2.1, bloom: 1.6, spin: 2.2, deal: 1.5, fade: 0.35 };
 
 const wrap = (value: number, size: number) => ((((value + size / 2) % size) + size) % size) - size / 2;
@@ -533,9 +534,6 @@ export default function FlexCarousel({
       x: 0,
       y: 0,
       over: false,
-      clientX: 0,
-      clientY: 0,
-      movedAt: -Infinity,
       down: false,
       id: -1,
       startX: 0,
@@ -937,11 +935,8 @@ export default function FlexCarousel({
         !hasFocus &&
         mode === "spring" &&
         Math.abs(goal - pos) < 1;
-      const autoplayDue = Math.max(
-        autoplayAt + s.interval * 1000,
-        interactedAt + 3000,
-        pointer.over ? pointer.movedAt + HOVER_HOLD : 0,
-      );
+      // Only a drag, a click or a keyboard step holds it; a pointer resting on the row does not.
+      const autoplayDue = Math.max(autoplayAt + s.interval * 1000, interactedAt + 3000);
       if (autoplayReady && now >= autoplayDue) {
         autoplayAt = now;
         step(m, 1);
@@ -1161,7 +1156,8 @@ export default function FlexCarousel({
       pointer.startPos = pos;
       pointer.dragging = false;
       pointer.samples = [{ x, t: performance.now() }];
-      interactedAt = performance.now();
+      // A touch that only scrolls the page past the row is not an interaction; a drag or a tap is.
+      if (!pointer.touch) interactedAt = performance.now();
       if (Math.abs(vel) > 40) {
         goal = pos;
         vel = 0;
@@ -1171,13 +1167,6 @@ export default function FlexCarousel({
     };
 
     const onPointerMove = (e: PointerEvent) => {
-      // The browser repeats a move when the page scrolls or a card closes under a still pointer;
-      // only a real move holds autoplay.
-      if (e.clientX !== pointer.clientX || e.clientY !== pointer.clientY) {
-        pointer.clientX = e.clientX;
-        pointer.clientY = e.clientY;
-        pointer.movedAt = performance.now();
-      }
       const [x, y] = localPoint(e);
       pointer.x = x;
       pointer.y = y;
@@ -1192,6 +1181,7 @@ export default function FlexCarousel({
             return;
           }
           if (Math.abs(dx) > slop) {
+            interactedAt = performance.now();
             pointer.dragging = true;
             pointer.startX = x;
             pointer.startPos = pos;
@@ -1214,7 +1204,7 @@ export default function FlexCarousel({
         }
       }
       // Only a drag or a lens chasing the cursor changes the picture, so only they redraw.
-      // A frame still runs for the rest: it re-tests the hover cursor and the autoplay hold.
+      // A frame still runs for the rest: it re-tests the hover cursor.
       if (pointer.dragging || settingsRef.current?.followCursor) dirty = true;
       start();
     };
@@ -1374,7 +1364,10 @@ export default function FlexCarousel({
       const entry = entries[entries.length - 1];
       if (!entry) return;
       visible = entry.isIntersecting;
-      if (visible) resume();
+      if (!visible) return;
+      // Coming into view, the row starts moving straight after its intro rather than a full interval later.
+      autoplayAt = performance.now() - (settingsRef.current?.interval ?? 4) * 1000 + FIRST_STEP;
+      start();
     });
     intersectionObserver.observe(container);
 
