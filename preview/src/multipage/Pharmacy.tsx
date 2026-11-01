@@ -2,35 +2,36 @@ import { useRef, useState } from "react";
 import type { CSSProperties, KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
 import {
-  ArrowUpRight,
-  Check,
-  CircleHelp,
   Factory,
-  Leaf,
   Package,
   PackageCheck,
-  Pause,
-  Phone,
   Pill,
-  Play,
   Sprout,
   Store,
   Tag,
   Warehouse,
 } from "lucide-react";
+import {
+  ArrowUpRight,
+  Check,
+  CircleHelp,
+  Leaf,
+  Pause,
+  Play,
+} from "@/components/animated-icons";
 import type { LucideIcon } from "lucide-react";
 import { ArrowButton } from "@/components/ui/arrow-button";
-import { WhatsAppIcon } from "@/components/WhatsAppIcon";
+import { pad } from "@/lib/utils";
 import { servicePages } from "./data";
 import type { Service } from "./data";
+import { StepProgress, TiltLight, useStepPlayer, useTilt } from "./motion-ui";
 import {
-  StepProgress,
-  TiltLight,
-  useMagnetic,
-  useStepPlayer,
-  useTilt,
-} from "./motion-ui";
-import { PageTitle, ServiceLink, TextLink } from "./primitives";
+  Action,
+  ConversationLinks,
+  PageTitle,
+  ServiceLink,
+  TextLink,
+} from "./primitives";
 import { storeUrl } from "./store";
 import "./pharmacy.css";
 
@@ -219,7 +220,7 @@ function ProductionStepper() {
               onKeyDown={(event) => stepKey(event, index)}
             >
               <span className="ph-step-number">
-                {String(index + 1).padStart(2, "0")}
+                {pad(index + 1)}
               </span>
               <span>{item.title}</span>
               {index === active && (
@@ -300,26 +301,6 @@ function ProductionStepper() {
   );
 }
 
-function StoreButton({ href }: { href: string }) {
-  const magnet = useMagnetic<HTMLAnchorElement>();
-  return (
-    <ArrowButton
-      className="mu-magnetic"
-      render={
-        <a
-          ref={magnet}
-          href={href}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Visit the online store (opens in a new tab)"
-        />
-      }
-    >
-      Visit the online store
-    </ArrowButton>
-  );
-}
-
 function OnlineStore() {
   if (storeUrl) {
     return (
@@ -334,7 +315,12 @@ function OnlineStore() {
             The Trust’s online store for its Unani products opens on a separate
             website. Take medicines only as prescribed by your clinician.
           </p>
-          <StoreButton href={storeUrl} />
+          <Action
+            href={storeUrl}
+            label="Visit the online store (opens in a new tab)"
+          >
+            Visit the online store
+          </Action>
         </div>
       </section>
     );
@@ -357,26 +343,7 @@ function OnlineStore() {
           The Trust is preparing an online store for its Unani products. Until
           it opens, please ask the hospital pharmacy or reception.
         </p>
-        <div className="mp-conversation-links">
-          <a
-            href="tel:+918555086667"
-            aria-label="Call reception at +91 85550 86667"
-          >
-            <Phone size={22} aria-hidden="true" />
-            <span>+91 85550 86667</span>
-            <ArrowUpRight size={20} aria-hidden="true" />
-          </a>
-          <a
-            href="https://wa.me/918555086667"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="WhatsApp +91 85550 86667 (opens in a new tab)"
-          >
-            <WhatsAppIcon />
-            <span>+91 85550 86667</span>
-            <ArrowUpRight size={20} aria-hidden="true" />
-          </a>
-        </div>
+        <ConversationLinks />
         <p className="ph-store-note">
           Take medicines only as prescribed by your clinician, who decides what
           is suitable for you.

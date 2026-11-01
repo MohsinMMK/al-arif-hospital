@@ -1,16 +1,25 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import type { MouseEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ArrowUpRight, Leaf, Search, Stethoscope, X } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import {
+  ArrowUpRight,
+  Leaf,
+  Stethoscope,
+  X,
+} from "@/components/animated-icons";
 import { DoctorSpotlight } from "@/components/react-bits/DoctorSpotlight";
 import { doctorPages, servicePages } from "./data";
 import type { DoctorProfile, Service } from "./data";
 import { InteractionMotion } from "./interaction-context";
 import { LiquidSegments, TiltLight, useTilt } from "./motion-ui";
 import type { Segment } from "./motion-ui";
+import { SearchField } from "./primitives";
 import { useFlipList } from "./Stories";
-import { siteScroller } from "./useSiteScroll";
+import {
+  jumpToSection,
+  scrollOnArrival,
+  sectionTop,
+  useSectionSpy,
+} from "./useSiteScroll";
 
 const careWings = [
   {
@@ -34,10 +43,21 @@ const careWings = [
   introduction: string;
 }[];
 
-const wingSegments: Segment[] = careWings.map((wing) => ({
+const wingIds = careWings.map((wing) => wing.id);
+
+// Each wing's services, and the doctors who offer them.
+const wingSections = careWings.map((wing) => {
+  const services = servicePages.filter((service) => service.wing === wing.name);
+  const doctors = doctorPages.filter((doctor) =>
+    services.some((service) => service.doctorSlugs.includes(doctor.slug)),
+  );
+  return { ...wing, services, doctors };
+});
+
+const wingSegments: Segment[] = wingSections.map((wing) => ({
   id: wing.id,
   label: wing.name,
-  detail: `${servicePages.filter((service) => service.wing === wing.name).length} services`,
+  detail: `${wing.services.length} services`,
   icon:
     wing.name === "General hospital" ? (
       <Stethoscope size={18} aria-hidden="true" />
@@ -46,8 +66,25 @@ const wingSegments: Segment[] = careWings.map((wing) => ({
     ),
 }));
 
-const headerOffset = () =>
-  document.querySelector(".mp-header")?.getBoundingClientRect().height ?? 90;
+// The words a search matches, written once for each service and doctor.
+const searchableServices = servicePages.map((service) => {
+  const names = doctorPages
+    .filter((doctor) => service.doctorSlugs.includes(doctor.slug))
+    .map((doctor) => doctor.name)
+    .join(" ");
+  const text =
+    `${service.name} ${service.wing} ${service.intro} ${service.topics.join(" ")} ${names}`.toLowerCase();
+  return { service, text };
+});
+const searchableDoctors = doctorPages.map((doctor) => {
+  const services = servicePages
+    .filter((service) => service.doctorSlugs.includes(doctor.slug))
+    .map((service) => `${service.name} ${service.wing}`)
+    .join(" ");
+  const text =
+    `${doctor.name} ${doctor.honorific ?? ""} ${doctor.role} ${doctor.designation} ${doctor.department} ${doctor.degrees} ${services}`.toLowerCase();
+  return { doctor, text };
+});
 
 export function CareTeam({
   doctors,
@@ -122,34 +159,20 @@ export function CareDirectory() {
   const enabled = useContext(InteractionMotion);
   const [query, setQuery] = useState("");
   const [activeWing, setActiveWing] = useState(careWings[0].id);
-  // While a switch jump glides past the other wing, the scrollspy waits.
-  const hold = useRef(0);
   const searchInput = useRef<HTMLInputElement>(null);
   const { root: resultsRoot, capture: captureResults } =
     useFlipList<HTMLDivElement>();
   const { hash, search } = useLocation();
   const term = query.toLowerCase().trim();
   const matchingServices = term
-    ? servicePages.filter((service) => {
-        const names = doctorPages
-          .filter((doctor) => service.doctorSlugs.includes(doctor.slug))
-          .map((doctor) => doctor.name)
-          .join(" ");
-        return `${service.name} ${service.wing} ${service.intro} ${service.topics.join(" ")} ${names}`
-          .toLowerCase()
-          .includes(term);
-      })
+    ? searchableServices
+        .filter(({ text }) => text.includes(term))
+        .map(({ service }) => service)
     : [];
   const matchingDoctors = term
-    ? doctorPages.filter((doctor) => {
-        const services = servicePages
-          .filter((service) => service.doctorSlugs.includes(doctor.slug))
-          .map((service) => `${service.name} ${service.wing}`)
-          .join(" ");
-        return `${doctor.name} ${doctor.honorific ?? ""} ${doctor.role} ${doctor.designation} ${doctor.department} ${doctor.degrees} ${services}`
-          .toLowerCase()
-          .includes(term);
-      })
+    ? searchableDoctors
+        .filter(({ text }) => text.includes(term))
+        .map(({ doctor }) => doctor)
     : [];
   const resultCount = matchingServices.length + matchingDoctors.length;
   const clearSearch = () => {
@@ -169,95 +192,16 @@ export function CareDirectory() {
           ? "unani-care"
           : "");
     if (!careWings.some((section) => section.id === id)) return;
-    let cancelled = false;
-    let frame = 0;
-    void document.fonts.ready.then(() => {
-      if (cancelled) return;
-      frame = requestAnimationFrame(() => {
-        const section = document.getElementById(id);
-        if (!section) return;
-        window.scrollTo({
-          top:
-            section.getBoundingClientRect().top +
-            window.scrollY -
-            headerOffset(),
-          behavior: "instant",
-        });
-        section.querySelector("h2")?.focus({ preventScroll: true });
-      });
+    return scrollOnArrival(() => {
+      const section = document.getElementById(id);
+      if (!section) return;
+      window.scrollTo({ top: sectionTop(section), behavior: "instant" });
+      section.querySelector("h2")?.focus({ preventScroll: true });
     });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(frame);
-    };
   }, [hash, search]);
 
-  useEffect(() => {
-    let frame = 0;
-    let timer = 0;
-    const update = () => {
-      frame = 0;
-      const wait = hold.current - performance.now();
-      if (wait > 0) {
-        window.clearTimeout(timer);
-        timer = window.setTimeout(schedule, wait);
-        return;
-      }
-      // The current wing is the last one whose top has passed mid-screen.
-      const line = window.innerHeight / 2;
-      let current = careWings[0].id;
-      for (const wing of careWings) {
-        const top = document
-          .getElementById(wing.id)
-          ?.getBoundingClientRect().top;
-        if (top !== undefined && top <= line) current = wing.id;
-      }
-      setActiveWing(current);
-    };
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    const release = () => {
-      hold.current = 0;
-      schedule();
-    };
-    schedule();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    window.addEventListener("scrollend", release);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.clearTimeout(timer);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      window.removeEventListener("scrollend", release);
-    };
-  }, []);
-
-  const jumpToWing = (id: string, event: MouseEvent<HTMLAnchorElement>) => {
-    const section = document.getElementById(id);
-    if (!section) return;
-    // Lenis claims in-page anchors on window, even modified clicks; keep them all from it.
-    event.stopPropagation();
-    if (
-      event.button !== 0 ||
-      event.metaKey ||
-      event.ctrlKey ||
-      event.shiftKey ||
-      event.altKey
-    )
-      return;
-    event.preventDefault();
-    setActiveWing(id);
-    hold.current = performance.now() + (enabled ? 1200 : 0);
-    const top =
-      section.getBoundingClientRect().top + window.scrollY - headerOffset();
-    // A native smooth scroll would be cancelled by a Lenis glide still in flight.
-    const lenis = enabled ? siteScroller() : undefined;
-    if (lenis && !lenis.isStopped) lenis.scrollTo(top, { duration: 0.8 });
-    else window.scrollTo({ top, behavior: enabled ? "smooth" : "instant" });
-    section.querySelector("h2")?.focus({ preventScroll: true });
-  };
+  // While a switch jump glides past the other wing, the scrollspy waits.
+  const hold = useSectionSpy(wingIds, setActiveWing);
 
   return (
     <>
@@ -272,31 +216,20 @@ export function CareDirectory() {
             Explore general hospital and Unani care. Find your service, meet the
             team, and plan your visit.
           </p>
-          <label htmlFor="care-search">Find a service or doctor</label>
-          <div className="mp-search care-search">
-            <Search size={18} aria-hidden="true" />
-            <Input
-              id="care-search"
-              ref={searchInput}
-              placeholder="Service or doctor’s name"
-              value={query}
-              onChange={(event) => {
-                captureResults();
-                setQuery(event.target.value);
-              }}
-              aria-controls="care-search-results"
-              autoComplete="off"
-            />
-            {query && (
-              <button
-                type="button"
-                onClick={clearSearch}
-                aria-label="Clear search"
-              >
-                <X size={18} aria-hidden="true" />
-              </button>
-            )}
-          </div>
+          <SearchField
+            id="care-search"
+            label="Find a service or doctor"
+            placeholder="Service or doctor’s name"
+            value={query}
+            onChange={(value) => {
+              captureResults();
+              setQuery(value);
+            }}
+            onClear={clearSearch}
+            controls="care-search-results"
+            ref={searchInput}
+            className="care-search"
+          />
         </div>
       </div>
       <div
@@ -369,18 +302,16 @@ export function CareDirectory() {
             label="Care sections"
             items={wingSegments}
             active={activeWing}
-            onSelect={jumpToWing}
+            onSelect={(id, event) =>
+              jumpToSection(id, event, {
+                enabled,
+                hold,
+                setActive: setActiveWing,
+              })
+            }
           />
         </div>
-        {careWings.map((wing) => {
-          const services = servicePages.filter(
-            (service) => service.wing === wing.name,
-          );
-          const doctors = doctorPages.filter((doctor) =>
-            services.some((service) =>
-              service.doctorSlugs.includes(doctor.slug),
-            ),
-          );
+        {wingSections.map(({ services, doctors, ...wing }) => {
           return (
             <section
               key={wing.id}

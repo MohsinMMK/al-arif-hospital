@@ -15,24 +15,24 @@
   flex-direction: column;
   gap: 14px;
   padding: 32px 30px;
-  border-radius: 14px;
+  border-radius: 24px;
   min-width: 0;
 }
 .ph-unit-unani {
   background: #dce7cf;
 }
 .ph-unit-general {
-  background: #eee9db;
+  background: #e9e9e2;
 }
 .ph-unit-learning {
-  background: #e8e3d3;
+  background: #e3e3dd;
 }
 .ph-unit > svg {
-  color: #527649;
+  color: #517745;
 }
 .mp .ph-unit h3 {
-  font-family: Bitter, serif;
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-weight: 360;
   font-size: 24px;
   line-height: 1.25;
   letter-spacing: -0.02em;
@@ -41,7 +41,7 @@
 /* The olive label tone is too light on the tinted unit cards. */
 .mp .ph-unit dt,
 .mp .ph-unit dd small {
-  color: #4c6151;
+  color: #50604b;
 }
 .ph-unit p {
   font-size: 14px;
@@ -92,9 +92,9 @@
   width: 100%;
   min-height: 72px;
   padding: 13px 14px;
-  border-radius: 7px;
-  background: #f2f0e4;
-  color: #254c3d;
+  border-radius: 999px;
+  background: #f1f1ec;
+  color: var(--forest);
   font-size: 14px;
   font-weight: 600;
   line-height: 1.3;
@@ -104,17 +104,17 @@
 }
 @media (hover: hover) and (pointer: fine) {
   .ph-steps button:hover {
-    background: #e9edde;
+    background: #e7eedf;
   }
 }
 .ph-steps button[aria-current="step"] {
-  background: #254c3d;
-  color: #fffdf5;
+  background: var(--forest);
+  color: var(--paper);
 }
 .ph-step-number {
   font-size: 12px;
   font-weight: 500;
-  color: #59744b;
+  color: var(--leaf);
   font-variant-numeric: tabular-nums;
 }
 .ph-steps button[aria-current="step"] .ph-step-number {
@@ -149,7 +149,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: #527649;
+  background: #517745;
   transform-origin: left;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -160,20 +160,20 @@
   min-height: 44px;
   margin-left: auto;
   padding: 0 16px;
-  border-radius: 7px;
-  background: #f2f0e4;
-  color: #254c3d;
+  border-radius: 999px;
+  background: #f1f1ec;
+  color: var(--forest);
   font-size: 14px;
   font-weight: 600;
   transition: background-color 0.2s ease-out;
 }
 .ph-play:hover {
-  background: #e9edde;
+  background: #e7eedf;
 }
 .ph-step-panel {
   min-height: 220px;
   padding: 40px 44px;
-  border-radius: 14px;
+  border-radius: 24px;
   background: var(--sage);
 }
 .ph-step-body {
@@ -184,15 +184,15 @@
 }
 .ph-step-body > svg {
   grid-row: span 3;
-  color: #527649;
+  color: #517745;
 }
 .ph-step-body > span {
   font-size: 12px;
-  color: #4c6151;
+  color: #50604b;
 }
 .mp .ph-step-panel h3 {
-  font-family: Bitter, serif;
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-weight: 360;
   font-size: 30px;
   letter-spacing: -0.03em;
   line-height: 1.2;
@@ -238,8 +238,8 @@
 .ph-store {
   margin: 30px 0 10px;
   padding: 50px 56px;
-  border-radius: 14px;
-  background: #f2f0e4;
+  border-radius: 24px;
+  background: #f1f1ec;
 }
 .ph-store > div {
   min-width: 0;
@@ -250,7 +250,7 @@
   gap: 8px;
   margin-bottom: 18px;
   padding: 5px 11px;
-  border-radius: 7px;
+  border-radius: 16px;
   background: #dce7cf;
   font-size: 12px;
   font-weight: 600;
@@ -289,7 +289,6 @@
   .ph-units {
     padding: 35px 0 10px;
   }
-  .ph-unit-grid,
   .ph-section-head,
   .ph-quality,
   .ph-store {
@@ -297,6 +296,7 @@
     gap: 22px;
   }
   .ph-unit-grid {
+    grid-template-columns: 1fr;
     gap: 12px;
   }
   .ph-stepper {
@@ -363,15 +363,5 @@
   from {
     opacity: 0;
     transform: translateX(calc(var(--ph-dir, 1) * 14px));
-  }
-}
-.mp[data-motion="off"] .ph-progress-track span {
-  transition: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .ph-steps button,
-  .ph-play,
-  .ph-progress-track span {
-    transition: none;
   }
 }

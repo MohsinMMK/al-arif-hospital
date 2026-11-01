@@ -1,16 +1,16 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { hospital } from "@/hospital";
+import { Hospital, Microscope } from "lucide-react";
 import {
   ArrowUpRight,
   Check,
   CircleHelp,
   HandHeart,
   HeartPulse,
-  Hospital,
   Leaf,
-  Microscope,
   RotateCcw,
-} from "lucide-react";
+} from "@/components/animated-icons";
 import { PageTitle, TextLink } from "./primitives";
 import { milestones, milestoneYears } from "./milestones";
 import type { Milestone, MilestoneCategory } from "./milestones";
@@ -330,8 +330,8 @@ export function Community() {
             <p>
               To ask whether any camps are planned, please contact reception
               on{" "}
-              <a className="cm-inline-link" href="tel:+918555086667">
-                +91 85550 86667
+              <a className="cm-inline-link" href={hospital.receptionHref}>
+                {hospital.reception}
               </a>
               .
             </p>

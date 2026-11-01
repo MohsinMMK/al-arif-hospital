@@ -8,6 +8,9 @@ import { fullAddress, hospital, pageHead, publicPaths, siteUrl } from "./seo";
 const hospitalId = `${siteUrl}/#hospital`;
 const absolute = (path: string) => `${siteUrl}${path}`;
 
+// Describes public/og-image.png, made from scripts/og-image.html.
+const shareImageAlt = `${hospital.name} logo, Bandlaguda, Hyderabad: open 24 hours, general and Unani care, ₹10 OPD fee`;
+
 const escapeHtml = (text: string) =>
   text
     .replace(/&/g, "&amp;")
@@ -22,8 +25,8 @@ const hospitalData = {
   name: hospital.name,
   alternateName: ["Al Arif General Hospital", "Al-Arif Hospital", "Al Arif Hospital"],
   url: absolute("/site"),
-  logo: absolute("/hospital-mark.svg"),
-  image: absolute("/hospital-mark.svg"),
+  logo: absolute("/icon-512.png"),
+  image: absolute("/og-image.png"),
   description: pageHead("/site")?.description,
   telephone: hospital.reception,
   email: hospital.email,
@@ -134,7 +137,13 @@ export function headTags(path: string) {
     `<meta property="og:title" content="${escapeHtml(head.title)}" />`,
     `<meta property="og:description" content="${escapeHtml(head.description)}" />`,
     `<meta property="og:url" content="${url}" />`,
-    `<meta name="twitter:card" content="summary" />`,
+    `<meta property="og:image" content="${absolute("/og-image.png")}" />`,
+    `<meta property="og:image:type" content="image/png" />`,
+    `<meta property="og:image:width" content="1200" />`,
+    `<meta property="og:image:height" content="630" />`,
+    `<meta property="og:image:alt" content="${escapeHtml(shareImageAlt)}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta name="twitter:image:alt" content="${escapeHtml(shareImageAlt)}" />`,
     `<meta name="geo.region" content="IN-TG" />`,
     `<meta name="geo.placename" content="Hyderabad" />`,
     `<link rel="alternate" type="text/plain" title="Site summary for AI assistants" href="/llms.txt" />`,

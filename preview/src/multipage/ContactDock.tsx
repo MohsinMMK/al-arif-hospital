@@ -1,7 +1,9 @@
-import { Mail, Phone, Plus, Siren } from "lucide-react";
+import { Mail, Siren } from "lucide-react";
+import { Phone, Plus } from "@/components/animated-icons";
 import type { CSSProperties, PointerEvent as ReactPointerEvent, ReactNode } from "react";
 import { useContext, useEffect, useRef, useState } from "react";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
+import { hospital } from "@/hospital";
 import { InteractionMotion } from "./interaction-context";
 import "./contact-dock.css";
 
@@ -39,30 +41,30 @@ const channels: Channel[] = [
   {
     key: "emergency",
     label: "Emergency 24/7",
-    detail: "+91 98484 30017",
-    href: "tel:+919848430017",
+    detail: hospital.emergency,
+    href: hospital.emergencyHref,
     icon: <Siren size={21} aria-hidden="true" />,
   },
   {
     key: "call",
     label: "Call reception",
-    detail: "+91 85550 86667",
-    href: "tel:+918555086667",
+    detail: hospital.reception,
+    href: hospital.receptionHref,
     icon: <Phone size={20} aria-hidden="true" />,
   },
   {
     key: "whatsapp",
     label: "WhatsApp",
     detail: "Chat with reception",
-    href: "https://wa.me/918555086667",
+    href: hospital.whatsappHref,
     icon: <WhatsAppIcon />,
     external: true,
   },
   {
     key: "email",
     label: "Email",
-    detail: "aaghuri@gmail.com",
-    href: "mailto:aaghuri@gmail.com",
+    detail: hospital.email,
+    href: hospital.emailHref,
     icon: <Mail size={20} aria-hidden="true" />,
   },
   {
@@ -196,7 +198,7 @@ export function ContactDock() {
                   <strong>{channel.label}</strong>
                   <span>{channel.detail}</span>
                   {channel.external && (
-                    <span className="mu-sr"> (opens in a new tab)</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
                   )}
                 </span>
                 <span className="cd-icon">{channel.icon}</span>

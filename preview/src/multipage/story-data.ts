@@ -5,7 +5,7 @@ export type StoryCategory =
   | "Research & learning"
   | "Pharmacy";
 
-export type StorySection = {
+type StorySection = {
   id: string;
   heading: string;
   paragraphs: string[];
@@ -798,17 +798,23 @@ export const stories: Story[] = [
 
 const countWords = (text: string) => text.split(/\s+/).filter(Boolean).length;
 
-export function readingMinutes(story: Story): number {
-  const words = story.sections.reduce(
-    (total, section) =>
-      total +
-      countWords(section.heading) +
-      section.paragraphs.reduce((sum, paragraph) => sum + countWords(paragraph), 0) +
-      (section.points ?? []).reduce((sum, point) => sum + countWords(point), 0),
-    countWords(story.dek),
-  );
-  return Math.max(1, Math.ceil(words / 200));
-}
+// Each story's reading time, counted once rather than on every render.
+const minutesByStory = new Map(
+  stories.map((story) => {
+    const words = story.sections.reduce(
+      (total, section) =>
+        total +
+        countWords(section.heading) +
+        section.paragraphs.reduce((sum, paragraph) => sum + countWords(paragraph), 0) +
+        (section.points ?? []).reduce((sum, point) => sum + countWords(point), 0),
+      countWords(story.dek),
+    );
+    return [story.slug, Math.max(1, Math.ceil(words / 200))];
+  }),
+);
+
+export const readingMinutes = (story: Story) =>
+  minutesByStory.get(story.slug) ?? 1;
 
 export const regimentalTherapies: {
   name: string;

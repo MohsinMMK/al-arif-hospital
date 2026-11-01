@@ -1,21 +1,14 @@
-import { ArrowUpRight, Leaf, Stethoscope } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { ArrowUpRight } from "@/components/animated-icons";
 import { Link } from "react-router-dom";
 import { doctorPages } from "./data";
 import {
   departmentGroups,
   departmentPath,
   departments,
+  wings,
   type Department,
-  type DepartmentGroup,
 } from "./department-data";
 import "./care-menu.css";
-
-// The two wings side by side, so a patient sees both traditions in one place.
-const wings: { id: DepartmentGroup; title: string; icon: LucideIcon }[] = [
-  { id: "general", title: "General hospital", icon: Stethoscope },
-  { id: "unani", title: "Unani care", icon: Leaf },
-];
 
 const onwardLinks = [
   ["All departments", "/site/departments"],
@@ -74,8 +67,9 @@ export function CareLinks({ onNavigate }: { onNavigate: () => void }) {
   );
   return (
     <div className="cm-links">
+      {/* The two wings side by side, so a patient sees both traditions in one place. */}
       <div className="cm-wings">
-        {wings.map(({ id, title, icon: Icon }) => {
+        {wings.map(({ id, name, icon: Icon }) => {
           const group = departmentGroups.find((item) => item.id === id);
           return (
             <div key={id} className="cm-wing" data-wing={id}>
@@ -83,7 +77,7 @@ export function CareLinks({ onNavigate }: { onNavigate: () => void }) {
                 <span>
                   <Icon size={18} aria-hidden="true" />
                 </span>
-                {title}
+                {name}
                 {group && <small>{group.accent}</small>}
               </p>
               <ul>

@@ -8,27 +8,22 @@ import {
   useState,
 } from "react";
 import { Link, useParams } from "react-router-dom";
+import { BookOpen, FlaskConical, Hospital, Library } from "lucide-react";
 import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
-  BookOpen,
   Check,
-  CircleQuestionMark,
-  FlaskConical,
+  CircleHelp,
   HeartHandshake,
-  Hospital,
   Leaf,
-  Library,
   Link2,
   Pause,
   Play,
   RotateCcw,
-  Search,
-  X,
-} from "lucide-react";
+} from "@/components/animated-icons";
 import type { LucideIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { hospital } from "@/hospital";
 import { servicePages } from "./data";
 import type { Service } from "./data";
 import { InteractionMotion } from "./interaction-context";
@@ -43,6 +38,7 @@ import {
   BackLink,
   NotFound,
   PageTitle,
+  SearchField,
   ServiceLink,
   TextLink,
 } from "./primitives";
@@ -53,6 +49,7 @@ import {
   storyCategories,
 } from "./story-data";
 import type { Story, StoryCategory } from "./story-data";
+import { headerOffset } from "./useSiteScroll";
 import "./stories.css";
 
 type CategoryFilter = StoryCategory | "All";
@@ -65,7 +62,16 @@ const categoryIcons: Record<StoryCategory, LucideIcon> = {
   Pharmacy: FlaskConical,
 };
 
-const filterOptions: CategoryFilter[] = ["All", ...storyCategories];
+// Each filter, with how many stories it shows.
+const filterOptions = (["All", ...storyCategories] satisfies CategoryFilter[]).map(
+  (option) => ({
+    option,
+    count:
+      option === "All"
+        ? stories.length
+        : stories.filter((story) => story.category === option).length,
+  }),
+);
 
 function toneFor(story: Story) {
   if (story.category === "Research & learning") return "learning";
@@ -477,7 +483,7 @@ function FeaturedPlayer({ items }: { items: Story[] }) {
           </button>
         )}
       </div>
-      <span className="mu-sr" aria-live="polite" aria-atomic="true">
+      <span className="sr-only" aria-live="polite" aria-atomic="true">
         {spoken}
       </span>
     </section>
@@ -507,10 +513,6 @@ export function Stories() {
       ".st-chip",
       '.st-chip[aria-pressed="true"]',
     );
-  const countFor = (option: CategoryFilter) =>
-    option === "All"
-      ? stories.length
-      : stories.filter((story) => story.category === option).length;
   const resetFilters = () => {
     captureResults();
     setCategory("All");
@@ -546,32 +548,21 @@ export function Stories() {
             <em>Browse by topic.</em>
           </h2>
           <div className="st-search-field">
-            <label htmlFor="story-search">Search stories and guides</label>
-            <div className="mp-search st-search">
-              <Search size={18} aria-hidden="true" />
-              <Input
-                id="story-search"
-                ref={searchInput}
-                placeholder="Try “Hijama” or “maternity”"
-                value={query}
-                onChange={(event) => {
-                  captureResults();
-                  setQuery(event.target.value);
-                }}
-                aria-controls="story-results"
-                autoComplete="off"
-              />
-              {query && (
-                <button
-                  type="button"
-                  className="st-search-clear"
-                  onClick={clearSearch}
-                  aria-label="Clear search"
-                >
-                  <X size={18} aria-hidden="true" />
-                </button>
-              )}
-            </div>
+            <SearchField
+              id="story-search"
+              label="Search stories and guides"
+              placeholder="Try “Hijama” or “maternity”"
+              value={query}
+              onChange={(value) => {
+                captureResults();
+                setQuery(value);
+              }}
+              onClear={clearSearch}
+              controls="story-results"
+              ref={searchInput}
+              className="st-search"
+              clearClassName="st-search-clear"
+            />
           </div>
         </div>
 
@@ -581,8 +572,7 @@ export function Stories() {
           role="group"
           aria-label="Filter by category"
         >
-          {filterOptions.map((option) => {
-            const count = countFor(option);
+          {filterOptions.map(({ option, count }) => {
             return (
               <button
                 key={option}
@@ -665,7 +655,7 @@ export function Stories() {
             Stories are drawn from the Trust’s activity reports, and details
             reflect the period each one describes. Please confirm current
             services, timings and fees with reception on{" "}
-            <a href="tel:+918555086667">+91 85550 86667</a>.
+            <a href={hospital.receptionHref}>{hospital.reception}</a>.
           </p>
         </div>
       </section>
@@ -718,10 +708,7 @@ function StoryArticle({ story, index }: { story: Story; index: number }) {
 
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
-    const header = document.querySelector(".mp-header");
-    const offset = Math.round(
-      (header?.getBoundingClientRect().height ?? 90) + 16,
-    );
+    const offset = Math.round(headerOffset() + 16);
     const visible = new Set<string>();
     const observer = new IntersectionObserver(
       (entries) => {
@@ -923,7 +910,7 @@ function StoryArticle({ story, index }: { story: Story; index: number }) {
         Drawn from the Trust’s activity reports. Details reflect the period
         described and may have changed since. Please confirm current services,
         timings and fees with reception on{" "}
-        <a href="tel:+918555086667">+91 85550 86667</a>.
+        <a href={hospital.receptionHref}>{hospital.reception}</a>.
       </p>
     </div>
   );
@@ -1016,7 +1003,7 @@ export function TherapyExplorer({
         </div>
       )}
       <div className="st-therapy-note">
-        <CircleQuestionMark size={20} aria-hidden="true" />
+        <CircleHelp size={20} aria-hidden="true" />
         <p>
           Your Unani physician decides whether any therapy is suitable, and not
           every therapy suits everyone. Please confirm current services,

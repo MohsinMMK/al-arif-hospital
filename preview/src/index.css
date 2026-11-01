@@ -1,46 +1,80 @@
 @import "tailwindcss";
-@import "@fontsource/manrope/latin-400.css";
-@import "@fontsource/manrope/latin-500.css";
-@import "@fontsource/manrope/latin-600.css";
-@import "@fontsource/manrope/latin-700.css";
-@import "@fontsource/bitter/latin-400.css";
-@import "@fontsource/bitter/latin-400-italic.css";
+@import "@fontsource-variable/inter-tight/wght.css";
+@import "@fontsource/ibm-plex-mono/latin-400.css";
+@import "@fontsource/ibm-plex-mono/latin-500.css";
 
 @theme inline {
-  --color-background: #f7f4eb;
-  --color-foreground: #254c3d;
-  --color-primary: #254c3d;
-  --color-primary-foreground: #fffdf5;
-  --color-secondary: #e2ebd9;
-  --color-secondary-foreground: #254c3d;
-  --color-muted: #ede8d9;
-  --color-muted-foreground: #536254;
-  --color-accent: #d8e4cc;
-  --color-accent-foreground: #254c3d;
-  --color-border: #becbb4;
-  --color-input: #94a686;
-  --color-ring: #527649;
+  --color-background: var(--paper);
+  --color-foreground: var(--forest);
+  --color-primary: var(--forest);
+  --color-primary-foreground: var(--paper);
+  --color-secondary: #e3ecd6;
+  --color-secondary-foreground: var(--forest);
+  --color-muted: #ebebe4;
+  --color-muted-foreground: #556251;
+  --color-accent: #d9e4cb;
+  --color-accent-foreground: var(--forest);
+  --color-border: #bfcbb3;
+  --color-input: #92a786;
+  --color-ring: #517745;
   --color-destructive: #9b352c;
   --color-destructive-foreground: #9b352c;
   --color-info: #3f6f8a;
   --color-info-foreground: #2f5a72;
-  --color-success: #527649;
-  --color-success-foreground: #3d5d36;
+  --color-success: #517745;
+  --color-success-foreground: #3c5d32;
   --color-warning: #b07d1e;
   --color-warning-foreground: #8a6d24;
 }
 :root {
-  font-family: Manrope, sans-serif;
+  /* Seed-style palette and type */
+  --forest: #1c3a13;
+  --moss: #36542d;
+  --leaf: #55754a;
+  --paper: #fcfcf7;
+  --stone: #efefea;
+  --lime: #d3fa99;
+  --mist:
+    radial-gradient(60% 70% at 85% 20%, #f6f8f0 0%, transparent 70%),
+    radial-gradient(70% 90% at 8% 100%, #c3d5ae 0%, transparent 70%),
+    linear-gradient(180deg, #e9f0df 0%, #d9e5ca 100%);
+  --glass: rgb(252 252 247 / 0.5);
+  --glass-edge: rgb(255 255 255 / 0.65);
+  /* clear frosted glass for menus that float over the page: the blur does the work, the tint stays faint */
+  --frost: rgb(252 252 247 / 0.32);
+  --frost-filter: saturate(1.8) blur(20px);
+  /* the same frost, a touch firmer, for bars and buttons whose text rides over scrolling content */
+  --frost-strong: rgb(252 252 247 / 0.44);
+  /* the shadow under panels that float over the page (Care panel, phone menu) */
+  --shadow-panel: 0 30px 60px -28px #1c3a1355, 0 4px 14px #1c3a1312;
+  /* the sticky header's height; the header measures itself and overrides this inline */
+  --site-header-height: 90px;
+  /* stacking: menu backdrop under the header, the contact dock above both */
+  --z-backdrop: 4;
+  --z-header: 5;
+  --z-dock: 45;
+  --font-body: "Inter Tight Variable", system-ui, sans-serif;
+  --font-display: "Inter Tight Variable", system-ui, sans-serif;
+  --font-label: "IBM Plex Mono", ui-monospace, monospace;
+  font-family: var(--font-body);
+  letter-spacing: -0.005em;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  color: #254c3d;
-  background: #f7f4eb;
+  color: var(--forest);
+  background: var(--paper);
   line-height: 1.5;
-  scrollbar-color: #91a37d #f7f4eb;
+  scrollbar-color: #8ca47e var(--paper);
 }
 * {
   box-sizing: border-box;
+}
+/* dropdown panels settle in from their trigger */
+@keyframes select-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
 }
 body {
   margin: 0;
@@ -50,13 +84,11 @@ a {
   text-decoration: none;
 }
 button,
-input,
-select {
+input {
   font: inherit;
 }
 button,
-a,
-select {
+a {
   -webkit-tap-highlight-color: transparent;
 }
 button {
@@ -69,26 +101,17 @@ p {
   margin: 0;
 }
 ::selection {
-  background: #c6d7b5;
-  color: #254c3d;
+  background: #d3fa99;
+  color: #1c3a13;
 }
-input,
-select {
-  caret-color: #254c3d;
+input {
+  caret-color: var(--forest);
 }
-select {
-  border: 1px solid #94a686;
-  border-radius: 7px;
-  padding: 12px;
-  min-width: 0;
-  max-width: 100%;
-}
-select:focus-visible,
 input:focus-visible,
 a:focus-visible,
 button:focus-visible,
 summary:focus-visible {
-  outline: 3px solid #527649;
+  outline: 3px solid #517745;
   outline-offset: 4px;
 }
 svg {

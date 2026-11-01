@@ -1,18 +1,14 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import type { MouseEvent } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { BedDouble, Building2, Pill, Siren } from "lucide-react";
 import {
   ArrowUpRight,
-  BedDouble,
-  Building2,
   Check,
   Clock,
   Leaf,
   Phone,
-  Pill,
-  Siren,
   Stethoscope,
-} from "lucide-react";
+} from "@/components/animated-icons";
 import { doctorPages, servicePages } from "./data";
 import {
   departmentGroups,
@@ -26,7 +22,12 @@ import type { Segment } from "./motion-ui";
 import { ContactBand, PageTitle } from "./primitives";
 import { FactChips, SectionHead, WeekStrip } from "./sections";
 import type { IconFact } from "./sections";
-import { siteScroller } from "./useSiteScroll";
+import {
+  jumpToSection,
+  scrollOnArrival,
+  sectionTop,
+  useSectionSpy,
+} from "./useSiteScroll";
 import "./departments.css";
 
 const groupIcons: Record<DepartmentGroup, typeof Stethoscope> = {
@@ -61,15 +62,11 @@ const departmentFacts: IconFact[] = [
   { icon: Clock, label: "Open 24 hours" },
 ];
 
-const headerOffset = () =>
-  document.querySelector(".mp-header")?.getBoundingClientRect().height ?? 90;
+const groupIds = departmentGroups.map((group) => group.id);
 
 /** A card sits below the sticky group switch as well as the header. */
 const targetTop = (target: HTMLElement) =>
-  target.getBoundingClientRect().top +
-  window.scrollY -
-  headerOffset() -
-  (target.classList.contains("dp-card") ? 88 : 0);
+  sectionTop(target) - (target.classList.contains("dp-card") ? 88 : 0);
 
 function DepartmentCard({
   department,
@@ -206,107 +203,35 @@ export function Departments() {
     departmentGroups[0].id,
   );
   const [highlight, setHighlight] = useState("");
-  // Keeps the scroll spy from overriding a chosen group while the glide runs.
-  const hold = useRef(0);
 
   useEffect(() => {
     const id = decodeURIComponent(hash.slice(1));
     const department = departments.find((item) => item.slug === id);
     if (!department && !departmentGroups.some((group) => group.id === id))
       return;
-    let cancelled = false;
-    let frame = 0;
     let timer = 0;
-    // The shell scrolls a new page to the top after this effect, so wait a frame.
-    void document.fonts.ready.then(() => {
-      if (cancelled) return;
-      frame = requestAnimationFrame(() => {
-        const target = document.getElementById(id);
-        if (!target) return;
-        window.scrollTo({ top: targetTop(target), behavior: "instant" });
-        if (department) {
-          setActiveGroup(department.group);
-          setHighlight(department.slug);
-          timer = window.setTimeout(() => setHighlight(""), 2400);
-          target.focus({ preventScroll: true });
-        } else {
-          setActiveGroup(id);
-          target.querySelector("h2")?.focus({ preventScroll: true });
-        }
-      });
+    const stop = scrollOnArrival(() => {
+      const target = document.getElementById(id);
+      if (!target) return;
+      window.scrollTo({ top: targetTop(target), behavior: "instant" });
+      if (department) {
+        setActiveGroup(department.group);
+        setHighlight(department.slug);
+        timer = window.setTimeout(() => setHighlight(""), 2400);
+        target.focus({ preventScroll: true });
+      } else {
+        setActiveGroup(id);
+        target.querySelector("h2")?.focus({ preventScroll: true });
+      }
     });
     return () => {
-      cancelled = true;
-      cancelAnimationFrame(frame);
+      stop();
       window.clearTimeout(timer);
     };
   }, [hash]);
 
-  useEffect(() => {
-    let frame = 0;
-    let timer = 0;
-    const update = () => {
-      frame = 0;
-      const wait = hold.current - performance.now();
-      if (wait > 0) {
-        window.clearTimeout(timer);
-        timer = window.setTimeout(schedule, wait);
-        return;
-      }
-      // The current group is the last one whose top has passed mid-screen.
-      const line = window.innerHeight / 2;
-      let current: string = departmentGroups[0].id;
-      for (const group of departmentGroups) {
-        const top = document
-          .getElementById(group.id)
-          ?.getBoundingClientRect().top;
-        if (top !== undefined && top <= line) current = group.id;
-      }
-      setActiveGroup(current);
-    };
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    const release = () => {
-      hold.current = 0;
-      schedule();
-    };
-    schedule();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    window.addEventListener("scrollend", release);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.clearTimeout(timer);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      window.removeEventListener("scrollend", release);
-    };
-  }, []);
-
-  const jumpToGroup = (id: string, event: MouseEvent<HTMLAnchorElement>) => {
-    const section = document.getElementById(id);
-    if (!section) return;
-    // Lenis claims in-page anchors on window, even modified clicks; keep them all from it.
-    event.stopPropagation();
-    if (
-      event.button !== 0 ||
-      event.metaKey ||
-      event.ctrlKey ||
-      event.shiftKey ||
-      event.altKey
-    )
-      return;
-    event.preventDefault();
-    setActiveGroup(id);
-    hold.current = performance.now() + (enabled ? 1200 : 0);
-    const top = targetTop(section);
-    // A native smooth scroll would be cancelled by a Lenis glide still in flight.
-    const lenis = enabled ? siteScroller() : undefined;
-    if (lenis && !lenis.isStopped) lenis.scrollTo(top, { duration: 0.8 });
-    else window.scrollTo({ top, behavior: enabled ? "smooth" : "instant" });
-    section.querySelector("h2")?.focus({ preventScroll: true });
-  };
+  // Keeps the scroll spy from overriding a chosen group while the glide runs.
+  const hold = useSectionSpy(groupIds, setActiveGroup);
 
   return (
     <div className="mp-page dp-page">
@@ -328,7 +253,14 @@ export function Departments() {
           label="Department groups"
           items={groupSegments}
           active={activeGroup}
-          onSelect={jumpToGroup}
+          onSelect={(id, event) =>
+            jumpToSection(id, event, {
+              enabled,
+              hold,
+              setActive: setActiveGroup,
+              top: targetTop,
+            })
+          }
         />
       </div>
       {departmentGroups.map((group) => (
@@ -338,14 +270,14 @@ export function Departments() {
           className="dp-group"
           aria-labelledby={`${group.id}-title`}
         >
-          <div className="sx-head" data-align="split">
-            <h2 id={`${group.id}-title`} tabIndex={-1}>
-              {group.title}
-              <br />
-              <em>{group.accent}</em>
-            </h2>
-            <p>{group.lead}</p>
-          </div>
+          <SectionHead
+            id={`${group.id}-title`}
+            align="split"
+            title={group.title}
+            accent={group.accent}
+            lead={group.lead}
+            focusable
+          />
           <DepartmentGrid group={group.id} highlight={highlight} />
         </section>
       ))}

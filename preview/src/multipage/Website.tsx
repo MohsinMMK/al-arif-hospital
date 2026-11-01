@@ -5,14 +5,20 @@ import { Community } from "./Community";
 import { Pharmacy } from "./Pharmacy";
 import { CareDirectory, CareTeam } from "./CareDirectory";
 import { Departments } from "./Departments";
-import { departmentPath, departments, wardBeds } from "./department-data";
+import {
+  departmentPath,
+  departments,
+  wardBeds,
+  wings,
+} from "./department-data";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { InteractionMotion } from "./interaction-context";
 import { ContactDock } from "./ContactDock";
 import { CareLinks } from "./CareMenu";
 import { GooeyNav } from "@/components/ui/gooey-nav";
-import { ReadingProgress, VisitChecklist } from "./interactive";
 import { useEffect, useRef, useState } from "react";
+import { LazyMotion, domAnimation } from "motion/react";
+import type { ReactNode, Ref } from "react";
 import {
   BrowserRouter,
   Link,
@@ -25,61 +31,70 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import {
-  ArrowUpRight,
-  ChevronDown,
-  Leaf,
-  Stethoscope,
-  Menu,
-  X,
-  Phone,
-  MapPin,
   BookOpen,
-  CalendarDays,
-  Search,
-  Check,
-  CircleHelp,
   Mail,
   Siren,
-  Ambulance,
   Baby,
   BadgeCheck,
   BedDouble,
   Building2,
-  Clock,
-  Eye,
   FlaskConical,
-  GraduationCap,
-  Hand,
-  HandHeart,
-  HeartHandshake,
-  HeartPulse,
   Hospital,
-  IndianRupee,
   Landmark,
   LandPlot,
   Microscope,
   Navigation,
-  PhoneCall,
   Pill,
   Presentation,
   Quote,
   School,
   Sprout,
   Target,
-  Telescope,
-  Users,
   Warehouse,
 } from "lucide-react";
+import {
+  Ambulance,
+  ArrowUpRight,
+  CalendarDays,
+  Check,
+  ChevronDown,
+  CircleHelp,
+  Clock,
+  Eye,
+  GraduationCap,
+  Hand,
+  HandHeart,
+  HeartHandshake,
+  HeartPulse,
+  IndianRupee,
+  Leaf,
+  MapPin,
+  Phone,
+  PhoneCall,
+  Search,
+  Stethoscope,
+  Telescope,
+  Users,
+  X,
+} from "@/components/animated-icons";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { servicePages, doctorPages, landmark } from "./data";
-import type { DoctorProfile, Service } from "./data";
+import { servicePages, doctorPages, wingOf } from "./data";
+import type { Service } from "./data";
+import { fullAddress, hospital, landmark } from "@/hospital";
 import { DoctorSpotlight } from "@/components/react-bits/DoctorSpotlight";
 import { FloatField, SplitBar, ToastProvider } from "./motion-ui";
 import {
@@ -97,6 +112,7 @@ import {
   Action,
   BackLink,
   ContactBand,
+  ConversationLinks,
   NotFound,
   PageTitle,
   ServiceLink,
@@ -105,15 +121,13 @@ import {
 import { Chapter } from "./Chapter";
 import { useReducedMotion } from "./useReducedMotion";
 import { applyHead } from "@/seo";
-import { useSiteScroll } from "./useSiteScroll";
+import { scrollOnArrival, sectionTop, useSiteScroll } from "./useSiteScroll";
+import { drawerQuery } from "./useMedia";
+import { cn } from "@/lib/utils";
 import "./website.css";
 import "./home-story.css";
 import "./care-services.css";
 
-const address =
-  "18-13-132/41/B, Tulsi Nagar, Noori Nagar, Bandlaguda, Chandrayangutta, Hyderabad, Telangana 500005";
-const maps =
-  "https://maps.google.com/?q=Al+Arif+General+Hospital+Bandlaguda+Hyderabad";
 function Services() {
   return (
     <div className="care-directory">
@@ -224,9 +238,9 @@ function ServiceDetail() {
           <Action to={`/site/visit?service=${service.slug}#request`}>
             Ask about this care
           </Action>
-          <a href="tel:+918555086667" className="mp-aside-phone">
+          <a href={hospital.receptionHref} className="mp-aside-phone">
             <Phone size={16} />
-            +91 85550 86667
+            {hospital.reception}
           </a>
           <small>
             Contact reception before travelling to confirm your arrangements.
@@ -269,13 +283,6 @@ function ServiceDetail() {
     </div>
   );
 }
-const doctorWings = [
-  { id: "general", name: "General hospital", icon: Stethoscope },
-  { id: "unani", name: "Unani care", icon: Leaf },
-] as const;
-const wingOf = (doctor: DoctorProfile) =>
-  servicePages.find((service) => service.slug === doctor.serviceSlugs[0])
-    ?.wing;
 function Doctors() {
   const [query, setQuery] = useState("");
   const [wing, setWing] = useState<Service["wing"] | "All">("All");
@@ -291,7 +298,7 @@ function Doctors() {
         .toLowerCase()
         .includes(query.toLowerCase().trim()),
   );
-  const groups = doctorWings
+  const groups = wings
     .filter((group) => wing === "All" || group.name === wing)
     .map((group) => ({
       ...group,
@@ -300,7 +307,7 @@ function Doctors() {
     .filter((group) => group.doctors.length);
   const filters = [
     { name: "All" as const, icon: Users, count: matches.length },
-    ...doctorWings.map((group) => ({
+    ...wings.map((group) => ({
       name: group.name,
       icon: group.icon,
       count: matches.filter((doctor) => wingOf(doctor) === group.name).length,
@@ -523,7 +530,6 @@ const trustees = [
     photo: "syed-ahmed-mohiuddin-jeelani",
     role: "Managing Trustee",
     name: "Alhaj Syed Ahmed Mohiuddin Jeelani Chishti wo Quadri",
-    note: "Janasheen Silsile Nooria wo Arifia and Sajjada Rouza-e-Nooria",
   },
   { photo: "mohammed-sami-uddin", role: "Trustee", name: "Mohammed Sami Uddin" },
   {
@@ -747,7 +753,7 @@ function About() {
       </section>
       <StatBand items={aboutStats} label="Al Arif in figures" />
       <section className="sx-section" aria-labelledby="about-principles">
-        <h2 id="about-principles" className="mu-sr">
+        <h2 id="about-principles" className="sr-only">
           Motto, vision and mission
         </h2>
         <figure className="sx-quote">
@@ -818,7 +824,6 @@ function About() {
               />
               <span>{trustee.role}</span>
               <strong>{trustee.name}</strong>
-              {trustee.note && <small>{trustee.note}</small>}
             </li>
           ))}
         </ul>
@@ -1199,29 +1204,14 @@ function Visit() {
   const { hash, search, key } = useLocation();
   useEffect(() => {
     if (hash !== "#request") return;
-    let cancelled = false;
-    let frame = 0;
-    // The shell scrolls a new page to the top after this effect, so wait a frame.
-    void document.fonts.ready.then(() => {
-      if (cancelled) return;
-      frame = requestAnimationFrame(() => {
-        const target = document.getElementById("request");
-        if (!target) return;
-        const header =
-          document.querySelector(".mp-header")?.getBoundingClientRect().height ?? 90;
-        window.scrollTo({
-          top: target.getBoundingClientRect().top + window.scrollY - header - 16,
-          behavior: "instant",
-        });
-        const heading = target.querySelector("h2");
-        heading?.setAttribute("tabindex", "-1");
-        heading?.focus({ preventScroll: true });
-      });
+    return scrollOnArrival(() => {
+      const target = document.getElementById("request");
+      if (!target) return;
+      window.scrollTo({ top: sectionTop(target) - 16, behavior: "instant" });
+      const heading = target.querySelector("h2");
+      heading?.setAttribute("tabindex", "-1");
+      heading?.focus({ preventScroll: true });
     });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(frame);
-    };
     // A new key means a fresh click, even on a link to the hash already shown.
   }, [hash, key]);
   return (
@@ -1235,33 +1225,33 @@ function Visit() {
           </>
         }
         title={"We’ll help you\nfind your way."}
-        description="Directions, reception and a little help getting ready."
+        description="Directions, reception and an easy way to request a visit."
       >
-        <FactChips items={visitFacts} label="At a glance" />
+        <FactChips items={visitFacts} label="At a glance" oneRow />
       </PageTitle>
       <nav className="sx-contact" aria-label="Contact the hospital">
-        <a href="tel:+918555086667">
+        <a href={hospital.receptionHref}>
           <Phone size={24} aria-hidden="true" />
           <span>Reception</span>
-          <strong>+91 85550 86667</strong>
+          <strong>{hospital.reception}</strong>
         </a>
-        <a href="https://wa.me/918555086667" target="_blank" rel="noreferrer">
+        <a href={hospital.whatsappHref} target="_blank" rel="noreferrer">
           <WhatsAppIcon />
           <span>WhatsApp</span>
           <strong>
-            +91 85550 86667
-            <span className="mu-sr"> (opens in a new tab)</span>
+            {hospital.reception}
+            <span className="sr-only"> (opens in a new tab)</span>
           </strong>
         </a>
-        <a href="tel:+919848430017" data-tone="urgent">
+        <a href={hospital.emergencyHref} data-tone="urgent">
           <Siren size={24} aria-hidden="true" />
           <span>Emergency 24/7</span>
-          <strong>+91 98484 30017</strong>
+          <strong>{hospital.emergency}</strong>
         </a>
-        <a href="mailto:aaghuri@gmail.com">
+        <a href={hospital.emailHref}>
           <Mail size={24} aria-hidden="true" />
           <span>Email</span>
-          <strong>aaghuri@gmail.com</strong>
+          <strong>{hospital.email}</strong>
         </a>
       </nav>
       <VisitRequest key={search} />
@@ -1279,9 +1269,29 @@ function Visit() {
         <div className="mp-address-panel">
           <MapPin size={37} aria-hidden="true" />
           <h2 id="visit-address">Al-Arif Hospital</h2>
-          <p>{address}</p>
+          <p>{fullAddress}</p>
+          {/* Phones get the map itself; the whole map is one link out to Google Maps. */}
+          <a
+            className="mp-address-map"
+            href={hospital.maps}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <iframe
+              src={hospital.mapsEmbed}
+              title="Map of Al-Arif Hospital"
+              loading="lazy"
+              tabIndex={-1}
+              aria-hidden="true"
+            />
+            <span>
+              <MapPin size={14} aria-hidden="true" />
+              Tap to open in Maps
+              <span className="sr-only"> (opens in a new tab)</span>
+            </span>
+          </a>
           <ArrowButton
-            render={<a href={maps} target="_blank" rel="noreferrer" />}
+            render={<a href={hospital.maps} target="_blank" rel="noreferrer" />}
           >
             Open Google Maps
           </ArrowButton>
@@ -1301,11 +1311,10 @@ function Visit() {
           </li>
         </ul>
       </section>
-      <VisitChecklist />
       <section className="sx-band sx-alert" aria-labelledby="visit-urgent">
         <Siren size={34} aria-hidden="true" />
         <h2 id="visit-urgent">Urgent medical need?</h2>
-        <a href="tel:+919848430017">+91 98484 30017</a>
+        <a href={hospital.emergencyHref}>{hospital.emergency}</a>
         <p>
           Call the hospital emergency line or seek immediate local emergency
           help. Do not wait for an online inquiry.
@@ -1329,18 +1338,37 @@ function Visit() {
     </div>
   );
 }
-// Plans an inquiry in the browser only; nothing is collected or sent.
+const visitDays = ["Any day", "Today", "Tomorrow", "This week", "Next week"];
+const visitTimes = ["Any time", "Morning", "Afternoon", "Evening"];
+
+// Writes the chosen visit into a WhatsApp message to reception; the patient sends it from their own WhatsApp.
 function VisitRequest() {
   const [params] = useSearchParams();
   const initial = params.get("service") || "";
   const [service, setService] = useState(
     servicePages.some((item) => item.slug === initial) ? initial : "",
   );
-  const [preference, setPreference] = useState("No preference");
-  const [prepared, setPrepared] = useState(false);
+  const [day, setDay] = useState(visitDays[0]);
+  const [time, setTime] = useState(visitTimes[0]);
+  const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
   // Remounts the alert on every blocked submit so the nudge and announcement repeat.
   const [attempt, setAttempt] = useState(0);
+  const care = servicePages.find((item) => item.slug === service)?.name;
+  const message = [
+    `Hello ${hospital.shortName}, I would like to request a visit.`,
+    "",
+    `Care: ${care}`,
+    `Day: ${day}`,
+    `Time: ${time}`,
+    "",
+    "Please let me know the doctor and timing available.",
+  ].join("\n");
+  const whatsapp = `${hospital.whatsappHref}?text=${encodeURIComponent(message)}`;
+  const choose = (set: (value: string) => void) => (value: string) => {
+    set(value);
+    setSent(false);
+  };
   return (
     <section
       id="request"
@@ -1349,8 +1377,8 @@ function VisitRequest() {
     >
       <ol className="sx-steps" aria-label="Three steps">
         <li>Choose care</li>
-        <li>Pick a time</li>
-        <li>Call reception</li>
+        <li>Pick a day and time</li>
+        <li>Send on WhatsApp</li>
       </ol>
       <div className="mp-inquiry-layout">
         <form
@@ -1362,52 +1390,67 @@ function VisitRequest() {
               return;
             }
             setError("");
-            setPrepared(true);
+            window.open(whatsapp, "_blank", "noopener");
+            setSent(true);
           }}
         >
           <h2 id="visit-request">Request a visit.</h2>
-          <p>
-            Choose a department and your preferred time, then contact reception
-            to arrange your visit. No patient details are collected or sent.
-          </p>
           <FloatField
             id="inquiry-service"
             label="Care or service"
             filled={Boolean(service)}
             invalid={Boolean(error)}
           >
-            <select
-              id="inquiry-service"
+            <Select
               value={service}
-              aria-invalid={error ? true : undefined}
-              aria-describedby={error ? "inquiry-service-error" : undefined}
-              onChange={(event) => {
-                setService(event.target.value);
-                setPrepared(false);
+              onValueChange={choose((value) => {
+                setService(value);
                 setError("");
-              }}
+              })}
             >
-              <option value="">Choose a service</option>
-              {servicePages.map((item) => (
-                <option value={item.slug} key={item.slug}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
+              <SelectTrigger
+                id="inquiry-service"
+                aria-invalid={error ? true : undefined}
+                aria-describedby={error ? "inquiry-service-error" : undefined}
+              >
+                <SelectValue placeholder="Choose a service" />
+              </SelectTrigger>
+              <SelectContent>
+                {servicePages.map((item) => (
+                  <SelectItem value={item.slug} key={item.slug}>
+                    {item.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </FloatField>
+          <FloatField id="inquiry-day" label="Preferred day" filled>
+            <Select value={day} onValueChange={choose(setDay)}>
+              <SelectTrigger id="inquiry-day">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {visitDays.map((option) => (
+                  <SelectItem value={option} key={option}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </FloatField>
           <FloatField id="inquiry-time" label="Time preference" filled>
-            <select
-              id="inquiry-time"
-              value={preference}
-              onChange={(event) => {
-                setPreference(event.target.value);
-                setPrepared(false);
-              }}
-            >
-              <option>No preference</option>
-              <option>Morning</option>
-              <option>Evening</option>
-            </select>
+            <Select value={time} onValueChange={choose(setTime)}>
+              <SelectTrigger id="inquiry-time">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {visitTimes.map((option) => (
+                  <SelectItem value={option} key={option}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </FloatField>
           {error && (
             <p
@@ -1420,20 +1463,22 @@ function VisitRequest() {
             </p>
           )}
           <ArrowButton type="submit" direction="right">
-            Show my next step
+            Send on WhatsApp
           </ArrowButton>
-          {prepared && (
+          {sent && (
             <div className="mp-inquiry-result" role="status">
               <Check size={21} />
               <div>
-                <h3>Your inquiry plan</h3>
+                <h3>Your message is ready in WhatsApp</h3>
                 <p>
-                  {servicePages.find((item) => item.slug === service)?.name} ·{" "}
-                  {preference}
+                  {care} · {day} · {time}
                 </p>
                 <p>
-                  Contact reception to discuss a day and clinician. Nothing has
-                  been sent or booked.
+                  Press send there and reception will reply to confirm the
+                  doctor and timing.{" "}
+                  <a href={whatsapp} target="_blank" rel="noopener">
+                    Open WhatsApp again
+                  </a>
                 </p>
               </div>
             </div>
@@ -1441,26 +1486,7 @@ function VisitRequest() {
         </form>
         <aside>
           <h2>Prefer a conversation?</h2>
-          <div className="mp-conversation-links">
-            <a
-              href="tel:+918555086667"
-              aria-label="Call reception at +91 85550 86667"
-            >
-              <Phone size={22} aria-hidden="true" />
-              <span>+91 85550 86667</span>
-              <ArrowUpRight size={20} aria-hidden="true" />
-            </a>
-            <a
-              href="https://wa.me/918555086667"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="WhatsApp +91 85550 86667 (opens in a new tab)"
-            >
-              <WhatsAppIcon />
-              <span>+91 85550 86667</span>
-              <ArrowUpRight size={20} aria-hidden="true" />
-            </a>
-          </div>
+          <ConversationLinks />
           <hr />
           <h3>Arrange your visit</h3>
           <p>
@@ -1476,9 +1502,69 @@ function VisitRequest() {
   );
 }
 
+/**
+ * Closes an open panel on Escape, handing focus back to its toggle, and when a
+ * resize leaves the layout the panel belongs to.
+ */
+function useDismiss(
+  open: boolean,
+  setOpen: (open: boolean) => void,
+  { toggle, closeWhen }: { toggle: string; closeWhen: () => boolean },
+) {
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      document.querySelector<HTMLElement>(toggle)?.focus();
+    };
+    const closeOnResize = () => {
+      if (closeWhen()) setOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    window.addEventListener("resize", closeOnResize);
+    return () => {
+      window.removeEventListener("keydown", closeOnEscape);
+      window.removeEventListener("resize", closeOnResize);
+    };
+  }, [open, setOpen, toggle, closeWhen]);
+}
+const inDrawerLayout = () => window.matchMedia(drawerQuery).matches;
+const inWideLayout = () => !inDrawerLayout();
+
+/** The sticky header, which frosts over once the page scrolls; only it re-renders as it does. */
+function SiteHeader({
+  ref,
+  menuOpen,
+  children,
+}: {
+  ref: Ref<HTMLElement>;
+  menuOpen: boolean;
+  children: ReactNode;
+}) {
+  const [raised, setRaised] = useState(false);
+  useEffect(() => {
+    const updateHeader = () => setRaised(window.scrollY > 12);
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    return () => window.removeEventListener("scroll", updateHeader);
+  }, []);
+  return (
+    <header
+      ref={ref}
+      className={cn(
+        "mp-header",
+        raised && "is-raised",
+        menuOpen && "is-menu-open",
+      )}
+    >
+      {children}
+    </header>
+  );
+}
+
 export function Shell() {
   const header = useRef<HTMLElement>(null);
-  const [headerRaised, setHeaderRaised] = useState(false);
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [careOpen, setCareOpen] = useState(false);
@@ -1506,64 +1592,27 @@ export function Shell() {
     setCareOpen(false);
     setMenuOpen(false);
   }
-  useEffect(() => {
-    if (!careOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      setCareOpen(false);
-      document
-        .querySelector<HTMLButtonElement>('[aria-controls="care-panel"]')
-        ?.focus();
-    };
-    const closeOnResize = () => {
-      if (window.innerWidth <= 1050) setCareOpen(false);
-    };
-    window.addEventListener("keydown", closeOnEscape);
-    window.addEventListener("resize", closeOnResize);
-    return () => {
-      window.removeEventListener("keydown", closeOnEscape);
-      window.removeEventListener("resize", closeOnResize);
-    };
-  }, [careOpen]);
-  useEffect(() => {
-    if (!menuOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setMenuOpen(false);
-        document.querySelector<HTMLButtonElement>(".mp-menu-toggle")?.focus();
-      }
-    };
-    const closeOnResize = () => {
-      if (window.innerWidth > 1050) setMenuOpen(false);
-    };
-    window.addEventListener("keydown", closeOnEscape);
-    window.addEventListener("resize", closeOnResize);
-    return () => {
-      window.removeEventListener("keydown", closeOnEscape);
-      window.removeEventListener("resize", closeOnResize);
-    };
-  }, [menuOpen]);
+  // The Care map belongs to the wide header, the drawer to narrow screens.
+  useDismiss(careOpen, setCareOpen, {
+    toggle: '[aria-controls="care-panel"]',
+    closeWhen: inDrawerLayout,
+  });
+  useDismiss(menuOpen, setMenuOpen, {
+    toggle: ".mp-menu-toggle",
+    closeWhen: inWideLayout,
+  });
   useEffect(() => {
     const element = header.current;
     if (!element) return;
-    const updateHeight = () => {
-      const height = `${element.getBoundingClientRect().height}px`;
-      element.parentElement?.style.setProperty("--site-header-height", height);
+    const updateHeight = () =>
       document.documentElement.style.setProperty(
         "--site-header-height",
-        height,
+        `${element.getBoundingClientRect().height}px`,
       );
-    };
     const observer = new ResizeObserver(updateHeight);
     observer.observe(element);
     updateHeight();
     return () => observer.disconnect();
-  }, []);
-  useEffect(() => {
-    const updateHeader = () => setHeaderRaised(window.scrollY > 12);
-    updateHeader();
-    window.addEventListener("scroll", updateHeader, { passive: true });
-    return () => window.removeEventListener("scroll", updateHeader);
   }, []);
   // Care opens a map of both wings; the other three are pages.
   const nav = [
@@ -1571,6 +1620,12 @@ export function Shell() {
     ["About", "/site/about"],
     ["Visit us", "/site/visit"],
   ];
+  // The phone menu shows each page as a tile with a line about it, after Seed's menu.
+  const navTiles = [
+    [Users, `${doctorPages.length} clinicians across two wings`],
+    [Landmark, "The Trust behind the hospital"],
+    [MapPin, "Bandlaguda, Chandrayangutta"],
+  ] as const;
   const carePaths = ["/site/departments", "/site/services", "/site/pharmacy"];
   const onPath = (path: string) =>
     location.pathname === path || location.pathname.startsWith(`${path}/`);
@@ -1584,7 +1639,6 @@ export function Shell() {
     <InteractionMotion.Provider value={enabled}>
       <div className="mp" data-motion={enabled ? "on" : "off"}>
         <ToastProvider>
-          <ReadingProgress />
           <a className="mp-skip" href="#page-content">
             Skip to content
           </a>
@@ -1604,12 +1658,9 @@ export function Shell() {
               onClick={() => setMenuOpen(false)}
             />
           )}
-          <header
-            ref={header}
-            className={`mp-header${headerRaised ? " is-raised" : ""}`}
-          >
+          <SiteHeader ref={header} menuOpen={menuOpen}>
             <Link className="mp-brand" to="/site">
-              <Leaf size={30} />
+              <img src="/al-arif-logo-gradient.svg" alt="" width={39} height={52} />
               <span>
                 Al-Arif<small>General Hospital & Unani Research Institute</small>
               </span>
@@ -1630,8 +1681,8 @@ export function Shell() {
               ]}
               value={careOpen ? 0 : routeIndex}
               onChange={(index) => setCareOpen(index === 0 && !careOpen)}
-              activeColor="#254c3d"
-              activeLabelColor="#fffdf5"
+              activeColor="#1c3a13"
+              activeLabelColor="#fcfcf7"
               reducedMotion={!enabled}
             />
             <div
@@ -1647,7 +1698,7 @@ export function Shell() {
             <nav
               id="main-navigation"
               aria-label="Main navigation"
-              className={`mp-drawer${menuOpen ? " is-open" : ""}`}
+              className={cn("mp-drawer", menuOpen && "is-open")}
             >
               <button
                 type="button"
@@ -1656,7 +1707,12 @@ export function Shell() {
                 aria-controls="drawer-care"
                 onClick={() => setDrawerCareOpen(!drawerCareOpen)}
               >
-                Care: departments & services
+                <span className="mp-drawer-tile">
+                  <Stethoscope size={26} aria-hidden="true" />
+                </span>
+                <span className="mp-drawer-text">
+                  Care <small>Departments & services</small>
+                </span>
                 <ChevronDown
                   className="mp-care-chevron"
                   size={18}
@@ -1666,11 +1722,19 @@ export function Shell() {
               <div id="drawer-care" className="cm-drawer" hidden={!drawerCareOpen}>
                 <CareLinks onNavigate={() => setMenuOpen(false)} />
               </div>
-              {nav.map(([label, path]) => (
-                <NavLink onClick={() => setMenuOpen(false)} key={path} to={path}>
-                  {label}
-                </NavLink>
-              ))}
+              {nav.map(([label, path], index) => {
+                const [Icon, note] = navTiles[index];
+                return (
+                  <NavLink onClick={() => setMenuOpen(false)} key={path} to={path}>
+                    <span className="mp-drawer-tile">
+                      <Icon size={26} aria-hidden="true" />
+                    </span>
+                    <span className="mp-drawer-text">
+                      {label} <small>{note}</small>
+                    </span>
+                  </NavLink>
+                );
+              })}
             </nav>
             <Action to="/site/visit#request">Request a visit</Action>
             <button
@@ -1680,9 +1744,22 @@ export function Shell() {
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(!menuOpen)}
             >
-              {menuOpen ? <X /> : <Menu />}
+              {/* Seed's two bars, which cross into an X while the menu is open */}
+              <svg
+                className="mp-menu-icon"
+                viewBox="0 0 24 24"
+                width={24}
+                height={24}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
+              >
+                <line x1="3.5" y1="9" x2="20.5" y2="9" />
+                <line x1="3.5" y1="15" x2="20.5" y2="15" />
+              </svg>
             </button>
-          </header>
+          </SiteHeader>
           <main id="page-content" ref={main}>
             <Chapter path={location.pathname} motionEnabled={enabled}>
               <Routes>
@@ -1726,6 +1803,13 @@ export function Shell() {
           <footer className="mp-footer">
             <div>
               <Link to="/site" className="mp-footer-brand">
+                <img
+                  src="/al-arif-logo-reversed.svg"
+                  alt=""
+                  width={48}
+                  height={64}
+                  loading="lazy"
+                />
                 Al-Arif
               </Link>
               <p>
@@ -1752,16 +1836,12 @@ export function Shell() {
             </div>
             <div>
               <h3>Get in touch</h3>
-              <a href="tel:+918555086667">Call reception</a>
-              <a
-                href="https://wa.me/918555086667"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={hospital.receptionHref}>Call reception</a>
+              <a href={hospital.whatsappHref} target="_blank" rel="noreferrer">
                 WhatsApp
               </a>
-              <a href="tel:+919848430017">Emergency line (24/7)</a>
-              <a href="mailto:aaghuri@gmail.com">aaghuri@gmail.com</a>
+              <a href={hospital.emergencyHref}>Emergency line (24/7)</a>
+              <a href={hospital.emailHref}>{hospital.email}</a>
             </div>
             <p className="mp-footer-legal">
               Run by the Al Arif Education and Medical Trust · Hospital Reg. No.
@@ -1795,10 +1875,14 @@ export function Shell() {
     </InteractionMotion.Provider>
   );
 }
+// Every moving part is an m.* component, so only the DOM animation features load. The prerender
+// draws the same markup without them, since nothing animates there.
 export default function Website() {
   return (
-    <BrowserRouter>
-      <Shell />
-    </BrowserRouter>
+    <LazyMotion features={domAnimation}>
+      <BrowserRouter>
+        <Shell />
+      </BrowserRouter>
+    </LazyMotion>
   );
 }

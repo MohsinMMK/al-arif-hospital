@@ -5,9 +5,9 @@
 import { useContext, useRef } from "react";
 import type { PointerEventHandler } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "@/components/animated-icons";
 import { InteractionMotion } from "@/multipage/interaction-context";
-import type { DoctorProfile } from "@/multipage/data";
+import { initialsOf, type DoctorProfile } from "@/multipage/data";
 
 export function DoctorSpotlight({
   doctor,
@@ -19,12 +19,7 @@ export function DoctorSpotlight({
   const Heading = headingLevel === 4 ? "h4" : "h3";
   const link = useRef<HTMLAnchorElement>(null);
   const enabled = useContext(InteractionMotion);
-  const initials = doctor.name
-    .replace(/^Dr\.\s*/, "")
-    .split(" ")
-    .map((part) => part[0])
-    .slice(0, 2)
-    .join("");
+  const initials = initialsOf(doctor.name);
   const handlePointerMove: PointerEventHandler<HTMLAnchorElement> = (event) => {
     if (!enabled || event.pointerType === "touch" || !link.current) return;
     const bounds = link.current.getBoundingClientRect();

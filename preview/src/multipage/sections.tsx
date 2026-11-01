@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, ShieldCheck } from "@/components/animated-icons";
 import type { LucideIcon } from "lucide-react";
 import { RollingNumber, useReveal } from "./motion-ui";
 import "./sections.css";
@@ -29,12 +29,19 @@ export type Destination = {
 export function FactChips({
   items,
   label,
+  oneRow,
 }: {
   items: IconFact[];
   label?: string;
+  /** Keeps the chips on one line on phones too, shrinking them to fit. */
+  oneRow?: boolean;
 }) {
   return (
-    <ul className="sx-chips" aria-label={label}>
+    <ul
+      className="sx-chips"
+      data-one-row={oneRow || undefined}
+      aria-label={label}
+    >
       {items.map(({ icon: Icon, label: text }) => (
         <li key={text}>
           <Icon size={16} aria-hidden="true" />
@@ -52,16 +59,19 @@ export function SectionHead({
   lead,
   align = "center",
   id,
+  focusable = false,
 }: {
   title: string;
   accent: string;
   lead?: React.ReactNode;
   align?: "center" | "split" | "start";
   id?: string;
+  /** Lets a jump to the section move focus to its heading. */
+  focusable?: boolean;
 }) {
   return (
     <div className="sx-head" data-align={align}>
-      <h2 id={id}>
+      <h2 id={id} tabIndex={focusable ? -1 : undefined}>
         {title}
         <br />
         <em>{accent}</em>
@@ -100,13 +110,7 @@ export function StatBand({
 }
 
 /** A grid of icon-led tiles; an optional figure replaces the detail's opening words. */
-export function IconTiles({
-  items,
-  label,
-}: {
-  items: Tile[];
-  label?: string;
-}) {
+export function IconTiles({ items, label }: { items: Tile[]; label?: string }) {
   const list = useReveal<HTMLUListElement>();
   return (
     <ul ref={list} className="sx-tiles mu-reveal" aria-label={label}>

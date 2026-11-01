@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion, useReducedMotion, useSpring, useTransform } from "motion/react";
+import { m, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { cn } from "cn";
 
 // the duration picker's spring, damped so nothing overshoots
@@ -136,7 +136,7 @@ function Segment({
   const d = useTransform(marginLeft, (g) => neckPath(g, span));
 
   return (
-    <motion.li
+    <m.li
       data-slot="gooey-nav-segment"
       className={cn("relative", className)}
       style={{ ...style, marginLeft }}
@@ -161,11 +161,11 @@ function Segment({
               <stop offset="1" stopColor={rightFill} />
             </linearGradient>
           </defs>
-          <motion.path d={d} fill={`url(#${gradientId})`} />
+          <m.path d={d} fill={`url(#${gradientId})`} />
         </svg>
       )}
       {children}
-    </motion.li>
+    </m.li>
   );
 }
 

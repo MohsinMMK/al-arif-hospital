@@ -1,16 +1,16 @@
 /* Header navigation: the gooey bar on wide screens, with the Care panel beneath it. */
 .mp-gooey {
-  --gooey-bar: #ece8da;
-  --gooey-label: #536254;
-  --gooey-label-hover: #254c3d;
-  --gooey-focus: #789767;
+  --gooey-bar: #edf1e6;
+  --gooey-label: #556251;
+  --gooey-label-hover: var(--forest);
+  --gooey-focus: #759866;
+  display: flex;
+  font-size: 13px;
 }
 .mp-gooey [data-slot="gooey-nav-item"] {
-  --tw-ring-offset-color: #f7f4eb;
+  --tw-ring-offset-color: var(--paper);
 }
-/* The older header rules pad bare nav links; hand these back to the component. */
 .mp-header .mp-gooey a {
-  padding: revert-layer;
   color: revert-layer;
 }
 .mp-care-chevron {
@@ -19,9 +19,9 @@
 [aria-expanded="true"] > .mp-care-chevron {
   transform: rotate(180deg);
 }
-@media (min-width: 1051px) {
-  .mp-header .mp-drawer {
-    display: none;
+@media (max-width: 1100px) {
+  .mp-gooey {
+    font-size: 12px;
   }
 }
 @media (max-width: 1050px) {
@@ -37,16 +37,16 @@
   top: calc(100% + 8px);
   left: 50%;
   width: min(1080px, 92vw);
-  max-height: calc(100dvh - var(--site-header-height, 90px) - 24px);
+  max-height: calc(100dvh - var(--site-header-height) - 24px);
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 26px 30px 22px;
-  border: 1px solid #dfe5d6;
-  border-radius: 22px;
-  background: #fffdf5;
-  box-shadow:
-    0 30px 60px -28px #254c3d55,
-    0 4px 14px #254c3d12;
+  border: 1px solid var(--glass-edge);
+  border-radius: 24px;
+  background: var(--frost);
+  -webkit-backdrop-filter: var(--frost-filter);
+  backdrop-filter: var(--frost-filter);
+  box-shadow: var(--shadow-panel);
   opacity: 0;
   visibility: hidden;
   transform: translate(-50%, -10px) scale(0.985);
@@ -68,9 +68,9 @@
 .cm-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 4;
+  z-index: var(--z-backdrop);
   border: 0;
-  background: #254c3d12;
+  background: #1c3a1312;
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   cursor: default;
@@ -79,6 +79,20 @@
 @keyframes cm-fade {
   from {
     opacity: 0;
+  }
+}
+
+/* The care map itself, in the wide header's panel and in the phone menu's accordion. */
+:where(.cm-panel, .cm-drawer) > .cm-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 32px;
+  margin-top: 18px;
+}
+@media (max-width: 430px) {
+  :where(.cm-panel, .cm-drawer) > .cm-links {
+    flex-direction: column;
+    gap: 0;
   }
 }
 
@@ -91,17 +105,19 @@
 }
 .cm-wing + .cm-wing {
   padding-left: 30px;
-  border-left: 1px solid #e6e9dd;
+  border-left: 1px solid #1c3a131f;
 }
 .cm-title {
   display: flex;
   align-items: center;
   gap: 10px;
   margin: 0 0 10px;
-  color: #254c3d;
-  font-family: Bitter, serif;
+  color: var(--forest);
+  font-family: var(--font-display);
   font-size: 20px;
   line-height: 1.2;
+  font-weight: 360;
+  letter-spacing: -0.025em;
 }
 .cm-title > span {
   display: grid;
@@ -109,17 +125,17 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #eef2e6;
-  color: #527649;
+  background: #fcfcf7b3;
+  color: #517745;
 }
 .cm-wing[data-wing="unani"] .cm-title > span {
-  background: #f5efdc;
+  background: #fcfcf7b3;
   color: #8a6d24;
 }
 .cm-title small {
   margin-left: auto;
-  color: #6b7a6c;
-  font-family: Manrope, sans-serif;
+  color: #6d7a69;
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 500;
 }
@@ -140,34 +156,33 @@
   align-items: center;
   gap: 12px;
   padding: 7px 10px;
-  border-radius: 10px;
-  color: #254c3d;
+  border-radius: 16px;
+  color: var(--forest);
   font-size: 14px;
   font-weight: 600;
   line-height: 1.25;
-  white-space: normal;
   transition: background 160ms;
 }
 .cm-row > a:first-child > svg {
   flex-shrink: 0;
-  color: #789767;
+  color: #759866;
 }
 .cm-row small {
   display: block;
   margin-top: 1px;
-  color: #6b7a6c;
+  color: #6d7a69;
   font-size: 11.5px;
   font-weight: 500;
 }
 .cm-row > a:first-child:hover {
-  background: #f2f0e4;
+  background: #fcfcf799;
 }
 .cm-row .cm-doctors {
   flex-shrink: 0;
   padding: 4px 10px;
-  border: 1px solid #d5dccb;
+  border: 1px solid #1c3a1326;
   border-radius: 999px;
-  color: #527649;
+  color: #517745;
   font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
@@ -177,9 +192,9 @@
     color 160ms;
 }
 .cm-row .cm-doctors:hover {
-  border-color: #254c3d;
-  background: #254c3d;
-  color: #fffdf5;
+  border-color: var(--forest);
+  background: var(--forest);
+  color: var(--paper);
 }
 
 .cm-foot {
@@ -190,7 +205,7 @@
   gap: 14px 28px;
   margin-top: 18px;
   padding-top: 16px;
-  border-top: 1px solid #e6e9dd;
+  border-top: 1px solid #1c3a131f;
   font-size: 13px;
 }
 .cm-foot p {
@@ -216,7 +231,7 @@
 }
 .cm-links .cm-foot a {
   padding: 2px 0;
-  color: #254c3d;
+  color: var(--forest);
   white-space: nowrap;
 }
 .cm-links .cm-foot p a:hover {
@@ -243,8 +258,8 @@
 .cm-onward a:hover svg {
   transform: translate(2px, -2px);
 }
-.cm-links a:focus-visible {
-  outline: 2px solid #789767;
+:where(.cm-panel, .cm-drawer) > .cm-links a:focus-visible {
+  outline: 2px solid #759866;
   outline-offset: 2px;
   border-radius: 8px;
 }
@@ -275,7 +290,7 @@
 .cm-drawer .cm-wing + .cm-wing {
   padding: 16px 0 0;
   border-left: 0;
-  border-top: 1px solid #e6e9dd;
+  border-top: 1px solid #1c3a131f;
 }
 .cm-drawer .cm-title {
   font-size: 17px;
@@ -298,11 +313,14 @@
   .cm-drawer .cm-wing + .cm-wing {
     padding: 0 0 0 24px;
     border-top: 0;
-    border-left: 1px solid #e6e9dd;
+    border-left: 1px solid #1c3a131f;
   }
 }
 
-.mp[data-motion="off"] :is(.cm-panel, .mp-care-chevron, .cm-backdrop) {
-  transition: none;
-  animation: none;
+/* Inside the phone menu's frosted card the Care map lines up with the menu rows. */
+.mp-drawer .cm-drawer {
+  padding: 4px 8px 12px;
+}
+.mp-drawer .cm-row > a:first-child:hover {
+  background: #1c3a130d;
 }

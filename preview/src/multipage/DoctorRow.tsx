@@ -10,9 +10,9 @@ import {
 } from "react";
 import { Link } from "react-router-dom";
 import { ArrowButton } from "@/components/ui/arrow-button";
+import { Building2 } from "lucide-react";
 import {
   ArrowRight,
-  Building2,
   CalendarDays,
   Check,
   ChevronLeft,
@@ -21,14 +21,22 @@ import {
   Pause,
   Play,
   X,
-} from "lucide-react";
+} from "@/components/animated-icons";
 import { DoctorSpotlight } from "@/components/react-bits/DoctorSpotlight";
 import type {
   FlexCarouselHandle,
   FlexCarouselItem,
 } from "@/components/react-bits/FlexCarousel";
+import { pad } from "@/lib/utils";
 import { InteractionMotion } from "./interaction-context";
-import { doctorPages, servicePages, type DoctorProfile } from "./data";
+import {
+  doctorPages,
+  initialsOf,
+  servicePages,
+  wingOf,
+  type DoctorProfile,
+} from "./data";
+import { useMedia } from "./useMedia";
 
 // WebGL and its card art load only as the row approaches the viewport.
 const FlexCarousel = lazy(() => import("@/components/react-bits/FlexCarousel"));
@@ -36,21 +44,9 @@ const FlexCarousel = lazy(() => import("@/components/react-bits/FlexCarousel"));
 type Wing = (typeof servicePages)[number]["wing"];
 
 const tones: Record<Wing, { base: string; arch: string }> = {
-  "General hospital": { base: "#eee9db", arch: "#f7f4eb" },
+  "General hospital": { base: "#e9e9e2", arch: "#fcfcf7" },
   "Unani care": { base: "#dce7cf", arch: "#ebf1e3" },
 };
-
-const wingOf = (doctor: DoctorProfile): Wing =>
-  servicePages.find((service) => service.slug === doctor.serviceSlugs[0])
-    ?.wing ?? "General hospital";
-
-const initialsOf = (name: string) =>
-  name
-    .replace(/^Dr\.\s*/, "")
-    .split(" ")
-    .map((part) => part[0])
-    .slice(0, 2)
-    .join("");
 
 const wrapLines = (
   context: CanvasRenderingContext2D,
@@ -88,8 +84,8 @@ const drawCard = (doctor: DoctorProfile) => {
   context.fillRect(0, 0, 600, 800);
 
   context.textAlign = "center";
-  context.fillStyle = "#4c6151";
-  context.font = "600 22px Manrope, sans-serif";
+  context.fillStyle = "#50604b";
+  context.font = '22px "IBM Plex Mono", monospace';
   context.letterSpacing = "3px";
   context.fillText(wing.toUpperCase(), 300, 118);
   context.letterSpacing = "0px";
@@ -102,22 +98,22 @@ const drawCard = (doctor: DoctorProfile) => {
   context.closePath();
   context.fill();
 
-  context.fillStyle = "#254c3d";
+  context.fillStyle = "#1c3a13";
   context.beginPath();
   context.arc(300, 392, 118, 0, Math.PI * 2);
   context.fill();
-  context.fillStyle = "#fffdf5";
+  context.fillStyle = "#fcfcf7";
   context.textBaseline = "middle";
-  context.font = "400 92px Bitter, serif";
+  context.font = '340 92px "Inter Tight Variable", sans-serif';
   context.fillText(initialsOf(doctor.name), 300, 398);
 
   context.textBaseline = "alphabetic";
-  context.fillStyle = "#254c3d";
+  context.fillStyle = "#1c3a13";
   let size = 48;
   let lines: string[];
   do {
     size -= 4;
-    context.font = `400 ${size}px Bitter, serif`;
+    context.font = `360 ${size}px "Inter Tight Variable", sans-serif`;
     lines = wrapLines(context, doctor.name, 380);
   } while (lines.length > 2 && size > 32);
   lines.forEach((line, index) =>
@@ -141,19 +137,6 @@ const besideGap = 48;
 const tuckGap = 20;
 /** Matches the details' slide back behind the card in home-story.css. */
 const retractMs = 340;
-
-function useMedia(query: string) {
-  const [matches, setMatches] = useState(
-    () => window.matchMedia(query).matches,
-  );
-  useEffect(() => {
-    const media = window.matchMedia(query);
-    const change = () => setMatches(media.matches);
-    media.addEventListener("change", change);
-    return () => media.removeEventListener("change", change);
-  }, [query]);
-  return matches;
-}
 
 /**
  * Where the opened card settles and where its details sit. The growth mirrors
@@ -196,8 +179,6 @@ const openLayout = (
     } as CSSProperties,
   };
 };
-
-const pad = (value: number) => String(value).padStart(2, "0");
 
 type DetailsProps = {
   index: number;
@@ -382,8 +363,8 @@ export function DoctorRow() {
     const revoke = () => urls.forEach((url) => URL.revokeObjectURL(url));
     void (async () => {
       await Promise.all([
-        document.fonts.load("400 92px Bitter"),
-        document.fonts.load("600 22px Manrope"),
+        document.fonts.load('340 92px "Inter Tight Variable"'),
+        document.fonts.load('22px "IBM Plex Mono"'),
       ]).catch(() => undefined);
       try {
         urls = await Promise.all(doctorPages.map(drawCard));

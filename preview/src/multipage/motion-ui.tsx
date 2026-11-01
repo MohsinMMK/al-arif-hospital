@@ -18,32 +18,47 @@ import type {
   RefObject,
 } from "react";
 import { createPortal } from "react-dom";
-import { X } from "lucide-react";
+import { X } from "@/components/animated-icons";
 import { ArrowButton } from "@/components/ui/arrow-button";
+import { cn, pad } from "@/lib/utils";
 import { InteractionMotion } from "./interaction-context";
+import { useMedia } from "./useMedia";
 import "./motion-ui.css";
 
 type Vars = CSSProperties & Record<`--${string}`, string | number>;
 type Pair = [number, number];
 
 const finePointerQuery = "(hover: hover) and (pointer: fine)";
-const classes = (...names: (string | undefined)[]) =>
-  names.filter(Boolean).join(" ");
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
 
-function useFinePointer() {
-  const [fine, setFine] = useState(
-    () => window.matchMedia(finePointerQuery).matches,
-  );
-  useEffect(() => {
-    const media = window.matchMedia(finePointerQuery);
-    const change = () => setFine(media.matches);
-    media.addEventListener("change", change);
-    return () => media.removeEventListener("change", change);
-  }, []);
-  return fine;
+type Watch = (
+  element: Element,
+  callback: (entry: IntersectionObserverEntry) => void,
+) => () => void;
+
+/** One IntersectionObserver for every element that waits on the same options. */
+function sharedObserver(options: IntersectionObserverInit): Watch {
+  let observer: IntersectionObserver | undefined;
+  const callbacks = new Map<
+    Element,
+    (entry: IntersectionObserverEntry) => void
+  >();
+  return (element, callback) => {
+    observer ??= new IntersectionObserver((entries) => {
+      for (const entry of entries) callbacks.get(entry.target)?.(entry);
+    }, options);
+    callbacks.set(element, callback);
+    observer.observe(element);
+    return () => {
+      callbacks.delete(element);
+      observer?.unobserve(element);
+    };
+  };
 }
+
+const watchHalfShown = sharedObserver({ threshold: 0.5 });
+const watchArrival = sharedObserver({ rootMargin: "0px 0px -8% 0px" });
 
 export type RollingPart =
   | { type: "digit"; digit: number }
@@ -79,25 +94,21 @@ export function RollingNumber({
   useEffect(() => {
     const element = root.current;
     if (rolled || !element) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((entry) => entry.intersectionRatio >= 0.49)) return;
-        observer.disconnect();
-        setRolled(true);
-      },
-      { threshold: 0.5 },
-    );
-    observer.observe(element);
-    return () => observer.disconnect();
+    const stop = watchHalfShown(element, (entry) => {
+      if (entry.intersectionRatio < 0.49) return;
+      stop();
+      setRolled(true);
+    });
+    return stop;
   }, [rolled]);
   let column = 0;
   return (
     <span
       ref={root}
-      className={classes("mu-rolling", className)}
+      className={cn("mu-rolling", className)}
       data-rolled={rolled ? "" : undefined}
     >
-      <span className="mu-sr">{value}</span>
+      <span className="sr-only">{value}</span>
       <span aria-hidden="true">
         {parts.map((part, index) => {
           const key = parts.length - index;
@@ -191,7 +202,7 @@ export function useTilt<T extends HTMLElement>({
 }: { max?: number } = {}): RefObject<T | null> {
   const ref = useRef<T>(null);
   const enabled = useContext(InteractionMotion);
-  const fine = useFinePointer();
+  const fine = useMedia(finePointerQuery);
   useEffect(() => {
     const element = ref.current;
     if (!element || !enabled || !fine) return;
@@ -230,7 +241,7 @@ export function useMagnetic<T extends HTMLElement>(
 ): RefObject<T | null> {
   const ref = useRef<T>(null);
   const enabled = useContext(InteractionMotion);
-  const fine = useFinePointer();
+  const fine = useMedia(finePointerQuery);
   useEffect(() => {
     const element = ref.current;
     if (!element || !enabled || !fine) return;
@@ -392,7 +403,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               setFocused(false);
           }}
         >
-          <div className="mu-sr" role="status" aria-live="polite" aria-atomic="true">
+          <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
             {announcement}
           </div>
           {toasts.length > 0 && (
@@ -573,7 +584,7 @@ export function StepProgress({
   const style: Vars = { "--mu-duration": `${interval}ms` };
   return (
     <span
-      className={classes("mu-step-progress", className)}
+      className={cn("mu-step-progress", className)}
       data-playing={playing ? "" : undefined}
       data-paused={paused ? "" : undefined}
       style={style}
@@ -602,7 +613,7 @@ export function Scrubber({
   const current = clamp(Math.round(value), 0, last);
   const style: Vars = { "--mu-p": last ? current / last : 0 };
   return (
-    <div className={classes("mu-scrubber", className)} style={style}>
+    <div className={cn("mu-scrubber", className)} style={style}>
       <label className="mu-scrubber-label" htmlFor={id}>
         {label}
       </label>
@@ -657,18 +668,14 @@ export function useReveal<T extends HTMLElement>(): RefObject<T | null> {
     }
     mark("pending");
     let timer = 0;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        observer.disconnect();
-        mark("run");
-        timer = window.setTimeout(() => mark("done"), 1100);
-      },
-      { rootMargin: "0px 0px -8% 0px" },
-    );
-    observer.observe(element);
+    const stop = watchArrival(element, (entry) => {
+      if (!entry.isIntersecting) return;
+      stop();
+      mark("run");
+      timer = window.setTimeout(() => mark("done"), 1100);
+    });
     return () => {
-      observer.disconnect();
+      stop();
       window.clearTimeout(timer);
       if (element.getAttribute("data-reveal") === "pending")
         element.removeAttribute("data-reveal");
@@ -694,7 +701,7 @@ export function SplitBar({
 }) {
   const reveal = useReveal<HTMLElement>();
   return (
-    <figure ref={reveal} className={classes("mu-split", className)}>
+    <figure ref={reveal} className={cn("mu-split", className)}>
       <figcaption>{caption}</figcaption>
       <div className="mu-split-bar" aria-hidden="true">
         {parts.map((part, index) => {
@@ -749,7 +756,7 @@ export function FloatField({
 }) {
   return (
     <div
-      className={classes("mu-float", className)}
+      className={cn("mu-float", className)}
       data-filled={filled ? "" : undefined}
       data-invalid={invalid ? "" : undefined}
     >
@@ -761,13 +768,12 @@ export function FloatField({
   );
 }
 
-export type SwapItem = {
+type SwapItem = {
   key: string;
   title: string;
   meta?: string;
   card: ReactNode;
 };
-const pad = (value: number) => String(value).padStart(2, "0");
 
 /** Tabs beside a stacked deck; the card leaving the front tucks in behind the rest. */
 export function CardSwap({
@@ -821,7 +827,7 @@ export function CardSwap({
     tabs.current[show(targets[event.key])]?.focus();
   };
   return (
-    <div className={classes("mu-swap", className)}>
+    <div className={cn("mu-swap", className)}>
       <div
         className="mu-swap-tabs"
         role="tablist"
@@ -901,7 +907,7 @@ export function CardSwap({
             {nextLabel}
           </ArrowButton>
         </div>
-        <p className="mu-sr" role="status" aria-atomic="true">
+        <p className="sr-only" role="status" aria-atomic="true">
           {announcement}
         </p>
       </div>
@@ -945,7 +951,7 @@ export function LiquidSegments({
   return (
     <nav
       aria-label={label}
-      className={classes("mu-segments", className)}
+      className={cn("mu-segments", className)}
       data-dir={direction}
       style={style}
     >

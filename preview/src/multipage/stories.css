@@ -13,7 +13,7 @@
   font-size: 12px;
   font-weight: 600;
   line-height: 1.5;
-  color: #4c6151;
+  color: #50604b;
 }
 
 /* Featured story */
@@ -23,14 +23,14 @@
   gap: 50px;
   align-items: center;
   padding: 48px 52px;
-  border-radius: 14px;
+  border-radius: 24px;
   background: var(--sage);
-  color: #254c3d;
+  color: var(--forest);
   transition: background 0.2s;
 }
 @media (hover: hover) and (pointer: fine) {
   .st-featured:hover {
-    background: #d8e4cc;
+    background: #d9e4cb;
   }
 }
 .st-featured-copy {
@@ -41,11 +41,12 @@
   min-width: 0;
 }
 .st-eyebrow {
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #4c6151;
+  color: #50604b;
 }
 .mp .st-featured h2 {
   font-size: clamp(32px, 3.6vw, 52px);
@@ -83,29 +84,29 @@
   gap: 18px;
   min-height: 240px;
   padding: 50px 20px 30px;
-  border-radius: 120px 120px 8px 8px;
-  background: #f7f4eb;
+  border-radius: 120px 120px 24px 24px;
+  background: var(--paper);
   font-size: 12px;
   text-align: center;
 }
 .st-featured[data-tone="general"] {
-  background: #eee9db;
+  background: #e9e9e2;
 }
 .st-featured[data-tone="unani"] {
   background: #dce7cf;
 }
 .st-featured[data-tone="learning"] {
-  background: #e8e3d3;
+  background: #e3e3dd;
 }
 @media (hover: hover) and (pointer: fine) {
   .st-featured[data-tone="general"]:hover {
-    background: #e6e0cf;
+    background: #e1e1da;
   }
   .st-featured[data-tone="unani"]:hover {
-    background: #d1dfc2;
+    background: #d2dfc2;
   }
   .st-featured[data-tone="learning"]:hover {
-    background: #dfd9c6;
+    background: #dadad2;
   }
 }
 
@@ -136,7 +137,7 @@
   padding: 4px 10px;
   list-style: none;
   border-radius: 999px;
-  background: #eee9db;
+  background: #e9e9e2;
 }
 .st-player-steps button {
   display: grid;
@@ -156,23 +157,23 @@
   height: 8px;
   overflow: hidden;
   border-radius: 999px;
-  background: #c9d6c0;
+  background: #cbd5bf;
 }
 .st-player-steps button[data-done] .st-player-track,
 .st-player-steps button[aria-current] .st-player-track {
-  background: #254c3d;
+  background: var(--forest);
 }
 .st-player-steps button[aria-current] .st-player-track {
   width: 44px;
 }
 /* While the player runs, the current bar is a track its fill moves along. */
 .st-player[data-auto] button[aria-current] .st-player-track {
-  background: #c9d6c0;
+  background: #cbd5bf;
 }
 .st-player-track .mu-step-progress {
   height: 100%;
   border-radius: inherit;
-  background: #254c3d;
+  background: var(--forest);
 }
 .st-player-toggle {
   display: grid;
@@ -182,16 +183,16 @@
   padding: 0;
   border: 0;
   border-radius: 999px;
-  background: #eee9db;
-  color: #254c3d;
+  background: #e9e9e2;
+  color: var(--forest);
   transition: background 0.2s;
 }
 @media (hover: hover) and (pointer: fine) {
   .st-player-steps button:not([aria-current]):hover .st-player-track {
-    background: #8fa585;
+    background: #8fa583;
   }
   .st-player-toggle:hover {
-    background: #e2dccb;
+    background: #ddddd6;
   }
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -281,19 +282,19 @@
 }
 .st-search-clear {
   position: absolute;
-  top: 1px;
-  right: 1px;
+  top: 2px;
+  right: 2px;
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
-  border-radius: 7px;
+  border-radius: 999px;
   background: transparent;
-  color: #254c3d;
+  color: var(--forest);
   transition: background 0.2s;
 }
 .st-search-clear:hover {
-  background: #e9edde;
+  background: #e7eedf;
 }
 .st-chips {
   display: flex;
@@ -307,9 +308,9 @@
   gap: 10px;
   min-height: 44px;
   padding: 0 16px;
-  border-radius: 7px;
-  background: #f2f0e4;
-  color: #254c3d;
+  border-radius: 999px;
+  background: #f1f1ec;
+  color: var(--forest);
   font-size: 14px;
   font-weight: 600;
   text-align: left;
@@ -317,12 +318,12 @@
 }
 @media (hover: hover) and (pointer: fine) {
   .st-chip:hover {
-    background: #e9edde;
+    background: #e7eedf;
   }
 }
 .st-chip[aria-pressed="true"] {
-  background: #254c3d;
-  color: #f7f4eb;
+  background: var(--forest);
+  color: var(--paper);
 }
 .st-chip-count {
   display: inline-grid;
@@ -330,14 +331,14 @@
   min-width: 24px;
   height: 24px;
   padding: 0 7px;
-  border-radius: 7px;
-  background: #f7f4eb;
-  color: #59744b;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--leaf);
   font-size: 12px;
 }
 .st-chip[aria-pressed="true"] .st-chip-count {
-  background: rgba(247, 244, 235, 0.16);
-  color: #f7f4eb;
+  background: rgba(252, 252, 247, 0.16);
+  color: var(--paper);
 }
 .mp .st-count {
   margin: 26px 0 18px;
@@ -365,38 +366,38 @@
   width: 100%;
   min-height: 270px;
   padding: 28px 28px 64px;
-  border-radius: 14px;
-  background: #f2f0e4;
-  color: #254c3d;
+  border-radius: 24px;
+  background: #f1f1ec;
+  color: var(--forest);
   transition: background 0.2s;
 }
 .st-card[data-tone="general"] {
-  background: #eee9db;
+  background: #e9e9e2;
 }
 .st-card[data-tone="unani"] {
   background: #dce7cf;
 }
 .st-card[data-tone="learning"] {
-  background: #e8e3d3;
+  background: #e3e3dd;
 }
 @media (hover: hover) and (pointer: fine) {
   .st-card:hover {
-    background: #e9e7d8;
+    background: #e7e7e1;
   }
   .st-card[data-tone="general"]:hover {
-    background: #e6e0cf;
+    background: #e1e1da;
   }
   .st-card[data-tone="unani"]:hover {
-    background: #d1dfc2;
+    background: #d2dfc2;
   }
   .st-card[data-tone="learning"]:hover {
-    background: #dfd9c6;
+    background: #dadad2;
   }
 }
 .mp .st-card h3 {
-  font-family: Bitter, serif;
+  font-family: var(--font-display);
   font-size: 24px;
-  font-weight: 400;
+  font-weight: 360;
   line-height: 1.2;
   letter-spacing: -0.02em;
   overflow-wrap: anywhere;
@@ -438,15 +439,15 @@
   gap: 10px;
   min-height: 44px;
   padding: 0 20px;
-  border-radius: 7px;
-  background: #254c3d;
-  color: #f7f4eb;
+  border-radius: 999px;
+  background: var(--forest);
+  color: var(--paper);
   font-size: 14px;
   font-weight: 600;
   transition: background 0.2s;
 }
 .st-reset:hover {
-  background: #1c3c30;
+  background: #132a0c;
 }
 
 /* Closing note */
@@ -483,20 +484,20 @@
   gap: 10px;
   min-height: 44px;
   padding: 0 18px;
-  border-radius: 7px;
-  background: #f2f0e4;
-  color: #254c3d;
+  border-radius: 999px;
+  background: #f1f1ec;
+  color: var(--forest);
   font-size: 14px;
   font-weight: 600;
   transition: background 0.2s;
 }
 .st-copy:hover {
-  background: #e9edde;
+  background: #e7eedf;
 }
 .st-copy-status {
   font-size: 13px;
   line-height: 1.6;
-  color: #4c6151;
+  color: #50604b;
 }
 .st-aside {
   grid-column: 2;
@@ -515,7 +516,7 @@
   margin: 0 0 8px;
   font-size: 12px;
   font-weight: 600;
-  color: #59744b;
+  color: var(--leaf);
 }
 .st-toc ol {
   display: flex;
@@ -530,25 +531,25 @@
   align-items: center;
   min-height: 44px;
   padding: 8px 14px;
-  border-radius: 7px;
-  color: #4c6151;
+  border-radius: 16px;
+  color: #50604b;
   font-size: 14px;
   line-height: 1.4;
   transition: background 0.2s;
 }
 .st-toc a:hover {
-  background: #efeee2;
+  background: #eeeee9;
 }
 .st-toc a.is-active {
   background: var(--sage);
-  color: #254c3d;
+  color: var(--forest);
   font-weight: 600;
 }
 .mp .st-facts {
   margin-top: 22px;
   padding: 24px 24px 8px;
-  border-radius: 14px;
-  background: #f2f0e4;
+  border-radius: 24px;
+  background: #f1f1ec;
 }
 .st-facts dl {
   margin: 8px 0 0;
@@ -557,7 +558,7 @@
   overflow-wrap: anywhere;
 }
 html:not(.lenis) .st-section {
-  scroll-margin-top: calc(var(--site-header-height, 90px) + 16px);
+  scroll-margin-top: calc(var(--site-header-height) + 16px);
 }
 .st-keep-reading {
   margin-top: 80px;
@@ -577,14 +578,14 @@ html:not(.lenis) .st-section {
   gap: 12px;
   min-height: 44px;
   padding: 26px 28px;
-  border-radius: 14px;
-  background: #f2f0e4;
-  color: #254c3d;
+  border-radius: 24px;
+  background: #f1f1ec;
+  color: var(--forest);
   transition: background 0.2s;
 }
 @media (hover: hover) and (pointer: fine) {
   .st-pager-link:hover {
-    background: #e9edde;
+    background: #e7eedf;
   }
 }
 .st-pager-next {
@@ -597,7 +598,7 @@ html:not(.lenis) .st-section {
   gap: 10px;
   font-size: 12px;
   font-weight: 600;
-  color: #59744b;
+  color: var(--leaf);
 }
 @media (hover: hover) and (pointer: fine) {
   .st-pager-link:hover .st-pager-label svg {
@@ -608,17 +609,18 @@ html:not(.lenis) .st-section {
   }
 }
 .st-pager-link strong {
-  font-family: Bitter, serif;
+  font-family: var(--font-display);
   font-size: 22px;
-  font-weight: 400;
+  font-weight: 360;
   line-height: 1.25;
   overflow-wrap: anywhere;
+  letter-spacing: -0.025em;
 }
 .mp .st-more-label {
   margin: 40px 0 16px;
   font-size: 13px;
   font-weight: 600;
-  color: #59744b;
+  color: var(--leaf);
 }
 .st-back {
   margin-top: 30px;
@@ -631,8 +633,8 @@ html:not(.lenis) .st-section {
 .st-therapy {
   margin: 10px 0 30px;
   padding: 40px;
-  border-radius: 14px;
-  background: #f2f0e4;
+  border-radius: 24px;
+  background: #f1f1ec;
 }
 .mp .st-therapy h2 {
   font-size: clamp(28px, 2.6vw, 36px);
@@ -655,9 +657,9 @@ html:not(.lenis) .st-section {
   min-width: 0;
   min-height: 60px;
   padding: 10px 14px;
-  border-radius: 7px;
-  background: #f7f4eb;
-  color: #254c3d;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--forest);
   text-align: left;
   overflow-wrap: anywhere;
   transition: background 0.2s;
@@ -670,16 +672,16 @@ html:not(.lenis) .st-section {
 .st-therapy-option small {
   font-size: 12px;
   line-height: 1.3;
-  color: #59744b;
+  color: var(--leaf);
 }
 @media (hover: hover) and (pointer: fine) {
   .st-therapy-option:hover {
-    background: #e9edde;
+    background: #e7eedf;
   }
 }
 .st-therapy-option[aria-pressed="true"] {
-  background: #254c3d;
-  color: #f7f4eb;
+  background: var(--forest);
+  color: var(--paper);
 }
 .st-therapy-option[aria-pressed="true"] small {
   color: #dce7cf;
@@ -688,20 +690,20 @@ html:not(.lenis) .st-section {
   min-height: 150px;
   margin-top: 16px;
   padding: 24px 26px;
-  border-radius: 14px;
-  background: #f7f4eb;
+  border-radius: 24px;
+  background: var(--paper);
 }
 .mp .st-therapy-panel h3 {
-  font-family: Bitter, serif;
+  font-family: var(--font-display);
   font-size: 26px;
-  font-weight: 400;
+  font-weight: 360;
   letter-spacing: -0.02em;
 }
 .mp .st-therapy-meaning {
   margin: 4px 0 10px;
   font-size: 13px;
   font-weight: 600;
-  color: #59744b;
+  color: var(--leaf);
 }
 .mp .st-therapy-panel p:last-child {
   margin: 0;
@@ -715,7 +717,7 @@ html:not(.lenis) .st-section {
 .st-therapy-note svg {
   flex-shrink: 0;
   margin-top: 4px;
-  color: #59744b;
+  color: var(--leaf);
 }
 .mp .st-therapy-note p {
   margin: 0;
@@ -750,10 +752,10 @@ html:not(.lenis) .st-section {
   /* Category chips: the pressed fill slides; labels sit above it. */
   .mp[data-motion="on"] [data-marker] > .st-chip-marker {
     z-index: 0;
-    background: #254c3d;
+    background: var(--forest);
   }
   .mp[data-motion="on"] .st-chips[data-marker] .st-chip[aria-pressed="true"] {
-    background: #f2f0e4;
+    background: #f1f1ec;
   }
   .mp[data-motion="on"] .st-chips[data-marker] .st-chip > span {
     position: relative;
@@ -806,7 +808,7 @@ html:not(.lenis) .st-section {
 @media (min-width: 801px) and (min-height: 760px) {
   .st-aside {
     position: sticky;
-    top: calc(var(--site-header-height, 90px) + 24px);
+    top: calc(var(--site-header-height) + 24px);
   }
 }
 @media (max-width: 1100px) {

@@ -1,4 +1,8 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+} from "@/components/animated-icons";
 import type * as React from "react";
 
 import { Button } from "@/components/ui/button";

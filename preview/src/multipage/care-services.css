@@ -41,7 +41,7 @@
   height: 44px;
   display: grid;
   place-items: center;
-  border-radius: 7px;
+  border-radius: 999px;
 }
 .care-search-status {
   margin-bottom: 24px;
@@ -74,7 +74,7 @@
 .care-search-groups small {
   display: block;
   font-size: 12px;
-  color: #4c6151;
+  color: #50604b;
   margin-top: 4px;
 }
 .care-search-groups svg {
@@ -94,10 +94,10 @@
 }
 .care-wing {
   padding-block: 80px;
-  scroll-margin-top: var(--site-header-height, 90px);
+  scroll-margin-top: var(--site-header-height);
 }
 .care-wing-general-hospital {
-  background: #eee9db;
+  background: #e9e9e2;
 }
 .care-wing-unani-care {
   background: #dce7cf;
@@ -106,13 +106,13 @@
    switch keeps its own height and lets go exactly where the wings end. */
 .care-wings {
   padding-top: 24px;
-  background: #eee9db;
+  background: #e9e9e2;
 }
 .care-wing-switch {
   position: sticky;
-  top: calc(var(--site-header-height, 90px) + 12px);
-  /* Under the menu backdrop (4), so an open menu softens it like the rest of the page. */
-  z-index: 3;
+  top: calc(var(--site-header-height) + 12px);
+  /* Under the menu backdrop, so an open menu softens it like the rest of the page. */
+  z-index: calc(var(--z-backdrop) - 1);
   height: 56px;
   padding-inline: 24px;
   pointer-events: none;
@@ -139,10 +139,10 @@
 }
 .care-wing-heading {
   position: sticky;
-  top: calc(var(--site-header-height, 90px) + 96px);
+  top: calc(var(--site-header-height) + 96px);
 }
 .care-wing-heading > svg {
-  color: #59744b;
+  color: var(--leaf);
   margin-bottom: 32px;
 }
 .care-wing-heading h2 {
@@ -162,12 +162,12 @@
   gap: 16px;
 }
 .care-service {
-  background: #f7f4eb99;
+  background: #fcfcf799;
   transition: background 0.25s ease-out;
 }
 .care-service:hover,
 .care-service:focus-within {
-  background: #f7f4eb;
+  background: var(--paper);
 }
 .care-service-route {
   display: grid;
@@ -178,8 +178,7 @@
 }
 .care-service-route h3 {
   font:
-    400 26px/1.25 Bitter,
-    serif;
+    360 26px/1.25 var(--font-display);
   letter-spacing: -0.025em;
 }
 .care-service-route > svg {
@@ -204,7 +203,7 @@
 }
 .care-service-doctors > span {
   font-size: 12px;
-  color: #4c6151;
+  color: #50604b;
 }
 .care-service-doctors a {
   display: inline-flex;
@@ -214,7 +213,7 @@
   font-weight: 600;
 }
 .care-service-doctors a:hover {
-  color: #59744b;
+  color: var(--leaf);
 }
 .care-service-support {
   font-size: 13px;
@@ -226,8 +225,7 @@
 }
 .care-team-heading :is(h2, h3) {
   font:
-    400 36px/1.2 Bitter,
-    serif;
+    360 36px/1.2 var(--font-display);
   letter-spacing: -0.025em;
 }
 .care-team-heading > p {
@@ -245,12 +243,11 @@
   width: calc((100% - 60px) / 4);
   min-height: 240px;
   padding: 28px 16px;
-  background: #f7f4eb99;
+  background: #fcfcf799;
 }
 .care-team .doctor-spotlight :is(h3, h4) {
   font:
-    400 24px/1.25 Bitter,
-    serif;
+    360 24px/1.25 var(--font-display);
   letter-spacing: -0.025em;
 }
 .care-team .doctor-spotlight p {

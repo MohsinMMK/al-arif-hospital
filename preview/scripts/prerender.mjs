@@ -19,14 +19,17 @@ const template = await readFile(resolve(dist, "index.html"), "utf8");
 const defaultHead = /<title>[\s\S]*?<\/title>\s*<meta\s+name="description"[\s\S]*?\/>/;
 if (!defaultHead.test(template)) throw new Error("index.html no longer has the expected title and description");
 
-for (const path of server.publicPaths) {
-  const html = template
-    .replace(defaultHead, () => server.headTags(path))
-    .replace('<div id="root"></div>', () => `<div id="root">${server.render(path)}</div>`);
-  const file = resolve(dist, `prerendered${path}/index.html`);
-  await mkdir(dirname(file), { recursive: true });
-  await writeFile(file, html);
-}
+// Each page renders in turn (rendering is synchronous); the files are written side by side.
+await Promise.all(
+  server.publicPaths.map(async (path) => {
+    const html = template
+      .replace(defaultHead, () => server.headTags(path))
+      .replace('<div id="root"></div>', () => `<div id="root">${server.render(path)}</div>`);
+    const file = resolve(dist, `prerendered${path}/index.html`);
+    await mkdir(dirname(file), { recursive: true });
+    await writeFile(file, html);
+  }),
+);
 
 // index.html now only answers unknown paths (the app shows its not-found page), so keep it out of search.
 await writeFile(

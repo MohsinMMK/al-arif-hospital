@@ -1,11 +1,6 @@
 import {
   Activity,
-  Ambulance,
   Baby,
-  Eye,
-  Hand,
-  HeartPulse,
-  Leaf,
   PersonStanding,
   Pill,
   ScanLine,
@@ -15,15 +10,34 @@ import {
   Smile,
   Sparkles,
   Sprout,
-  Stethoscope,
   TestTube,
   Venus,
   Warehouse,
 } from "lucide-react";
+import {
+  Ambulance,
+  Eye,
+  Hand,
+  HeartPulse,
+  Leaf,
+  Stethoscope,
+} from "@/components/animated-icons";
 import type { LucideIcon } from "lucide-react";
+import { hospital } from "@/hospital";
+import type { Service } from "./data";
 import type { SplitPart } from "./motion-ui";
 
 export type DepartmentGroup = "general" | "unani" | "round-the-clock" | "pharmacy";
+
+/** The two wings, each with its group id and its icon. */
+export const wings = [
+  { id: "general", name: "General hospital", icon: Stethoscope },
+  { id: "unani", name: "Unani care", icon: Leaf },
+] as const satisfies readonly {
+  id: DepartmentGroup;
+  name: Service["wing"];
+  icon: LucideIcon;
+}[];
 
 export type Department = {
   slug: string;
@@ -278,7 +292,7 @@ export const departments: Department[] = [
     icon: Siren,
     summary:
       "The hospital never closes. For an emergency, call the 24-hour line before you set out.",
-    call: { href: "tel:+919848430017", label: "+91 98484 30017" },
+    call: { href: hospital.emergencyHref, label: hospital.emergency },
     span: "feature",
   },
   {

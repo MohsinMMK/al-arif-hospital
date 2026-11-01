@@ -5,3 +5,6 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+/** Two-digit counters: 1 → "01". */
+export const pad = (value: number) => String(value).padStart(2, "0");

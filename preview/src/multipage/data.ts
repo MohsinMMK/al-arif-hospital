@@ -16,8 +16,6 @@ export type Service = {
   source: string;
   note: string;
 };
-export const landmark =
-  "Adjacent to Dargah Hazrat Syed Noori Shah Jeelani R.A., Bandlaguda Main Road";
 export const servicePages: Service[] = [
   {
     slug: "general-medicine",
@@ -572,6 +570,18 @@ export const doctorPages: DoctorProfile[] = [
     source: "Intake 5!A22:Y22",
   },
 ];
+/** A doctor's wing is the wing of their first service. */
+export const wingOf = (doctor: DoctorProfile): Service["wing"] =>
+  servicePages.find((service) => service.slug === doctor.serviceSlugs[0])
+    ?.wing ?? "General hospital";
+/** Up to two initials, without the "Dr." title. */
+export const initialsOf = (name: string) =>
+  name
+    .replace(/^Dr\.\s*/, "")
+    .split(" ")
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join("");
 export const pageCatalog = [
   {
     path: "/site",

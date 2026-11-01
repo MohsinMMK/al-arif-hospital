@@ -1,15 +1,3 @@
-.mu-sr {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border: 0;
-}
-
 /* Rolling number */
 .mu-rolling {
   display: inline-block;
@@ -86,8 +74,8 @@
   border-radius: 50%;
   background: radial-gradient(
     closest-side,
-    rgb(255 253 245 / 0.7),
-    rgb(255 253 245 / 0)
+    rgb(252 252 247 / 0.7),
+    rgb(252 252 247 / 0)
   );
   transform: translate(var(--mu-lx, 50%), var(--mu-ly, 50%));
 }
@@ -163,10 +151,13 @@
   align-items: center;
   gap: 12px;
   padding: 12px 10px 12px 18px;
-  border-radius: 14px;
-  background: #254c3d;
-  color: #fffdf5;
-  box-shadow: 0 14px 32px -18px rgb(23 45 36 / 0.55);
+  border: 1px solid rgb(252 252 247 / 0.14);
+  border-radius: 24px;
+  background: rgb(28 58 19 / 0.84);
+  color: var(--paper);
+  box-shadow: 0 14px 32px -18px rgb(31 44 27 / 0.55);
+  -webkit-backdrop-filter: saturate(1.4) blur(20px);
+  backdrop-filter: saturate(1.4) blur(20px);
   pointer-events: auto;
 }
 
@@ -188,7 +179,7 @@
   width: 32px;
   height: 32px;
   border: 0;
-  border-radius: 7px;
+  border-radius: 999px;
   background: transparent;
   color: inherit;
   cursor: pointer;
@@ -196,12 +187,12 @@
 
 @media (hover: hover) and (pointer: fine) {
   .mu-toast-dismiss:hover {
-    background: rgb(255 253 245 / 0.12);
+    background: rgb(252 252 247 / 0.12);
   }
 }
 
 .mu-toast-dismiss:focus-visible {
-  outline: 3px solid #e2ebd9;
+  outline: 3px solid #e3ecd6;
   outline-offset: 2px;
 }
 
@@ -244,7 +235,7 @@
   display: block;
   height: 3px;
   border-radius: 3px;
-  background: #59744b;
+  background: var(--leaf);
   transform: scaleX(0);
   transform-origin: 0 50%;
 }
@@ -276,7 +267,7 @@
 /* Scrubber */
 .mu-scrubber {
   min-width: 0;
-  color: #254c3d;
+  color: var(--forest);
 }
 
 .mu-scrubber-label {
@@ -290,7 +281,7 @@
   height: 48px;
   margin-top: 38px;
   border-radius: 7px;
-  background: #e2ebd9;
+  background: #e3ecd6;
 }
 
 .mu-scrubber-rail {
@@ -307,11 +298,11 @@
   height: 12px;
   margin-left: -1px;
   border-radius: 1px;
-  background: #bdc9b5;
+  background: #bec9b4;
 }
 
 .mu-scrubber-tick[data-passed] {
-  background: #789767;
+  background: #759866;
 }
 
 .mu-scrubber-thumb {
@@ -328,7 +319,7 @@
   left: -1.5px;
   width: 3px;
   border-radius: 3px;
-  background: #59744b;
+  background: var(--leaf);
 }
 
 .mu-scrubber-value {
@@ -337,7 +328,7 @@
   left: 0;
   max-width: calc(100vw - 64px);
   overflow: hidden;
-  color: #254c3d;
+  color: var(--forest);
   font-size: 15px;
   font-weight: 700;
   line-height: 1.3;
@@ -391,7 +382,7 @@
   justify-content: space-between;
   gap: 16px;
   margin-top: 8px;
-  color: #4c6151;
+  color: #50604b;
   font-size: 13px;
 }
 
@@ -452,7 +443,7 @@
 /* Split bar: the legend repeats every figure as text, so the bar itself stays decorative */
 .mu-split {
   margin: 0 0 36px;
-  color: #254c3d;
+  color: var(--forest);
 }
 
 .mu-split figcaption {
@@ -462,18 +453,18 @@
 }
 
 .mu-split [data-part="0"] {
-  --mu-swatch: #254c3d;
-  --mu-ink: #fffdf5;
+  --mu-swatch: var(--forest);
+  --mu-ink: var(--paper);
 }
 
 .mu-split [data-part="1"] {
-  --mu-swatch: #59744b;
-  --mu-ink: #fffdf5;
+  --mu-swatch: var(--leaf);
+  --mu-ink: var(--paper);
 }
 
 .mu-split [data-part="2"] {
-  --mu-swatch: #bdc9b5;
-  --mu-ink: #254c3d;
+  --mu-swatch: #bec9b4;
+  --mu-ink: var(--forest);
 }
 
 .mu-split-bar {
@@ -481,7 +472,7 @@
   gap: 3px;
   height: 56px;
   overflow: hidden;
-  border-radius: 7px;
+  border-radius: 16px;
 }
 
 /* Padding sits on the number, so it never skews the share each part receives. */
@@ -493,9 +484,11 @@
   overflow: hidden;
   background: var(--mu-swatch);
   color: var(--mu-ink);
-  font-family: Bitter, serif;
+  font-family: var(--font-display);
   font-size: 22px;
   font-variant-numeric: tabular-nums;
+  font-weight: 360;
+  letter-spacing: -0.025em;
 }
 
 .mu-split-part b {
@@ -531,7 +524,7 @@
 
 .mu-split .mu-split-legend dt {
   grid-column: 2;
-  color: #254c3d;
+  color: var(--forest);
   font-size: 15px;
   font-weight: 700;
   line-height: 1.4;
@@ -540,7 +533,7 @@
 .mu-split .mu-split-legend dt small {
   display: block;
   margin-top: 2px;
-  color: #4c6151;
+  color: #50604b;
   font-size: 13px;
   font-weight: 500;
   line-height: 1.45;
@@ -549,7 +542,7 @@
 .mu-split .mu-split-legend dd {
   grid-column: 2;
   margin: 6px 0 0;
-  color: #4c6151;
+  color: #50604b;
   font-size: 14px;
   font-weight: 600;
 }
@@ -600,29 +593,34 @@
   position: relative;
 }
 
-.mu-float > :is(select, input) {
-  display: block;
+.mu-float > :is(input, [data-slot="select-trigger"]) {
   width: 100%;
   min-height: 60px;
   padding: 24px 14px 8px;
   line-height: 20px;
 }
 
-/* Native Safari selects ignore vertical padding, so draw the chevron ourselves. */
-.mu-float > select {
+.mu-float > input {
+  display: block;
+}
+
+/* The chevron centres on the whole field, not on the text below the label. */
+.mu-float > [data-slot="select-trigger"] {
+  position: relative;
   padding-right: 42px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23254c3d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
-  background-position: right 14px center;
-  background-repeat: no-repeat;
-  background-size: 16px;
-  appearance: none;
 }
 
-.mu-float > select option {
-  color: #254c3d;
+.mu-float > [data-slot="select-trigger"] > svg {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  translate: 0 -50%;
 }
 
-.mu-float:not([data-filled], :focus-within) > select {
+/* An empty choice shows its placeholder only once the label has floated clear of it. */
+.mu-float:not([data-filled], :focus-within, :has(> [data-state="open"]))
+  > [data-slot="select-trigger"]
+  > span {
   color: transparent;
 }
 
@@ -633,7 +631,7 @@
   left: 15px;
   z-index: 1;
   overflow: hidden;
-  color: #4c6151;
+  color: #50604b;
   font-size: 15px;
   font-weight: 600;
   line-height: 20px;
@@ -643,8 +641,9 @@
   pointer-events: none;
 }
 
-.mu-float:is([data-filled], :focus-within) .mu-float-label {
-  color: #254c3d;
+.mu-float:is([data-filled], :focus-within, :has(> [data-state="open"]))
+  .mu-float-label {
+  color: var(--forest);
   transform: translateY(-11px) scale(0.8);
 }
 
@@ -685,40 +684,42 @@
   width: 100%;
   padding: 16px 18px;
   border: 0;
-  border-radius: 7px;
+  border-radius: 16px;
   background: transparent;
-  color: #254c3d;
+  color: var(--forest);
   text-align: left;
 }
 
 .mu-swap-tabs [aria-selected="true"] {
-  background: #e2ebd9;
+  background: #e3ecd6;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .mu-swap-tabs [aria-selected="false"]:hover {
-    background: #f2f0e4;
+    background: #f1f1ec;
   }
 }
 
 .mu-swap-index {
-  color: #4c6151;
+  color: #50604b;
   font-size: 13px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
 .mu-swap-title {
-  font-family: Bitter, serif;
+  font-family: var(--font-display);
   font-size: 19px;
   line-height: 1.3;
+  font-weight: 360;
+  letter-spacing: -0.025em;
 }
 
 .mu-swap-title small {
   display: block;
   margin-top: 6px;
-  color: #4c6151;
-  font-family: Manrope, sans-serif;
+  color: #50604b;
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 600;
   line-height: 1.4;
@@ -737,8 +738,8 @@
   display: flex;
   grid-area: 1 / 1;
   min-width: 0;
-  border-radius: 14px;
-  box-shadow: 0 18px 40px -28px rgb(23 45 36 / 0.45);
+  border-radius: 24px;
+  box-shadow: 0 18px 40px -28px rgb(31 44 27 / 0.45);
   transform: translate(
       calc(var(--mu-pos, 0) * var(--mu-dx, 22px) * var(--mu-fan, 1)),
       calc(var(--mu-pos, 0) * var(--mu-dy, -18px) * var(--mu-fan, 1))
@@ -762,7 +763,7 @@
   justify-content: space-between;
   gap: 16px;
   margin-top: 24px;
-  color: #4c6151;
+  color: #50604b;
   font-size: 13px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -845,12 +846,13 @@
   grid-auto-columns: minmax(0, 1fr);
   grid-auto-flow: column;
   padding: 4px;
-  border-radius: 11px;
-  background: rgb(247 244 235 / 0.82);
-  box-shadow: 0 14px 32px -20px rgb(23 45 36 / 0.5);
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  background: var(--frost-strong);
+  box-shadow: 0 14px 32px -20px rgb(31 44 27 / 0.5);
   isolation: isolate;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: var(--frost-filter);
+  -webkit-backdrop-filter: var(--frost-filter);
 }
 
 .mu-segments-pill {
@@ -863,8 +865,8 @@
   bottom: 4px;
   left: calc(4px + var(--mu-index) * (100% - 8px) / var(--mu-count));
   z-index: -1;
-  border-radius: 7px;
-  background: #254c3d;
+  border-radius: 999px;
+  background: var(--forest);
 }
 
 .mu-segments a {
@@ -875,15 +877,15 @@
   min-width: 0;
   min-height: 48px;
   padding: 6px 12px;
-  border-radius: 7px;
-  color: #254c3d;
+  border-radius: 999px;
+  color: var(--forest);
   font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
 }
 
 .mu-segments a[aria-current] {
-  color: #fffdf5;
+  color: var(--paper);
 }
 
 .mu-segments a > svg {
@@ -891,13 +893,13 @@
 }
 
 .mu-segments a small {
-  color: #4c6151;
+  color: #50604b;
   font-size: 12px;
   font-weight: 600;
 }
 
 .mu-segments a[aria-current] small {
-  color: #e2ebd9;
+  color: #e3ecd6;
 }
 
 .mu-segments a:focus-visible {
@@ -937,7 +939,7 @@
 
 /* High Contrast replaces tonal fills, so mark state with system colours instead. */
 @media (forced-colors: active) {
-  .mu-float > select {
+  .mu-float > [data-slot="select-trigger"] > span {
     color: FieldText;
   }
 

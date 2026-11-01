@@ -1,25 +1,27 @@
 import { useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { BookOpen } from "lucide-react";
 import {
   ArrowDown,
   ArrowUpRight,
-  BookOpen,
   Leaf,
   MapPin,
   Stethoscope,
-} from "lucide-react";
+} from "@/components/animated-icons";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowButton } from "@/components/ui/arrow-button";
+import { landmark } from "@/hospital";
 import { InteractionMotion } from "./interaction-context";
-import { landmark, servicePages } from "./data";
+import { servicePages } from "./data";
 import { departmentPath, departments } from "./department-data";
 import { DoctorRow } from "./DoctorRow";
 import { VisitJourney } from "./VisitJourney";
-import { RollingNumber, useMagnetic, useReveal } from "./motion-ui";
+import { RollingNumber, useReveal } from "./motion-ui";
+import { Action } from "./primitives";
 import { StoryDeck } from "./Stories";
 import { stories } from "./story-data";
+import { headerOffset } from "./useSiteScroll";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 function StoryLink({
@@ -29,14 +31,10 @@ function StoryLink({
   to: string;
   children: React.ReactNode;
 }) {
-  const magnet = useMagnetic<HTMLAnchorElement>();
   return (
-    <ArrowButton
-      className="story-link mu-magnetic"
-      render={<Link ref={magnet} to={to} />}
-    >
+    <Action className="story-link" to={to}>
       {children}
-    </ArrowButton>
+    </Action>
   );
 }
 
@@ -86,8 +84,7 @@ function CareChapter({ unani = false }: { unani?: boolean }) {
             scrollTrigger: {
               trigger: section,
               start: "top 85%",
-              end: () =>
-                `top ${(document.querySelector(".mp-header")?.getBoundingClientRect().height ?? 90) + 2}px`,
+              end: () => `top ${headerOffset() + 2}px`,
               scrub: 0.18,
               invalidateOnRefresh: true,
               onUpdate: (trigger) =>

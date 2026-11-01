@@ -7,6 +7,7 @@
 import { useEffect, useImperativeHandle, useRef, useState } from "react";
 import type { CSSProperties, Ref } from "react";
 import { Mesh, Plane, Program, RenderTarget, Renderer, Texture, Triangle } from "ogl";
+import { pad } from "@/lib/utils";
 
 import "./FlexCarousel.css";
 
@@ -54,7 +55,7 @@ export type FlexCarouselHandle = {
   open: (index: number) => void;
   close: () => void;
 };
-export type FlexCarouselProps = Partial<Bend> &
+type FlexCarouselProps = Partial<Bend> &
   Callbacks & {
     items: FlexCarouselItem[];
     preset?: Preset;
@@ -301,8 +302,7 @@ void main() {
 function Digits({ value }: { value: number }) {
   return (
     <span className="flex-carousel__digits">
-      {String(value)
-        .padStart(2, "0")
+      {pad(value)
         .split("")
         .map((digit, index) => (
           <span key={index} className="flex-carousel__digit">
@@ -1213,7 +1213,9 @@ export default function FlexCarousel({
           while (pointer.samples.length > 2 && now - pointer.samples[0].t > 100) pointer.samples.shift();
         }
       }
-      dirty = true;
+      // Only a drag or a lens chasing the cursor changes the picture, so only they redraw.
+      // A frame still runs for the rest: it re-tests the hover cursor and the autoplay hold.
+      if (pointer.dragging || settingsRef.current?.followCursor) dirty = true;
       start();
     };
 
@@ -1443,7 +1445,7 @@ export default function FlexCarousel({
           <span className="flex-carousel__count" data-hidden={focusOpen ? "" : undefined}>
             <Digits value={active + 1} />
             <span className="flex-carousel__slash">/</span>
-            <span>{String(items.length).padStart(2, "0")}</span>
+            <span>{pad(items.length)}</span>
           </span>
         </div>
       )}
