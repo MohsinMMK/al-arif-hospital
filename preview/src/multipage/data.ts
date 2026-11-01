@@ -591,11 +591,17 @@ export const pageCatalog = [
     kind: "Overview",
   },
   {
-    path: "/site/departments",
-    title: "Departments",
+    path: "/site/general",
+    title: "General hospital",
     description:
-      "Specialty and Unani OPDs, round-the-clock care, pharmacies and the herbal garden.",
-    kind: "Directory",
+      "Nine specialty OPDs, general hospital care pages and the general hospital team.",
+    kind: "Wing",
+  },
+  {
+    path: "/site/unani",
+    title: "Unani care",
+    description: "Seven Unani OPDs, Unani care pages and the Unani care team.",
+    kind: "Wing",
   },
   // Search reads the description too, so it carries each department's keywords.
   ...departments.map((department) => ({
@@ -608,8 +614,9 @@ export const pageCatalog = [
   })),
   {
     path: "/site/services",
-    title: "Care & services",
-    description: "Explore general hospital and Unani services with their associated doctors.",
+    title: "Services",
+    description:
+      "Casualty, ICU, operation theatre, maternity, ambulance, diagnostics, pharmacies and the herbal garden, shared by both wings.",
     kind: "Directory",
   },
   ...servicePages.map((service) => ({

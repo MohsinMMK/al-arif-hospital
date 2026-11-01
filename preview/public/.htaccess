@@ -19,6 +19,10 @@ RewriteCond %{QUERY_STRING} ^(.+)$
 RewriteRule ^site/request/?$ /site/visit?%1#request [L,R=301,NE]
 RewriteRule ^site/request/?$ /site/visit#request [L,R=301,NE]
 
+# The Departments page split into the General and Unani pages; the browser keeps any
+# #department fragment, and the General page sends other wings' anchors on
+RewriteRule ^site/departments/?$ /site/general [L,R=301]
+
 # Serve each route's prerendered HTML (built into /prerendered so no real folder shadows a route)
 RewriteCond %{DOCUMENT_ROOT}/prerendered/$1/index.html -f
 RewriteRule ^(site(?:/[^/]+)*)/?$ prerendered/$1/index.html [L]

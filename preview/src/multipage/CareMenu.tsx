@@ -1,21 +1,18 @@
+import { Pill, ScanLine, Siren } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { ArrowUpRight } from "@/components/animated-icons";
 import { Link } from "react-router-dom";
-import { doctorPages } from "./data";
+import { hospital } from "@/hospital";
+import { doctorPages, servicePages } from "./data";
 import {
   departmentGroups,
   departmentPath,
   departments,
-  wings,
+  sharedSections,
   type Department,
+  type Wing,
 } from "./department-data";
 import "./care-menu.css";
-
-const onwardLinks = [
-  ["All departments", "/site/departments"],
-  ["Find a doctor", "/site/doctors"],
-  ["Care & services", "/site/services"],
-  ["Pharmacy", "/site/pharmacy"],
-];
 
 // One clinician goes straight to their profile; several open the roster filtered to them.
 function doctorsLink({ slug, doctorSlugs = [] }: Department) {
@@ -26,12 +23,14 @@ function doctorsLink({ slug, doctorSlugs = [] }: Department) {
 
 function DepartmentRow({
   department,
+  to,
   onNavigate,
 }: {
   department: Department;
+  to: string;
   onNavigate: () => void;
 }) {
-  const { name, english, icon: Icon, to, slug } = department;
+  const { name, english, icon: Icon } = department;
   const doctorCount = doctorPages.filter((doctor) =>
     department.doctorSlugs?.includes(doctor.slug),
   ).length;
@@ -39,7 +38,7 @@ function DepartmentRow({
   const title = english ?? name;
   return (
     <li className="cm-row">
-      <Link to={to ?? departmentPath(slug)} onClick={onNavigate}>
+      <Link to={to} onClick={onNavigate}>
         <Icon size={16} aria-hidden="true" />
         <span>
           {title}
@@ -60,36 +59,122 @@ function DepartmentRow({
   );
 }
 
-/** The care map: both wings with their departments, the 24-hour services and onward links. */
-export function CareLinks({ onNavigate }: { onNavigate: () => void }) {
-  const roundTheClock = departments.filter(
-    (department) => department.group === "round-the-clock",
-  );
+function Onward({
+  links,
+  onNavigate,
+}: {
+  links: [string, string][];
+  onNavigate: () => void;
+}) {
   return (
-    <div className="cm-links">
-      {/* The two wings side by side, so a patient sees both traditions in one place. */}
-      <div className="cm-wings">
-        {wings.map(({ id, name, icon: Icon }) => {
-          const group = departmentGroups.find((item) => item.id === id);
+    <ul className="cm-onward">
+      {links.map(([label, path]) => (
+        <li key={path}>
+          <Link to={path} onClick={onNavigate}>
+            {label}
+            <ArrowUpRight size={14} aria-hidden="true" />
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** One wing's map: its departments, its care pages and its doctors. Both wings share this shape. */
+export function WingLinks({
+  wing,
+  onNavigate,
+}: {
+  wing: Wing;
+  onNavigate: () => void;
+}) {
+  const { id, name, short, path, icon: Icon } = wing;
+  const group = departmentGroups.find((item) => item.id === id);
+  const services = servicePages.filter((service) => service.wing === name);
+  return (
+    <div className="cm-links" data-wing={id}>
+      <div className="cm-cols">
+        <div className="cm-col">
+          <p className="cm-title">
+            <span>
+              <Icon size={18} aria-hidden="true" />
+            </span>
+            {name}
+            {group && <small>{group.accent}</small>}
+          </p>
+          <ul>
+            {departments
+              .filter((department) => department.group === id)
+              .map((department) => (
+                <DepartmentRow
+                  key={department.slug}
+                  department={department}
+                  to={department.to ?? departmentPath(department.slug)}
+                  onNavigate={onNavigate}
+                />
+              ))}
+          </ul>
+        </div>
+        <div className="cm-col cm-side">
+          <p className="cm-label">Care pages</p>
+          <ul className="cm-pages">
+            {services.map((service) => (
+              <li key={service.slug}>
+                <Link
+                  to={`/site/services/${service.slug}`}
+                  onClick={onNavigate}
+                >
+                  {service.name}
+                  <ArrowUpRight size={14} aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className="cm-foot">
+        <Onward
+          links={[
+            [`All ${short} departments`, path],
+            [`Doctors in ${short}`, `/site/doctors?wing=${id}`],
+          ]}
+          onNavigate={onNavigate}
+        />
+      </div>
+    </div>
+  );
+}
+
+const sharedIcons: Record<string, LucideIcon> = {
+  "round-the-clock": Siren,
+  diagnostics: ScanLine,
+  pharmacy: Pill,
+};
+
+/** The services both wings share: round-the-clock care, diagnostics and the pharmacies. */
+export function SharedServiceLinks({ onNavigate }: { onNavigate: () => void }) {
+  return (
+    <div className="cm-links" data-wing="shared">
+      <div className="cm-cols" data-count="3">
+        {sharedSections.map(({ id, label, items }) => {
+          const Icon = sharedIcons[id];
           return (
-            <div key={id} className="cm-wing" data-wing={id}>
+            <div key={id} className="cm-col">
               <p className="cm-title">
                 <span>
                   <Icon size={18} aria-hidden="true" />
                 </span>
-                {name}
-                {group && <small>{group.accent}</small>}
+                {label}
               </p>
               <ul>
-                {departments
-                  .filter((department) => department.group === id)
-                  .map((department) => (
-                    <DepartmentRow
-                      key={department.slug}
-                      department={department}
-                      onNavigate={onNavigate}
-                    />
-                  ))}
+                {items.map((department) => (
+                  <DepartmentRow
+                    key={department.slug}
+                    department={department}
+                    to={`/site/services#${department.slug}`}
+                    onNavigate={onNavigate}
+                  />
+                ))}
               </ul>
             </div>
           );
@@ -98,22 +183,15 @@ export function CareLinks({ onNavigate }: { onNavigate: () => void }) {
       <div className="cm-foot">
         <p>
           <strong>Open 24 hours</strong>
-          {roundTheClock.map(({ slug, name }) => (
-            <Link key={slug} to={departmentPath(slug)} onClick={onNavigate}>
-              {name}
-            </Link>
-          ))}
+          <a href={hospital.emergencyHref}>Emergency line</a>
         </p>
-        <ul className="cm-onward">
-          {onwardLinks.map(([label, path]) => (
-            <li key={path}>
-              <Link to={path} onClick={onNavigate}>
-                {label}
-                <ArrowUpRight size={14} aria-hidden="true" />
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <Onward
+          links={[
+            ["All services", "/site/services"],
+            ["Pharmacy & manufacturing", "/site/pharmacy"],
+          ]}
+          onNavigate={onNavigate}
+        />
       </div>
     </div>
   );

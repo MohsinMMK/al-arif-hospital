@@ -1,4 +1,4 @@
-/* Header navigation: the gooey bar on wide screens, with the Care panel beneath it. */
+/* Header navigation: the gooey bar on wide screens, with the General, Unani and Services panels beneath it. */
 .mp-gooey {
   --gooey-bar: #edf1e6;
   --gooey-label: #556251;
@@ -36,7 +36,7 @@
   position: absolute;
   top: calc(100% + 8px);
   left: 50%;
-  width: min(1080px, 92vw);
+  width: min(800px, 92vw);
   max-height: calc(100dvh - var(--site-header-height) - 24px);
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -55,6 +55,9 @@
     opacity 180ms,
     transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
     visibility 0s 300ms;
+}
+.cm-panel[data-menu="services"] {
+  width: min(1040px, 92vw);
 }
 .cm-panel[data-open] {
   opacity: 1;
@@ -82,7 +85,7 @@
   }
 }
 
-/* The care map itself, in the wide header's panel and in the phone menu's accordion. */
+/* Each menu's map, in the wide header's panel and in the phone menu's accordion. */
 :where(.cm-panel, .cm-drawer) > .cm-links {
   display: flex;
   flex-wrap: wrap;
@@ -96,15 +99,25 @@
   }
 }
 
-.cm-wings {
+.cm-cols {
+  flex: 1 1 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
 }
-.cm-wing:first-child {
-  padding-right: 30px;
+.cm-cols[data-count="3"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-.cm-wing + .cm-wing {
-  padding-left: 30px;
+.cm-col {
+  min-width: 0;
+  padding-inline: 26px;
+}
+.cm-col:first-child {
+  padding-left: 0;
+}
+.cm-col:last-child {
+  padding-right: 0;
+}
+.cm-col + .cm-col {
   border-left: 1px solid #1c3a131f;
 }
 .cm-title {
@@ -128,7 +141,7 @@
   background: #fcfcf7b3;
   color: #517745;
 }
-.cm-wing[data-wing="unani"] .cm-title > span {
+[data-wing="unani"] .cm-title > span {
   background: #fcfcf7b3;
   color: #8a6d24;
 }
@@ -139,7 +152,7 @@
   font-size: 12px;
   font-weight: 500;
 }
-.cm-wing ul {
+.cm-col ul {
   display: grid;
   margin: 0;
   padding: 0;
@@ -198,6 +211,7 @@
 }
 
 .cm-foot {
+  flex: 1 1 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -237,6 +251,40 @@
 .cm-links .cm-foot p a:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+.cm-label {
+  margin: 4px 0 12px;
+  color: #6d7a69;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.cm-col .cm-pages {
+  gap: 2px;
+}
+.cm-pages a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  color: var(--forest);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 160ms;
+}
+.cm-pages a > svg {
+  flex-shrink: 0;
+  color: #759866;
+  transition: transform 200ms;
+}
+.cm-pages a:hover {
+  background: #fcfcf799;
+}
+.cm-pages a:hover > svg {
+  transform: translate(2px, -2px);
 }
 .cm-onward {
   display: flex;
@@ -280,22 +328,24 @@
 .cm-drawer {
   padding: 4px 0 16px;
 }
-.cm-drawer .cm-wings {
+.cm-drawer .cm-cols,
+.cm-drawer .cm-cols[data-count="3"] {
   grid-template-columns: 1fr;
   gap: 16px;
 }
-.cm-drawer .cm-wing:first-child {
-  padding-right: 0;
+.cm-drawer .cm-col {
+  padding: 0;
 }
-.cm-drawer .cm-wing + .cm-wing {
-  padding: 16px 0 0;
+.cm-drawer .cm-col + .cm-col {
+  padding-top: 16px;
   border-left: 0;
   border-top: 1px solid #1c3a131f;
 }
 .cm-drawer .cm-title {
   font-size: 17px;
 }
-.cm-drawer .cm-row > a:first-child {
+.cm-drawer .cm-row > a:first-child,
+.cm-drawer .cm-pages a {
   padding-inline: 4px;
 }
 .cm-drawer .cm-foot {
@@ -303,15 +353,24 @@
   align-items: flex-start;
 }
 @media (min-width: 640px) and (max-width: 1050px) {
-  .cm-drawer .cm-wings {
-    grid-template-columns: 1fr 1fr;
+  .cm-drawer .cm-cols {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
     gap: 0;
   }
-  .cm-drawer .cm-wing:first-child {
-    padding-right: 24px;
+  .cm-drawer .cm-cols[data-count="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .cm-drawer .cm-wing + .cm-wing {
-    padding: 0 0 0 24px;
+  .cm-drawer .cm-col {
+    padding-inline: 20px;
+  }
+  .cm-drawer .cm-col:first-child {
+    padding-left: 0;
+  }
+  .cm-drawer .cm-col:last-child {
+    padding-right: 0;
+  }
+  .cm-drawer .cm-col + .cm-col {
+    padding-top: 0;
     border-top: 0;
     border-left: 1px solid #1c3a131f;
   }
@@ -321,6 +380,6 @@
 .mp-drawer .cm-drawer {
   padding: 4px 8px 12px;
 }
-.mp-drawer .cm-row > a:first-child:hover {
+.mp-drawer :is(.cm-row > a:first-child, .cm-pages a):hover {
   background: #1c3a130d;
 }

@@ -16,15 +16,20 @@ const fixed: Record<string, { title: string; description: string }> = {
     description:
       "General hospital and Unani care on one campus in Bandlaguda, Chandrayangutta, Hyderabad. 24-hour casualty, specialty and Unani OPDs, ₹10 OPD fee. Run by the Al Arif Education and Medical Trust since 2002.",
   },
-  "/site/departments": {
-    title: `Departments – General & Unani OPDs | ${brand}, Hyderabad`,
+  "/site/general": {
+    title: `General Hospital – Nine Specialty OPDs | ${brand}, Hyderabad`,
     description:
-      "Specialty OPDs, Unani departments, 24-hour casualty, wards, pharmacies and the herbal garden at Al-Arif General Hospital, Bandlaguda, Hyderabad.",
+      "General medicine, surgery, obstetrics and gynaecology, paediatrics, eye, dental, physiotherapy, radiology and pathology OPDs at Al-Arif General Hospital, Bandlaguda, Hyderabad.",
+  },
+  "/site/unani": {
+    title: `Unani Care – Seven Unani OPDs | ${brand}, Hyderabad`,
+    description:
+      "Unani internal medicine (Moalijat), obstetrics and gynaecology, paediatrics, regimental therapy, preventive and social medicine, skin and cosmetology, and surgery OPDs at Al-Arif Hospital, Bandlaguda, Hyderabad.",
   },
   "/site/services": {
-    title: `Care & Services – General Hospital and Unani | ${brand}`,
+    title: `Services – 24-Hour Casualty, Diagnostics & Pharmacy | ${brand}`,
     description:
-      "General medicine, surgery, women's and child health, diagnostics, Unani medicine, hijama and regimental therapy at Al-Arif Hospital, Hyderabad.",
+      "24-hour casualty, ICU, operation theatre, maternity ward, ambulance, pathology, radiology, two pharmacies and the herbal garden at Al-Arif Hospital, Hyderabad.",
   },
   "/site/doctors": {
     title: `Our Doctors – ${doctorPages.length} Clinicians | ${brand}, Hyderabad`,
@@ -72,7 +77,9 @@ const fixed: Record<string, { title: string; description: string }> = {
 };
 
 const trim = (text: string, length = 160) =>
-  text.length <= length ? text : `${text.slice(0, length - 1).replace(/\s+\S*$/, "")}…`;
+  text.length <= length
+    ? text
+    : `${text.slice(0, length - 1).replace(/\s+\S*$/, "")}…`;
 
 /** Title and description for a public page, or undefined for anything else. */
 export function pageHead(pathname: string) {
@@ -100,7 +107,10 @@ export function pageHead(pathname: string) {
   if (section === "stories") {
     const story = stories.find((item) => item.slug === slug);
     if (story)
-      return { title: `${story.title} | ${brand}`, description: trim(story.dek) };
+      return {
+        title: `${story.title} | ${brand}`,
+        description: trim(story.dek),
+      };
   }
   return undefined;
 }

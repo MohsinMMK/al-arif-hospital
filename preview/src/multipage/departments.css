@@ -1,4 +1,4 @@
-/* Departments: four groups of cards under a sticky group switch. */
+/* Care pages: the General and Unani wing pages and the shared Services page, card grids under a sticky switch. */
 .dp-switch {
   position: sticky;
   top: calc(var(--site-header-height) + 12px);

@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { doctorPages, servicePages, pageCatalog } from "./data";
-import { departmentPath, departments, wardBeds } from "./department-data";
+import {
+  departmentPath,
+  departments,
+  movedAnchor,
+  sharedSections,
+  wardBeds,
+} from "./department-data";
 import { milestones } from "./milestones";
 import { regimentalTherapies, stories } from "./story-data";
 
@@ -37,9 +43,9 @@ describe("multi-page content relationships", () => {
     );
     for (const story of stories) {
       expect(story.sections.length).toBeGreaterThan(0);
-      expect(
-        new Set(story.sections.map((section) => section.id)).size,
-      ).toBe(story.sections.length);
+      expect(new Set(story.sections.map((section) => section.id)).size).toBe(
+        story.sections.length,
+      );
       for (const serviceSlug of story.serviceSlugs)
         expect(
           servicePages.some((service) => service.slug === serviceSlug),
@@ -50,9 +56,9 @@ describe("multi-page content relationships", () => {
     }
     for (const milestone of milestones) {
       if (milestone.storySlug)
-        expect(stories.some((story) => story.slug === milestone.storySlug)).toBe(
-          true,
-        );
+        expect(
+          stories.some((story) => story.slug === milestone.storySlug),
+        ).toBe(true);
     }
     expect(
       milestones.every(
@@ -83,6 +89,29 @@ describe("multi-page content relationships", () => {
           true,
         );
     }
+  });
+  it("splits care into two wing pages and one shared Services page", () => {
+    const paths = pageCatalog.map((page) => page.path);
+    expect(paths).toEqual(
+      expect.arrayContaining([
+        "/site/general",
+        "/site/unani",
+        "/site/services",
+      ]),
+    );
+    expect(paths).not.toContain("/site/departments");
+    expect(departmentPath("moalijat")).toBe("/site/unani#moalijat");
+    expect(departmentPath("paediatrics")).toBe("/site/general#paediatrics");
+    expect(departmentPath("casualty")).toBe("/site/services#casualty");
+    expect(sharedSections.map((section) => section.items.length)).toEqual([
+      5, 2, 4,
+    ]);
+    // Old Departments and Care & services anchors still land somewhere real.
+    expect(movedAnchor("unani")).toBe("/site/unani");
+    expect(movedAnchor("general-hospital")).toBe("/site/general");
+    expect(movedAnchor("pharmacy")).toBe("/site/services#pharmacy");
+    expect(movedAnchor("herbal-garden")).toBe("/site/services#herbal-garden");
+    expect(movedAnchor("nowhere")).toBeUndefined();
   });
   it("keeps excluded topics off the public pages", () => {
     const text = JSON.stringify({

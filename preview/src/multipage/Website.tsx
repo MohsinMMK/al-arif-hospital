@@ -3,8 +3,8 @@ import { Stories, StoryCards, StoryDetail, TherapyExplorer } from "./Stories";
 import { stories } from "./story-data";
 import { Community } from "./Community";
 import { Pharmacy } from "./Pharmacy";
-import { CareDirectory, CareTeam } from "./CareDirectory";
-import { Departments } from "./Departments";
+import { CareTeam } from "./CareDirectory";
+import { DepartmentsRedirect, SharedServices, WingPage } from "./Departments";
 import {
   departmentPath,
   departments,
@@ -16,9 +16,9 @@ import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { InteractionMotion } from "./interaction-context";
 import { ContactDock } from "./ContactDock";
 import { ReachUs, VisitComposer } from "./ReachUs";
-import { CareLinks } from "./CareMenu";
+import { SharedServiceLinks, WingLinks } from "./CareMenu";
 import { GooeyNav } from "@/components/ui/gooey-nav";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { LazyMotion, domAnimation } from "motion/react";
 import type { ReactNode, Ref } from "react";
 import {
@@ -124,19 +124,6 @@ import "./website.css";
 import "./home-story.css";
 import "./care-services.css";
 
-function Services() {
-  return (
-    <div className="care-directory">
-      <CareDirectory />
-      <div className="mp-page care-directory-close">
-        <p className="mp-source-note">
-          Please confirm service availability, fees and consultation
-          arrangements with reception.
-        </p>
-      </div>
-    </div>
-  );
-}
 function ServiceDetail() {
   const { slug } = useParams();
   const service = servicePages.find((item) => item.slug === slug);
@@ -150,7 +137,9 @@ function ServiceDetail() {
   return (
     <div className="mp-page">
       <BackLink
-        to={`/site/services#${service.wing === "General hospital" ? "general-hospital" : "unani-care"}`}
+        to={
+          service.wing === "General hospital" ? "/site/general" : "/site/unani"
+        }
       >
         {service.wing}
       </BackLink>
@@ -280,9 +269,18 @@ function ServiceDetail() {
 }
 function Doctors() {
   const [query, setQuery] = useState("");
-  const [wing, setWing] = useState<Service["wing"] | "All">("All");
-  // The Care menu links here with ?department= to show one department's team.
+  // The header menus link here with ?department= to show one department's team,
+  // or with ?wing= to open on one wing.
   const [params, setParams] = useSearchParams();
+  const wingParam = params.get("wing");
+  const wingFromParam = () =>
+    wings.find((group) => group.id === wingParam)?.name ?? "All";
+  const [wing, setWing] = useState<Service["wing"] | "All">(wingFromParam);
+  const [seenWing, setSeenWing] = useState(wingParam);
+  if (wingParam !== seenWing) {
+    setSeenWing(wingParam);
+    setWing(wingFromParam());
+  }
   const department = departments.find(
     (item) => item.slug === params.get("department"),
   );
@@ -646,28 +644,28 @@ const registrations = [
 ];
 const aboutRoutes: Destination[] = [
   {
-    to: "/site/departments",
-    icon: Building2,
-    title: "Departments",
-    detail: "Sixteen OPDs, wards and round-the-clock care",
+    to: "/site/general",
+    icon: Stethoscope,
+    title: "General hospital",
+    detail: "Nine specialty OPDs, care pages and doctors",
+  },
+  {
+    to: "/site/unani",
+    icon: Leaf,
+    title: "Unani care",
+    detail: "Seven Unani OPDs, care pages and doctors",
   },
   {
     to: "/site/services",
-    icon: Stethoscope,
-    title: "Care & services",
-    detail: "General and Unani care, wing by wing",
+    icon: HeartPulse,
+    title: "Services",
+    detail: "24-hour care, diagnostics and the pharmacies",
   },
   {
     to: "/site/community",
     icon: HandHeart,
     title: "Community & milestones",
     detail: "Camps, relief work and the timeline",
-  },
-  {
-    to: "/site/pharmacy",
-    icon: Pill,
-    title: "Pharmacy & manufacturing",
-    detail: "Unani pharmacy and raw drugs",
   },
   {
     to: "/site/research",
@@ -725,7 +723,7 @@ function About() {
                 </li>
               ))}
             </ul>
-            <TextLink to="/site/departments#general">
+            <TextLink to="/site/general#departments">
               General hospital departments
             </TextLink>
           </article>
@@ -745,7 +743,7 @@ function About() {
                 </li>
               ))}
             </ul>
-            <TextLink to="/site/departments#unani">Unani departments</TextLink>
+            <TextLink to="/site/unani#departments">Unani departments</TextLink>
           </article>
         </div>
         <p className="sx-note">
@@ -1446,12 +1444,50 @@ function SiteHeader({
   );
 }
 
+// The three header menus: each wing, then the services both wings share.
+const menus = [
+  {
+    id: "general",
+    label: "General",
+    name: "General hospital",
+    icon: Stethoscope,
+    note: "Nine specialty OPDs",
+  },
+  {
+    id: "unani",
+    label: "Unani",
+    name: "Unani care",
+    icon: Leaf,
+    note: "Seven Unani OPDs",
+  },
+  {
+    id: "services",
+    label: "Services",
+    name: "Services",
+    icon: HeartPulse,
+    note: "24 hours, diagnostics, pharmacy",
+  },
+] as const;
+type MenuId = (typeof menus)[number]["id"];
+
+function MenuLinks({ id, onNavigate }: { id: MenuId; onNavigate: () => void }) {
+  const wing = wings.find((item) => item.id === id);
+  return wing ? (
+    <WingLinks wing={wing} onNavigate={onNavigate} />
+  ) : (
+    <SharedServiceLinks onNavigate={onNavigate} />
+  );
+}
+
 export function Shell() {
   const header = useRef<HTMLElement>(null);
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [careOpen, setCareOpen] = useState(false);
-  const [drawerCareOpen, setDrawerCareOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState<MenuId | null>(null);
+  const [drawerMenu, setDrawerMenu] = useState<MenuId | null>(null);
+  const dismissMenu = useCallback((open: boolean) => {
+    if (!open) setOpenMenu(null);
+  }, []);
   // Motion follows the system's reduced-motion setting.
   const enabled = !useReducedMotion();
   const main = useRef<HTMLElement>(null);
@@ -1471,17 +1507,17 @@ export function Shell() {
   }, [location.pathname]);
   useSiteScroll(enabled, location.pathname);
   usePageTone(page, location.pathname);
-  // Any navigation, including a jump to a department on the same page, folds the Care map away.
+  // Any navigation, including a jump to a department on the same page, folds the menus away.
   const routeKey = `${location.pathname}${location.search}${location.hash}`;
   const [seenRoute, setSeenRoute] = useState(routeKey);
   if (routeKey !== seenRoute) {
     setSeenRoute(routeKey);
-    setCareOpen(false);
+    setOpenMenu(null);
     setMenuOpen(false);
   }
-  // The Care map belongs to the wide header, the drawer to narrow screens.
-  useDismiss(careOpen, setCareOpen, {
-    toggle: '[aria-controls="care-panel"]',
+  // The menu panels belong to the wide header, the drawer to narrow screens.
+  useDismiss(openMenu !== null, dismissMenu, {
+    toggle: `[aria-controls="menu-${openMenu}"]`,
     closeWhen: inDrawerLayout,
   });
   useDismiss(menuOpen, setMenuOpen, {
@@ -1501,27 +1537,30 @@ export function Shell() {
     updateHeight();
     return () => observer.disconnect();
   }, []);
-  // Care opens a map of both wings; the other three are pages.
-  const nav = [
-    ["Doctors", "/site/doctors"],
-    ["About", "/site/about"],
-    ["Visit us", "/site/visit"],
-  ];
-  // The phone menu shows each page as a tile with a line about it, after Seed's menu.
-  const navTiles = [
-    [Users, `${doctorPages.length} clinicians across two wings`],
-    [Landmark, "The Trust behind the hospital"],
-    [MapPin, "Bandlaguda, Chandrayangutta"],
-  ] as const;
-  const carePaths = ["/site/departments", "/site/services", "/site/pharmacy"];
   const onPath = (path: string) =>
     location.pathname === path || location.pathname.startsWith(`${path}/`);
-  const pageIndex = nav.findIndex(([, path]) => onPath(path));
-  const routeIndex = carePaths.some(onPath)
+  // A care page belongs to its wing's menu; the pharmacy page to Services.
+  const serviceWing = servicePages.find(
+    (service) => service.slug === serviceSlug,
+  )?.wing;
+  const routeMenu: MenuId | null =
+    onPath("/site/general") || serviceWing === "General hospital"
+      ? "general"
+      : onPath("/site/unani") || serviceWing === "Unani care"
+        ? "unani"
+        : onPath("/site/services") || onPath("/site/pharmacy")
+          ? "services"
+          : null;
+  // Doctors, the three menus, then About.
+  const menuIndex = (id: MenuId) =>
+    1 + menus.findIndex((menu) => menu.id === id);
+  const routeIndex = onPath("/site/doctors")
     ? 0
-    : pageIndex === -1
-      ? -1
-      : pageIndex + 1;
+    : routeMenu
+      ? menuIndex(routeMenu)
+      : onPath("/site/about")
+        ? menus.length + 1
+        : -1;
   return (
     <InteractionMotion.Provider value={enabled}>
       <div ref={page} className="mp" data-motion={enabled ? "on" : "off"}>
@@ -1529,12 +1568,12 @@ export function Shell() {
           <a className="mp-skip" href="#page-content">
             Skip to content
           </a>
-          {careOpen && (
+          {openMenu && (
             <button
               className="cm-backdrop"
-              aria-label="Close care menu"
+              aria-label="Close menu"
               tabIndex={-1}
-              onClick={() => setCareOpen(false)}
+              onClick={() => setOpenMenu(null)}
             />
           )}
           {menuOpen && (
@@ -1562,85 +1601,105 @@ export function Shell() {
               className="mp-gooey"
               aria-label="Main navigation"
               items={[
-                {
-                  label: "Care",
+                { label: "Doctors", href: "/site/doctors" },
+                ...menus.map((menu) => ({
+                  label: menu.label,
                   trailing: (
                     <ChevronDown
                       className="mp-care-chevron"
                       aria-hidden="true"
                     />
                   ),
-                  expanded: careOpen,
-                  controls: "care-panel",
-                },
-                ...nav.map(([label, href]) => ({ label, href })),
+                  expanded: openMenu === menu.id,
+                  controls: `menu-${menu.id}`,
+                })),
+                { label: "About", href: "/site/about" },
               ]}
-              value={careOpen ? 0 : routeIndex}
-              onChange={(index) => setCareOpen(index === 0 && !careOpen)}
+              value={openMenu ? menuIndex(openMenu) : routeIndex}
+              onChange={(index) => {
+                const menu = menus[index - 1];
+                setOpenMenu(menu && openMenu !== menu.id ? menu.id : null);
+              }}
               activeColor="#1c3a13"
               activeLabelColor="#fcfcf7"
               reducedMotion={!enabled}
             />
-            <div
-              id="care-panel"
-              className="cm-panel"
-              role="region"
-              aria-label="Care at Al-Arif"
-              data-open={careOpen ? "" : undefined}
-              inert={!careOpen}
-            >
-              <CareLinks onNavigate={() => setCareOpen(false)} />
-            </div>
+            {menus.map((menu) => (
+              <div
+                key={menu.id}
+                id={`menu-${menu.id}`}
+                className="cm-panel"
+                data-menu={menu.id}
+                role="region"
+                aria-label={menu.name}
+                data-open={openMenu === menu.id ? "" : undefined}
+                inert={openMenu !== menu.id}
+              >
+                <MenuLinks id={menu.id} onNavigate={() => setOpenMenu(null)} />
+              </div>
+            ))}
             <nav
               id="main-navigation"
               aria-label="Main navigation"
               className={cn("mp-drawer", menuOpen && "is-open")}
             >
-              <button
-                type="button"
-                className="mp-drawer-care"
-                aria-expanded={drawerCareOpen}
-                aria-controls="drawer-care"
-                onClick={() => setDrawerCareOpen(!drawerCareOpen)}
-              >
+              <NavLink onClick={() => setMenuOpen(false)} to="/site/doctors">
                 <span className="mp-drawer-tile">
-                  <Stethoscope size={26} aria-hidden="true" />
+                  <Users size={26} aria-hidden="true" />
                 </span>
                 <span className="mp-drawer-text">
-                  Care <small>Departments & services</small>
+                  Doctors{" "}
+                  <small>
+                    {doctorPages.length} clinicians across two wings
+                  </small>
                 </span>
-                <ChevronDown
-                  className="mp-care-chevron"
-                  size={18}
-                  aria-hidden="true"
-                />
-              </button>
-              <div
-                id="drawer-care"
-                className="cm-drawer"
-                hidden={!drawerCareOpen}
-              >
-                <CareLinks onNavigate={() => setMenuOpen(false)} />
-              </div>
-              {nav.map(([label, path], index) => {
-                const [Icon, note] = navTiles[index];
+              </NavLink>
+              {menus.map(({ id, name, icon: Icon, note }) => {
+                const open = drawerMenu === id;
                 return (
-                  <NavLink
-                    onClick={() => setMenuOpen(false)}
-                    key={path}
-                    to={path}
-                  >
-                    <span className="mp-drawer-tile">
-                      <Icon size={26} aria-hidden="true" />
-                    </span>
-                    <span className="mp-drawer-text">
-                      {label} <small>{note}</small>
-                    </span>
-                  </NavLink>
+                  <Fragment key={id}>
+                    <button
+                      type="button"
+                      className="mp-drawer-care"
+                      aria-expanded={open}
+                      aria-controls={`drawer-${id}`}
+                      onClick={() => setDrawerMenu(open ? null : id)}
+                    >
+                      <span className="mp-drawer-tile">
+                        <Icon size={26} aria-hidden="true" />
+                      </span>
+                      <span className="mp-drawer-text">
+                        {name} <small>{note}</small>
+                      </span>
+                      <ChevronDown
+                        className="mp-care-chevron"
+                        size={18}
+                        aria-hidden="true"
+                      />
+                    </button>
+                    <div
+                      id={`drawer-${id}`}
+                      className="cm-drawer"
+                      hidden={!open}
+                    >
+                      <MenuLinks
+                        id={id}
+                        onNavigate={() => setMenuOpen(false)}
+                      />
+                    </div>
+                  </Fragment>
                 );
               })}
+              <NavLink onClick={() => setMenuOpen(false)} to="/site/about">
+                <span className="mp-drawer-tile">
+                  <Landmark size={26} aria-hidden="true" />
+                </span>
+                <span className="mp-drawer-text">
+                  About <small>The Trust behind the hospital</small>
+                </span>
+              </NavLink>
             </nav>
-            <Action to="/site/visit#request">Request a visit</Action>
+            <Action to="/site/visit">Request a visit</Action>
             <button
               className="mp-menu-toggle"
               aria-controls="main-navigation"
@@ -1668,8 +1727,19 @@ export function Shell() {
             <Chapter path={location.pathname} motionEnabled={enabled}>
               <Routes>
                 <Route path="/site" element={<HomeStory />} />
-                <Route path="/site/departments" element={<Departments />} />
-                <Route path="/site/services" element={<Services />} />
+                <Route
+                  path="/site/general"
+                  element={<WingPage key="general" id="general" />}
+                />
+                <Route
+                  path="/site/unani"
+                  element={<WingPage key="unani" id="unani" />}
+                />
+                <Route
+                  path="/site/departments"
+                  element={<DepartmentsRedirect />}
+                />
+                <Route path="/site/services" element={<SharedServices />} />
                 <Route
                   path="/site/services/:slug"
                   element={<ServiceDetail />}
@@ -1732,8 +1802,9 @@ export function Shell() {
             </div>
             <div>
               <h3>Explore</h3>
-              <Link to="/site/departments">Departments</Link>
-              <Link to="/site/services">Care & services</Link>
+              <Link to="/site/general">General hospital</Link>
+              <Link to="/site/unani">Unani care</Link>
+              <Link to="/site/services">Services</Link>
               <Link to="/site/doctors">Our doctors</Link>
               <Link to="/site/about">About the hospital</Link>
               <Link to="/site/pharmacy">Pharmacy & manufacturing</Link>

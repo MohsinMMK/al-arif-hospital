@@ -160,12 +160,13 @@ function CareChapter({ unani = false }: { unani?: boolean }) {
               : "From everyday health concerns to maternity, child health and surgery, backed by a 24-hour casualty and inpatient wards."}
           </p>
           <div className="story-care-links">
-            <StoryLink
-              to={`/site/services#${unani ? "unani-care" : "general-hospital"}`}
-            >
+            <StoryLink to={unani ? "/site/unani" : "/site/general"}>
               {unani ? "Explore Unani care" : "Explore general care"}
             </StoryLink>
-            <Link className="story-secondary-link" to="/site/departments">
+            <Link
+              className="story-secondary-link"
+              to={`${unani ? "/site/unani" : "/site/general"}#departments`}
+            >
               {unani ? `All ${opds} Unani OPDs` : `All ${opds} specialty OPDs`}
               <ArrowUpRight size={16} />
             </Link>

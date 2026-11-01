@@ -27,17 +27,42 @@ import { hospital } from "@/hospital";
 import type { Service } from "./data";
 import type { SplitPart } from "./motion-ui";
 
-export type DepartmentGroup = "general" | "unani" | "round-the-clock" | "pharmacy";
+export type DepartmentGroup =
+  "general" | "unani" | "round-the-clock" | "pharmacy";
 
-/** The two wings, each with its group id and its icon. */
+/** The two wings, each with its group id, its page and its icon. */
 export const wings = [
-  { id: "general", name: "General hospital", icon: Stethoscope },
-  { id: "unani", name: "Unani care", icon: Leaf },
+  {
+    id: "general",
+    name: "General hospital",
+    short: "General",
+    path: "/site/general",
+    icon: Stethoscope,
+    emphasis: "Care for everyday life.",
+    introduction:
+      "From everyday health concerns to maternity, child health and surgery, find the department and the care that fit the conversation you need.",
+  },
+  {
+    id: "unani",
+    name: "Unani care",
+    short: "Unani",
+    path: "/site/unani",
+    icon: Leaf,
+    emphasis: "Time to listen.",
+    introduction:
+      "A consultation starts with your health history, daily life and questions. Explore seven Unani OPDs, regimental therapy and the Unani pharmacy.",
+  },
 ] as const satisfies readonly {
   id: DepartmentGroup;
   name: Service["wing"];
+  short: string;
+  path: string;
   icon: LucideIcon;
+  emphasis: string;
+  introduction: string;
 }[];
+
+export type Wing = (typeof wings)[number];
 
 export type Department = {
   slug: string;
@@ -239,8 +264,7 @@ export const departments: Department[] = [
     english: "Paediatrics",
     group: "unani",
     icon: Baby,
-    summary:
-      "Unani care for children, coordinated with the child health team.",
+    summary: "Unani care for children, coordinated with the child health team.",
     beds: "Within the obstetrics wing",
     serviceSlug: "unani-women-children",
   },
@@ -330,7 +354,8 @@ export const departments: Department[] = [
     name: "Unani (Teaching) Pharmacy",
     group: "pharmacy",
     icon: Leaf,
-    summary: "GMP-certified, dispensing pure herbal Unani medicines at low rates.",
+    summary:
+      "GMP-certified, dispensing pure herbal Unani medicines at low rates.",
     points: ["GMP No. 502/U/12"],
     to: "/site/pharmacy",
   },
@@ -339,7 +364,8 @@ export const departments: Department[] = [
     name: "Allopathic Pharmacy",
     group: "pharmacy",
     icon: Pill,
-    summary: "DCA-certified, dispensing prescribed medicines at subsidised rates.",
+    summary:
+      "DCA-certified, dispensing prescribed medicines at subsidised rates.",
     points: ["DCA No. 102/HD1/AP/2010"],
     serviceSlug: "diagnostics-pharmacy",
   },
@@ -378,4 +404,56 @@ export const wardBeds: SplitPart[] = [
   { label: "Surgery", detail: "Incl. eye, ENT and dental", value: 25 },
 ];
 
-export const departmentPath = (slug: string) => `/site/departments#${slug}`;
+/** The shared services both wings use, in the order the Services page and menu show them. */
+export const sharedSections = [
+  {
+    id: "round-the-clock",
+    label: "Round the clock",
+    short: "24 hours",
+    title: "Round the clock.",
+    accent: "When care can’t wait.",
+    lead: "The hospital is open 24 hours. Casualty, critical care, theatre and maternity share the campus with the wards.",
+    items: departments.filter((item) => item.group === "round-the-clock"),
+  },
+  {
+    id: "diagnostics",
+    label: "Diagnostics",
+    short: "Diagnostics",
+    title: "Diagnostics.",
+    accent: "Tests on campus.",
+    lead: "Pathology and radiology are two of the general hospital’s nine specialty OPDs. Your doctor or reception can tell you which test you need.",
+    items: departments.filter((item) =>
+      ["pathology", "radiology"].includes(item.slug),
+    ),
+  },
+  {
+    id: "pharmacy",
+    label: "Pharmacy & garden",
+    short: "Pharmacy",
+    title: "Pharmacy & garden.",
+    accent: "Medicines made close by.",
+    lead: "Two licensed pharmacies, a raw drug agency and a medicinal herbal garden support both traditions.",
+    items: departments.filter((item) => item.group === "pharmacy"),
+  },
+];
+
+/** A wing's departments live on its own page; everything else is a shared service. */
+export const departmentPath = (slug: string) => {
+  const group = departments.find((item) => item.slug === slug)?.group;
+  return group === "general" || group === "unani"
+    ? `/site/${group}#${slug}`
+    : `/site/services#${slug}`;
+};
+
+/**
+ * Where an anchor from the old Departments and Care & services pages now lives:
+ * a department, a group or a wing section. Unknown anchors give undefined.
+ */
+export function movedAnchor(id: string) {
+  if (departments.some((item) => item.slug === id)) return departmentPath(id);
+  if (id === "general" || id === "general-hospital") return "/site/general";
+  if (id === "unani" || id === "unani-care") return "/site/unani";
+  if (sharedSections.some((section) => section.id === id))
+    return `/site/services#${id}`;
+  return undefined;
+}
