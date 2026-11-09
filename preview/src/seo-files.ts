@@ -15,8 +15,24 @@ import { fullAddress, hospital, pageHead, publicPaths, siteUrl } from "./seo";
 const hospitalId = `${siteUrl}/#hospital`;
 const absolute = (path: string) => `${siteUrl}${path}`;
 
-// Describes public/og-image.png, made from scripts/og-image.html.
-const shareImageAlt = `${hospital.name} logo, Bandlaguda, Hyderabad: open 24 hours, general and Unani care, ₹10 OPD fee`;
+type ShareImage = { src: string; type: string; alt: string };
+
+// public/og-image.png, made from scripts/og-image.html: the card for every page without its own.
+const defaultShareImage: ShareImage = {
+  src: "/og-image.png",
+  type: "image/png",
+  alt: `${hospital.name} logo, Bandlaguda, Hyderabad: open 24 hours, general and Unani care, ₹10 OPD fee`,
+};
+
+// Pages with their own 1200x630 card, each made from an HTML file in scripts/.
+const shareImages: Record<string, ShareImage> = {
+  // scripts/og-training.html
+  "/site/training": {
+    src: "/training/og-training.jpg",
+    type: "image/jpeg",
+    alt: "Free hands-on training in the Unani distillation process (Amal-e-Taqteer), held 7 November 2026 for 40 BUMS medicos at the GMP-certified Al-Arif Unani Pharmacy",
+  },
+};
 
 const address = {
   "@type": "PostalAddress",
@@ -59,7 +75,7 @@ const hospitalData = {
   ],
   url: absolute("/site"),
   logo: absolute("/icon-512.png"),
-  image: absolute("/og-image.png"),
+  image: absolute(defaultShareImage.src),
   description: pageHead("/site")?.description,
   telephone: hospital.reception,
   email: hospital.email,
@@ -281,6 +297,7 @@ export function headTags(path: string) {
   const head = pageHead(path);
   if (!head) throw new Error(`No title and description for ${path}`);
   const url = absolute(path);
+  const shareImage = shareImages[path] ?? defaultShareImage;
   const data = [
     hospitalData,
     websiteData,
@@ -297,13 +314,13 @@ export function headTags(path: string) {
     `<meta property="og:title" content="${escapeHtml(head.title)}" />`,
     `<meta property="og:description" content="${escapeHtml(head.description)}" />`,
     `<meta property="og:url" content="${url}" />`,
-    `<meta property="og:image" content="${absolute("/og-image.png")}" />`,
-    `<meta property="og:image:type" content="image/png" />`,
+    `<meta property="og:image" content="${absolute(shareImage.src)}" />`,
+    `<meta property="og:image:type" content="${shareImage.type}" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
-    `<meta property="og:image:alt" content="${escapeHtml(shareImageAlt)}" />`,
+    `<meta property="og:image:alt" content="${escapeHtml(shareImage.alt)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
-    `<meta name="twitter:image:alt" content="${escapeHtml(shareImageAlt)}" />`,
+    `<meta name="twitter:image:alt" content="${escapeHtml(shareImage.alt)}" />`,
     `<meta name="geo.region" content="IN-TG" />`,
     `<meta name="geo.placename" content="Hyderabad" />`,
     `<link rel="alternate" type="text/plain" title="Site summary for AI assistants" href="/llms.txt" />`,

@@ -209,6 +209,16 @@ const firstVisit = stories.find((story) => story.slug === "your-first-visit");
 // The hospital beyond the consulting room: its story, learning, research and guides.
 const moreItems: MoreItem[] = [
   {
+    key: "training",
+    title: "Hands-on training",
+    meta: "7 Nov 2026 · Unani pharmacy",
+    tone: "unani",
+    heading: "Distillation, learnt at the still.",
+    body: "Forty BUMS students and house surgeons joined a free, hands-on session on Amal-e-Taqteer, the Unani distillation process, at the Trust’s GMP-certified pharmacy. The next programme is coming shortly.",
+    cta: "See the training",
+    to: "/site/training",
+  },
+  {
     key: "story",
     title: "Our story",
     meta: "Since 2002 · Bandlaguda",
@@ -238,8 +248,8 @@ const moreItems: MoreItem[] = [
     meta: "Jamia Arifia Nooria",
     tone: "learning",
     heading: "A place to care. A place to learn.",
-    body: "The Trust has run Jamia Arifia Nooria, a charitable Arabic institute with free boarding and lodging, since 2002. Clinical observation, workshops and academic visits are planned.",
-    note: "Programme details are not yet confirmed. Applications are not open.",
+    body: "The Trust has run Jamia Arifia Nooria, a charitable Arabic institute with free boarding and lodging, since 2002. Hands-on pharmacy training began in November 2026; clinical observation is planned.",
+    note: "Clinical observation details are not yet confirmed. Applications are not open.",
     cta: "Explore education",
     to: "/site/education",
   },

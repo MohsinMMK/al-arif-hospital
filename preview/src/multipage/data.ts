@@ -693,6 +693,13 @@ export const pageCatalog = [
     kind: "Pharmacy",
   },
   {
+    path: "/site/training",
+    title: "Hands-on training",
+    description:
+      "Free hands-on training for BUMS students and house surgeons at the Al-Arif Unani Pharmacy.",
+    kind: "Training",
+  },
+  {
     path: "/site/visit",
     title: "Plan your visit",
     description: "Address, reception, practical guidance and directions.",

@@ -9,8 +9,18 @@ import {
 } from "./department-data";
 import { milestones } from "./milestones";
 import { regimentalTherapies, stories } from "./story-data";
+import { trainingProgrammes } from "./training-data";
 
 describe("multi-page content relationships", () => {
+  it("links training organisers to real doctor profiles", () => {
+    for (const programme of trainingProgrammes)
+      for (const { doctorSlug } of programme.organisers)
+        if (doctorSlug)
+          expect(doctorPages.some((doctor) => doctor.slug === doctorSlug)).toBe(
+            true,
+          );
+  });
+
   it("provides unique addresses and resolves every clinician/service association", () => {
     expect(new Set(pageCatalog.map((page) => page.path)).size).toBe(
       pageCatalog.length,

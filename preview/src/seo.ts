@@ -73,6 +73,11 @@ const fixed: Record<string, { title: string; description: string }> = {
     description:
       "The Unani teaching pharmacy, allopathic pharmacy and raw drug agency on the Al-Arif Hospital campus in Bandlaguda, Hyderabad.",
   },
+  "/site/training": {
+    title: `Hands-on Unani Pharmacy Training for BUMS Students | ${brand}`,
+    description:
+      "Free hands-on Unani distillation (Amal-e-Taqteer) training for BUMS students and house surgeons at the GMP-certified Al-Arif Unani Pharmacy, Hyderabad.",
+  },
   "/site/visit": {
     title: `Plan Your Visit – Address, OPD & Directions | ${brand}`,
     description: `Open 24 hours in Tulsi Nagar, Bandlaguda, Hyderabad ${hospital.postalCode}, beside Dargah Hazrat Syed Noori Shah Jeelani. OPD timings, directions and reception ${hospital.reception}.`,

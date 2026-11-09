@@ -1,0 +1,135 @@
+<!doctype html>
+<!--
+  The link-preview card for /site/training (public/training/og-training.jpg), shown when that page
+  is shared on WhatsApp, X, Facebook and LinkedIn. Text stays in the centre so square crops keep it.
+  Regenerate after editing, from preview/:
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --hide-scrollbars \
+    --window-size=1200,630 --screenshot=/tmp/og-training.png "file://$PWD/scripts/og-training.html" \
+    && sips -s format jpeg -s formatOptions 82 /tmp/og-training.png --out public/training/og-training.jpg
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      @font-face {
+        font-family: "Inter Tight";
+        src: url("../node_modules/@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2")
+          format("woff2");
+        font-weight: 100 900;
+      }
+      @font-face {
+        font-family: "IBM Plex Mono";
+        src: url("../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2")
+          format("woff2");
+        font-weight: 500;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+      body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #fcfcf7;
+        font-family: "Inter Tight", sans-serif;
+        text-align: center;
+        background: #1c3a13;
+      }
+      .photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 40%;
+      }
+      .shade {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(55% 75% at 50% 50%, rgb(20 42 14 / 0.82) 0%, rgb(20 42 14 / 0.62) 70%),
+          linear-gradient(180deg, rgb(28 58 19 / 0.25) 0%, rgb(28 58 19 / 0.6) 100%);
+      }
+      main {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .eyebrow {
+        margin: 0;
+        font: 500 16px/1 "IBM Plex Mono", monospace;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #c3d5ae;
+      }
+      h1 {
+        margin: 18px 0 0;
+        font-size: 66px;
+        font-weight: 500;
+        line-height: 1.02;
+        letter-spacing: -0.035em;
+      }
+      h1 em {
+        font-style: normal;
+        color: #c3d5ae;
+      }
+      .urdu {
+        margin: 10px 0 0;
+        font: 400 40px/1.6 "Noto Nastaliq Urdu", "Geeza Pro", serif;
+        color: #e3ecd6;
+      }
+      ul {
+        display: flex;
+        gap: 12px;
+        margin: 22px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      li {
+        padding: 11px 20px;
+        border-radius: 999px;
+        background: rgb(252 252 247 / 0.14);
+        box-shadow: inset 0 0 0 1px rgb(252 252 247 / 0.28);
+        font-size: 21px;
+        font-weight: 600;
+      }
+      li:first-child {
+        background: #fcfcf7;
+        color: #1c3a13;
+        box-shadow: none;
+      }
+      .foot {
+        position: absolute;
+        bottom: 26px;
+        left: 0;
+        right: 0;
+        margin: 0;
+        font-size: 17px;
+        font-weight: 500;
+        color: #e3ecd6;
+      }
+    </style>
+  </head>
+  <body>
+    <img class="photo" src="../public/training/distillation-apparatus.webp" alt="" />
+    <div class="shade"></div>
+    <main>
+      <p class="eyebrow">Free hands-on training · Al-Arif Unani Pharmacy</p>
+      <h1>Distillation process,<br /><em>learnt at the still.</em></h1>
+      <p class="urdu" lang="ur" dir="rtl">عمل تقطیر</p>
+      <ul>
+        <li>Held 7 Nov 2026</li>
+        <li>40 BUMS medicos</li>
+        <li>GMP-certified unit</li>
+      </ul>
+    </main>
+    <p class="foot">Al-Arif General Hospital &amp; Unani Research Institute · Bandlaguda, Hyderabad</p>
+  </body>
+</html>

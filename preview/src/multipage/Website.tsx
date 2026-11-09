@@ -3,6 +3,7 @@ import { Stories, StoryCards, StoryDetail, TherapyExplorer } from "./Stories";
 import { stories } from "./story-data";
 import { Community } from "./Community";
 import { Pharmacy } from "./Pharmacy";
+import { Training } from "./Training";
 import { CareTeam } from "./CareDirectory";
 import { DepartmentsRedirect, SharedServices, WingPage } from "./Departments";
 import {
@@ -944,7 +945,7 @@ function Education() {
       <div className="mp-detail-hero">
         <PageTitle
           title={"Care inspires\ncontinued learning."}
-          description="Jamia Arifia Nooria, and planned supervised observation, workshops and academic exchange at Al-Arif."
+          description="Jamia Arifia Nooria, hands-on training at the Al-Arif Unani Pharmacy, and planned supervised observation and academic exchange."
         />
         <div className="mp-service-stamp">
           <BookOpen size={48} aria-hidden="true" />
@@ -970,8 +971,8 @@ function Education() {
           id="education-programmes"
           align="split"
           title="Programmes."
-          accent="Planned, not yet open."
-          lead="Programme dates, eligibility and certification will be published here once confirmed."
+          accent="Training held, observation planned."
+          lead="Hands-on pharmacy training began in November 2026. Clinical observation dates, eligibility and certification will be published here once confirmed."
         />
         <div className="mp-status-notice">
           <CircleHelp size={20} aria-hidden="true" />
@@ -996,20 +997,23 @@ function Education() {
               <ArrowUpRight size={18} aria-hidden="true" />
             </span>
           </Link>
-          <article>
+          <Link to="/site/training">
             <span className="sx-programme-icon">
               <Presentation size={24} aria-hidden="true" />
             </span>
-            <span className="sx-programme-status">Details to be announced</span>
-            <h3>Workshops & academic visits</h3>
+            <span className="sx-programme-status">
+              Held · 7 November 2026
+            </span>
+            <h3>Hands-on pharmacy training</h3>
             <p>
-              Dates, topics and participation details will be shared when
-              confirmed.
+              A free distillation session for 40 BUMS students and house
+              surgeons at the GMP-certified Unani pharmacy. The next programme
+              is coming shortly.
             </p>
-            <TextLink to="/site/research">
-              View research & publications
-            </TextLink>
-          </article>
+            <span className="mp-text-link">
+              See the training <ArrowUpRight size={18} aria-hidden="true" />
+            </span>
+          </Link>
         </div>
       </section>
       <div className="sx-strip">
@@ -1554,14 +1558,17 @@ export function Shell() {
   }, []);
   const onPath = (path: string) =>
     location.pathname === path || location.pathname.startsWith(`${path}/`);
-  // A care page belongs to its wing's menu; the pharmacy page to Services.
+  // A care page belongs to its wing's menu; the pharmacy page to Services;
+  // the pharmacy's hands-on training to Unani.
   const serviceWing = servicePages.find(
     (service) => service.slug === serviceSlug,
   )?.wing;
   const routeMenu: MenuId | null =
     onPath("/site/general") || serviceWing === "General hospital"
       ? "general"
-      : onPath("/site/unani") || serviceWing === "Unani care"
+      : onPath("/site/unani") ||
+          onPath("/site/training") ||
+          serviceWing === "Unani care"
         ? "unani"
         : onPath("/site/services") || onPath("/site/pharmacy")
           ? "services"
@@ -1819,6 +1826,7 @@ export function Shell() {
                 <Route path="/site/stories/:slug" element={<StoryDetail />} />
                 <Route path="/site/community" element={<Community />} />
                 <Route path="/site/pharmacy" element={<Pharmacy />} />
+                <Route path="/site/training" element={<Training />} />
                 <Route path="/site/visit" element={<Visit />} />
                 <Route
                   path="/site/request"
@@ -1879,6 +1887,7 @@ export function Shell() {
               <Link to="/site/stories">Stories & guides</Link>
               <Link to="/site/community">Community & milestones</Link>
               <Link to="/site/education">Education & learning</Link>
+              <Link to="/site/training">Hands-on training</Link>
               <Link to="/site/research">Research & publications</Link>
               <Link to="/site/visit">Contact & directions</Link>
             </div>

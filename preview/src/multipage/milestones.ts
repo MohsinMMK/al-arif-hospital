@@ -241,6 +241,16 @@ export const milestones: Milestone[] = [
     category: "Community",
     storySlug: "community-camps",
   },
+  {
+    id: "distillation-training-2026-11",
+    date: "2026-11-07",
+    when: "7 November 2026",
+    year: 2026,
+    title: "Hands-on distillation training at the Unani pharmacy",
+    summary:
+      "The GMP-certified Al-Arif Unani Pharmacy held a free, hands-on session on Amal-e-Taqteer, the distillation process, for 40 BUMS students and house surgeons.",
+    category: "Pharmacy",
+  },
 ];
 
 export const milestoneYears: number[] = [

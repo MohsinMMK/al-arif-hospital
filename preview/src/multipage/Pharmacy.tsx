@@ -436,6 +436,10 @@ export function Pharmacy() {
         </section>
       )}
       <div className="mp-editorial-links ph-closing">
+        <Link to="/site/training">
+          See the hands-on distillation training
+          <ArrowUpRight />
+        </Link>
         <Link to="/site/stories/raw-drug-agency">
           Read the Raw Drug Agency story
           <ArrowUpRight />

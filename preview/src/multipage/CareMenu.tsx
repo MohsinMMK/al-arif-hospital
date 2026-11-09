@@ -137,6 +137,10 @@ export function WingLinks({
           links={[
             [`All ${short} departments`, path],
             [`Doctors in ${short}`, `/site/doctors?wing=${id}`],
+            // The pharmacy's hands-on training sits with the Unani wing.
+            ...(id === "unani"
+              ? ([["Hands-on training", "/site/training"]] as [string, string][])
+              : []),
           ]}
           onNavigate={onNavigate}
         />
@@ -189,6 +193,7 @@ export function SharedServiceLinks({ onNavigate }: { onNavigate: () => void }) {
           links={[
             ["All services", "/site/services"],
             ["Pharmacy & manufacturing", "/site/pharmacy"],
+            ["Hands-on training", "/site/training"],
           ]}
           onNavigate={onNavigate}
         />
